@@ -10,8 +10,8 @@ package trab;
  * @author Maria
  */
 public interface Juridica {
-    String cnpj="";
-    String razaoSocial="";
+    public String getCnpj();
+    public String getRazaoSocial();
     
     
 }

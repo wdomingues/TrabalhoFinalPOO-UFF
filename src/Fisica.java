@@ -3,13 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package trab;
+
 
 /**
  *
  * @author Maria
  */
 public interface Fisica {
-    String cpf="";
-    String nome="";
+    public String getCpf();
+    public String getNome();
 }
