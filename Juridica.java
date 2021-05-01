@@ -9,7 +9,10 @@ package trab;
  *
  * @author Maria
  */
-public class Fornecedor extends Pessoa{
+public interface Juridica {
+    String cnpj="";
+    String razaoSocial="";
     
     
 }
+   

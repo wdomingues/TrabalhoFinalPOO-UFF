@@ -9,7 +9,10 @@ package trab;
  *
  * @author Maria
  */
-public class Fornecedor extends Pessoa{
+public class Funcionario extends Pessoa{
+    String cargo;
+    float salarioHora;
+    
     
     
 }
