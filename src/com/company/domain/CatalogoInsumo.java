@@ -3,10 +3,10 @@ package com.company.domain;
 
 import java.util.ArrayList;
 
-public class Estoque {
+public class CatalogoInsumo {
     private ArrayList<Insumo> insumos;
 
-    public Estoque() {
+    public CatalogoInsumo() {
 
     }
 }

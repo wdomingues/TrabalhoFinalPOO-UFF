@@ -17,6 +17,8 @@ public class GerenciadorCliente {
         Scanner scanner = new Scanner(System.in);
         String nome,cpf;
 
+        //TODO identificar se o cliente é pessoa física
+
         System.out.println("Digite o nome do Cliente: ");
         nome = scanner.nextLine();
         System.out.println("Digite o CPF do Cliente: ");

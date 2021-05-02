@@ -5,9 +5,9 @@ import java.util.ArrayList;
 public class Edificacao {
     private ArrayList<Andar> andares;
     private int numeroAndares;
-    private String localidade;
 
     public Edificacao(int i) {
+        this.numeroAndares = i;
     }
 
     public Edificacao(ArrayList<Andar> andares) {
@@ -18,8 +18,8 @@ public class Edificacao {
         return andares;
     }
 
-    public void setAndares(int quantidadeAndares) {
-        this.numeroAndares = quantidadeAndares;
+    public void addAndar(Andar andar) {
+        this.andares.add(andar);
     }
 
     public int getNumeroAndares() {
@@ -28,13 +28,5 @@ public class Edificacao {
 
     public void setNumeroAndares(int numeroAndares) {
         this.numeroAndares = numeroAndares;
-    }
-
-    public String getLocalidade() {
-        return localidade;
-    }
-
-    public void setLocalidade(String localidade) {
-        this.localidade = localidade;
     }
 }

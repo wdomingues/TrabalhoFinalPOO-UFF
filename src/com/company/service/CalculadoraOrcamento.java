@@ -5,7 +5,7 @@ import com.company.domain.Projeto;
 
 public class CalculadoraOrcamento {
     public static Orcamento calcula(Projeto projeto) {
-        //logica de calculo
+        // TODO logica de calculo
         return new Orcamento();
     }
 }
