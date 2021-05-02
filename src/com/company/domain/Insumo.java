@@ -8,7 +8,7 @@ public class Insumo {
     private ArrayList<Fornecedor> fornecedores;
 
     public Insumo() {
-
+        this.fornecedores = new ArrayList<Fornecedor>();
     }
 
 
@@ -38,5 +38,14 @@ public class Insumo {
 
         }
         return qtd;
+    }
+
+    public ArrayList<Fornecedor> addFornecedor(Fornecedor fornecedor){
+        this.fornecedores.add(fornecedor);
+        return this.fornecedores;
+    }
+
+    public void removeFornecedor(Fornecedor fornecedor) {
+        this.fornecedores.removeIf(f -> f.getCnpj().equals(fornecedor.getCnpj()));
     }
 }

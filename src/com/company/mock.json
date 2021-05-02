@@ -1,39 +1,65 @@
-{
-  "Fornecedores": [
+[
     {
-      "Nome": "Zana",
-      "CNPJ": "123",
-      "Insumo": "Areia",
-      "QuantidadeDisponivel": 100,
-      "ValorUnitario": 5
+      "nome": "Zana Materiais de Construçoes LTDA",
+      "cnpj": "05.879.152/0009-87",
+      "insumo": "Areia",
+      "quantidadeDisponivel": 100,
+      "valorUnitario": 5
     },
     {
-      "Nome": "Zana",
-      "CNPJ": "123",
-      "Insumo": "Brita",
-      "QuantidadeDisponivel": 100,
-      "ValorUnitario": 7
+      "nome": "Zana Materiais de Construçoes LTDA",
+      "cnpj": "05.879.152/0009-87",
+      "insumo": "Brita",
+      "quantidadeDisponivel": 100,
+      "valorUnitario": 4
     },
     {
-      "Nome": "Pedrin",
-      "CNPJ": "321",
-      "Insumo": "Cimento",
-      "QuantidadeDisponivel": 70,
-      "ValorUnitario": 12
+      "nome": "Pedro e Paulo Materiais de Construcoes LTDA",
+      "cnpj": "05.239.152/0001-87",
+      "insumo": "Cimento",
+      "quantidadeDisponivel": 70,
+      "valorUnitario": 30
     },
     {
-      "Nome": "Tavin",
-      "CNPJ": "231",
-      "Insumo": "Viga",
-      "QuantidadeDisponivel": 57,
-      "ValorUnitario": 13
+      "nome": "Pedro e Paulo Materiais de Construcoes LTDA",
+      "cnpj": "05.239.152/0001-87",
+      "insumo": "Tijolo",
+      "quantidadeDisponivel": 100,
+      "valorUnitario": 1
     },
     {
-      "Nome": "Maria",
-      "CNPJ": "132",
-      "Insumo": "Viga",
-      "QuantidadeDisponivel": 90,
-      "ValorUnitario": 15
+      "nome": "Schimit Materiais LTDA",
+      "cnpj": "95.239.324/0001-87",
+      "insumo": "Viga",
+      "quantidadeDisponivel": 57,
+      "valorUnitario": 13
+    },
+    {
+      "nome": "Schimit Materiais LTDA",
+      "cnpj": "95.239.324/0001-87",
+      "insumo": "Tijolo",
+      "quantidadeDisponivel": 500,
+      "valorUnitario": 2
+    },
+    {
+      "nome": "Russo's Materiais LTDA ",
+      "cnpj": "79.234.445/0001-87",
+      "insumo": "Viga",
+      "quantidadeDisponivel": 90,
+      "valorUnitario": 15
+    },
+    {
+      "nome": "Russo's Materiais LTDA ",
+      "cnpj": "79.234.445/0001-87",
+      "insumo": "Areia",
+      "quantidadeDisponivel": 80,
+      "valorUnitario": 4
+    },
+    {
+      "nome": "Russo's Materiais LTDA ",
+      "cnpj": "79.234.445/0001-87",
+      "insumo": "Cimento",
+      "quantidadeDisponivel": 90,
+      "valorUnitario": 29
     }
   ]
-}

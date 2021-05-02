@@ -30,3 +30,11 @@ public class Andar {
         this.comodos.add(comodo);
     }
 }
+    public ArrayList<Comodo> getComodos() {
+        return comodos;
+    }
+
+    public void setComodos(ArrayList<Comodo> comodos) {
+        this.comodos = comodos;
+    }
+}

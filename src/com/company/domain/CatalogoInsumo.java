@@ -9,4 +9,16 @@ public class CatalogoInsumo {
     public CatalogoInsumo() {
 
     }
+
+    public CatalogoInsumo(ArrayList<Insumo> insumos) {
+        this.insumos = insumos;
+    }
+
+    public ArrayList<Insumo> getInsumos() {
+        return insumos;
+    }
+
+    public void setInsumos(ArrayList<Insumo> insumos) {
+        this.insumos = insumos;
+    }
 }

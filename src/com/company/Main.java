@@ -3,11 +3,15 @@ package com.company;
 import com.company.domain.*;
 import com.company.service.*;
 
+import java.io.IOException;
+
 public class Main {
 
-    public static void main(String[] args) {
-	// write your code here
-        //lerFornecedores();
+    public static void main(String[] args) throws IOException {
+        // write your code here
+        GerenciadorCatalogo gerenciadorCatalogo = new GerenciadorCatalogo();
+        CatalogoInsumo catalogo = gerenciadorCatalogo.gerarCatalogo();
+
         GerenciadorCliente gerenciadorCliente = new GerenciadorCliente();
         GerenciadorProjeto gerenciadorProjeto = new GerenciadorProjeto();
 
@@ -17,7 +21,7 @@ public class Main {
 //        Projeto projeto = new Projeto();
 //        projeto.setEdificacao(new Edificacao(2));
 
-        if(ValidadorProjeto.validar(projeto)){
+        if (ValidadorProjeto.validar(projeto, catalogo)) {
             Orcamento orcamento = CalculadoraOrcamento.calcula(projeto);
 
         }
