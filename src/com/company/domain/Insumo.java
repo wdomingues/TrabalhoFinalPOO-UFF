@@ -5,12 +5,9 @@
  */
 package com.company.domain;
 
-import java.util.*;
-
 
 public class Insumo {
     private String nome;
-    private double valorUnitario;
 
 
 }

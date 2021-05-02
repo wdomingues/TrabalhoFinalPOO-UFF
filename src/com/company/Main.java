@@ -11,11 +11,11 @@ public class Main {
         GerenciadorCliente gerenciadorCliente = new GerenciadorCliente();
         GerenciadorProjeto gerenciadorProjeto = new GerenciadorProjeto();
 
-//        Cliente cliente = gerenciadorCliente.cadastrar();
-        Cliente cliente = new Cliente("Danilo","123123");
-//        Projeto projeto = gerenciadorProjeto.cadastrar();
-        Projeto projeto = new Projeto();
-        projeto.setEdificacao(new Edificacao(2));
+        Cliente cliente = gerenciadorCliente.cadastrar();
+//        Cliente cliente = new Cliente("Danilo","123123");
+        Projeto projeto = gerenciadorProjeto.cadastrar();
+//        Projeto projeto = new Projeto();
+//        projeto.setEdificacao(new Edificacao(2));
 
         if(ValidadorProjeto.validar(projeto)){
             Orcamento orcamento = CalculadoraOrcamento.calcula(projeto);

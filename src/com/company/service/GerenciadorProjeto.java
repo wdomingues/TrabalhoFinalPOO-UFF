@@ -13,6 +13,7 @@ public class GerenciadorProjeto {
 
         this.projeto = new Projeto();
 
+        System.out.println("Onde fica ");
         System.out.println("Digite quantos andares:");
         andares = scanner.nextInt();
         System.out.println("Digite o prazo máximo que você deseja:");

@@ -8,6 +8,7 @@ package com.company.domain;
 public class Fornecedor extends Pessoa implements PessoaJuridica {
     private Insumo insumo;
     private int quantidadeDisponivel;
+    private double valorUnitario;
 
     public Fornecedor(String nome, String documento) {
         super(nome, documento);
