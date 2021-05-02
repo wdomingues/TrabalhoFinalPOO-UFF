@@ -1,14 +1,8 @@
-package com.company.domain;/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+package com.company.domain;
 
-/**
- *
- * @author Maria
- */
-public class Cliente extends Pessoa implements PessoaFisica {
+public class Cliente extends Pessoa implements PessoaFisica, PessoaJuridica {
+
+    private boolean isPessoaFisica;
 
     public Cliente(String nome, String documento) {
         super(nome, documento);
@@ -16,11 +10,21 @@ public class Cliente extends Pessoa implements PessoaFisica {
 
     @Override
     public String getCpf() {
-        return this.documento;
+        return this.isPessoaFisica ? this.documento : null;
     }
 
     @Override
     public String getNome() {
-        return this.nome;
+        return this.isPessoaFisica ? this.nome : null;
+    }
+
+    @Override
+    public String getCnpj() {
+        return !this.isPessoaFisica ? this.documento : null;
+    }
+
+    @Override
+    public String getRazaoSocial() {
+        return !this.isPessoaFisica ? this.nome : null;
     }
 }

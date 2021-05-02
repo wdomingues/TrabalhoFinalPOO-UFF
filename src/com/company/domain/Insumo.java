@@ -1,16 +1,42 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.company.domain;
 
-import java.util.*;
 
+import java.util.ArrayList;
 
 public class Insumo {
     private String nome;
-    private double valorUnitario;
+    private ArrayList<Fornecedor> fornecedores;
+
+    public Insumo() {
+
+    }
 
 
+
+
+    public String getNome() {
+        return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public ArrayList<Fornecedor> getFornecedores() {
+        return fornecedores;
+    }
+
+    public void setFornecedores(ArrayList<Fornecedor> fornecedores) {
+        this.fornecedores = fornecedores;
+    }
+
+    public int quantidadeTotal(){
+        int qtd =0;
+        for (Fornecedor f:
+             fornecedores) {
+            qtd = qtd + f.getQuantidadeDisponivel();
+
+        }
+        return qtd;
+    }
 }
