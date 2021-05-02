@@ -1,39 +1,67 @@
 {
   "Fornecedores": [
     {
-      "Nome": "Zana",
-      "CNPJ": "123",
+      "Nome": "Zana Materiais de Construçoes LTDA",
+      "CNPJ": "05.879.152/0009-87",
       "Insumo": "Areia",
       "QuantidadeDisponivel": 100,
       "ValorUnitario": 5
     },
     {
-      "Nome": "Zana",
-      "CNPJ": "123",
+      "Nome": "Zana Materiais de Construçoes LTDA",
+      "CNPJ": "05.879.152/0009-87",
       "Insumo": "Brita",
       "QuantidadeDisponivel": 100,
-      "ValorUnitario": 7
+      "ValorUnitario": 4
     },
     {
-      "Nome": "Pedrin",
-      "CNPJ": "321",
+      "Nome": "Pedro e Paulo Materiais de Construcoes LTDA",
+      "CNPJ": "05.239.152/0001-87",
       "Insumo": "Cimento",
       "QuantidadeDisponivel": 70,
-      "ValorUnitario": 12
+      "ValorUnitario": 30
     },
     {
-      "Nome": "Tavin",
-      "CNPJ": "231",
+      "Nome": "Pedro e Paulo Materiais de Construcoes LTDA",
+      "CNPJ": "05.239.152/0001-87",
+      "Insumo": "Tijolo",
+      "QuantidadeDisponivel": 100,
+      "ValorUnitario": 1
+    },
+    {
+      "Nome": "Schimit Materiais LTDA",
+      "CNPJ": "95.239.324/0001-87",
       "Insumo": "Viga",
       "QuantidadeDisponivel": 57,
       "ValorUnitario": 13
     },
     {
-      "Nome": "Maria",
-      "CNPJ": "132",
+      "Nome": "Schimit Materiais LTDA",
+      "CNPJ": "95.239.324/0001-87",
+      "Insumo": "Tijolo",
+      "QuantidadeDisponivel": 500,
+      "ValorUnitario": 2
+    },
+    {
+      "Nome": "Russo's Materiais LTDA ",
+      "CNPJ": "79.234.445/0001-87",
       "Insumo": "Viga",
       "QuantidadeDisponivel": 90,
       "ValorUnitario": 15
+    },
+    {
+      "Nome": "Russo's Materiais LTDA ",
+      "CNPJ": "79.234.445/0001-87",
+      "Insumo": "Areia",
+      "QuantidadeDisponivel": 80,
+      "ValorUnitario": 4
+    },
+    {
+      "Nome": "Russo's Materiais LTDA ",
+      "CNPJ": "79.234.445/0001-87",
+      "Insumo": "Cimento",
+      "QuantidadeDisponivel": 90,
+      "ValorUnitario": 29
     }
   ]
 }

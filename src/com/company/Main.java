@@ -13,7 +13,7 @@ public class Main {
 
         Cliente cliente = gerenciadorCliente.cadastrar();
 //        Cliente cliente = new Cliente("Danilo","123123");
-        Projeto projeto = gerenciadorProjeto.cadastrar();
+          Projeto projeto = gerenciadorProjeto.cadastrar();
 //        Projeto projeto = new Projeto();
 //        projeto.setEdificacao(new Edificacao(2));
 
