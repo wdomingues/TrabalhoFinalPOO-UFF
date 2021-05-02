@@ -20,11 +20,11 @@ public class GerenciadorEdificacao {
 
         for (int i = 0; i<qtdAndares; i++){
             if (proximoIgual.equalsIgnoreCase("S")){
-                a.setNumeroAndar(i+1);
+                //a.setNumeroAndar(i+1);
                 this.edificacao.addAndar(a); //adiciona andar igual ao anterior
             } else{
-                a = new GerenciadorAndar().projetarAndar();
-                a.setNumeroAndar(i + 1);
+                a = new GerenciadorAndar().projetarAndar(i+1);
+                //a.setNumeroAndar(i + 1);
                 this.edificacao.addAndar(a);
             }
 
@@ -33,12 +33,6 @@ public class GerenciadorEdificacao {
                 proximoIgual = scanner.nextLine();
             }
         }
-
-        //TODO: pensar em deslocar para Gerenciador de projeto
-        System.out.println("Digite o prazo máximo que você deseja:");
-        this.edificacao.setPrazoDias(scanner.nextInt());
-
-        //TODO: calcular baseado em prazo, consid dias de trab x nFuncionarios para exec comodo
 
         return  this.edificacao;
     }

@@ -8,9 +8,10 @@ public class ValidadorProjeto {
 
     public static boolean validar(Projeto projeto, CatalogoInsumo catalogoInsumo) {
         //Verificar se existem insumos disponiveis para o projeto especifico
-        projeto.getEdificacao().getAndares().forEach(andar -> andar.getComodos().forEach(comodo -> {
-
-        }));
+        projeto.getEdificacao().getAndares().forEach(andar ->
+        {
+        //    andar
+        });
 
         return true;
     }
