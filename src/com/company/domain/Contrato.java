@@ -3,12 +3,15 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package trab;
+package com.company.domain;
 
 /**
  *
  * @author Maria
  */
-public class Fornecedor {
-    
+public abstract class Contrato  {
+    protected Projeto projeto;
+    protected Cliente cliente;
+    protected Fornecedor fornecedor;
+
 }

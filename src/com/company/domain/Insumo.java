@@ -3,12 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package trab;
+package com.company.domain;
 
-/**
- *
- * @author Maria
- */
-public class Insumos {
-    
+import java.util.*;
+
+
+public class Insumo {
+    private String nome;
+    private double valorUnitario;
+
+
 }
