@@ -5,6 +5,7 @@ import java.util.ArrayList;
 public class Edificacao {
     private ArrayList<Andar> andares;
     private int numeroAndares;
+    private int prazoDias;
 
     public Edificacao(int i) {
         this.numeroAndares = i;
@@ -28,5 +29,9 @@ public class Edificacao {
 
     public void setNumeroAndares(int numeroAndares) {
         this.numeroAndares = numeroAndares;
+    }
+
+    public void setPrazoDias(int prazoDias) {
+        this.prazoDias = prazoDias;
     }
 }

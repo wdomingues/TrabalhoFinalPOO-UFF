@@ -5,19 +5,23 @@
         "Insumos": [
           {
             "Nome": "Areia",
-            "Quantidade": 2
+            "Quantidade": 0.06
           },
           {
             "Nome": "Cimento",
-            "Quantidade": 5
+            "Quantidade": 0.24
+          },
+          {
+            "Nome": "Brita",
+            "Quantidade": 0.06
           },
           {
             "Nome": "Agua",
-            "Quantidade": 1.5
+            "Quantidade": 0.02
           },
           {
             "Nome": "Viga",
-            "Quantidade": 1
+            "Quantidade": 2
           }
         ]
       }
@@ -27,24 +31,20 @@
       "Parede": {
         "Insumos": [
           {
-            "Nome": "Areia",
-            "Quantidade": 2
+            "Nome": "Areola",
+            "Quantidade": 0.037
           },
           {
             "Nome": "Cimento",
-            "Quantidade": 5
+            "Quantidade": 0.111
           },
           {
             "Nome": "Agua",
-            "Quantidade": 1.5
-          },
-          {
-            "Nome": "Argamassa",
-            "Quantidade": 2
+            "Quantidade": 0.01
           },
           {
             "Nome": "Tijolo",
-            "Quantidade": 12
+            "Quantidade": 17
           }
         ]
       }
@@ -53,24 +53,24 @@
       "Coluna": {
         "Insumos": [
           {
-            "Nome": "Viga",
-            "Quantidade": 1
+            "Nome": "Coluna de Ferro",
+            "Quantidade": 0.50
           },
           {
             "Nome": "Cimento",
-            "Quantidade": 7
+            "Quantidade": 0.144
           },
           {
             "Nome": "Areia",
-            "Quantidade": 3
+            "Quantidade": 0.036
           },
           {
             "Nome": "Agua",
-            "Quantidade": 2
+            "Quantidade": 0.012
           },
           {
             "Nome": "Brita",
-            "Quantidade": 5
+            "Quantidade": 0.036
           }
         ]
       }

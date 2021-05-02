@@ -14,27 +14,58 @@ import java.util.ArrayList;
 public class GerenciadorCatalogo {
     private CatalogoInsumo catalogo;
 
-    public CatalogoInsumo gerarCatalogo() throws IOException {
-        String json
-                = String.join(" ",
-                Files.readAllLines(
-                        Paths.get("./src/com/company/mock.json"),
-                        StandardCharsets.UTF_8)
-        );
-        Fornecedor[] fornecedorList;
-        fornecedorList = new Gson().fromJson(json, Fornecedor[].class);
+    public CatalogoInsumo gerarCatalogo() {
+        if (this.catalogo == null) {
+            try {
+                String json
+                        = String.join(" ",
+                        Files.readAllLines(
+                                Paths.get("./src/com/company/mock.json"),
+                                StandardCharsets.UTF_8)
+                );
+                Fornecedor[] fornecedorList;
+                fornecedorList = new Gson().fromJson(json, Fornecedor[].class);
 
-        for (Fornecedor f :
-                fornecedorList) {
-            System.out.println(f.getInsumo());
+                ArrayList<Insumo> insumos = new ArrayList<Insumo>();
+                Insumo insumo;
+
+                for (Fornecedor f :
+                        fornecedorList) {
+                    insumo = insumos.stream().filter(ins -> f.getInsumo().equals(ins.getNome())).findAny().orElse(null);
+                    if (insumo == null) {
+                        insumo = new Insumo();
+                        insumo.setNome(f.getInsumo());
+                        insumo.addFornecedor(f);
+                        insumos.add(insumo);
+                    } else {
+                        for (int i = 0; i < insumos.stream().count(); i++) {
+                            if (insumos.get(i).getNome().equals(f.getInsumo()))
+                                insumos.get(i).addFornecedor(f);
+                        }
+                    }
+                }
+
+                this.catalogo = new CatalogoInsumo(insumos);
+
+            } catch (IOException ex) {
+
+            }
         }
-        //
-        // Criando lista de insumos disponiveis
-        this.catalogo = new CatalogoInsumo(new ArrayList<Insumo>());
+        else
+        {
+            ArrayList<Insumo> insumos =this.catalogo.getInsumos();
+            for (int i = 0; i < insumos.stream().count(); i++) {
+                for (Fornecedor fornecedor :
+                        insumos.get(i).getFornecedores()) {
+                    if(!validadorFornecedor(fornecedor))
+                        insumos.get(i).removeFornecedor(fornecedor);
+                }
+            }
+        }
         return this.catalogo;
     }
 
-    private boolean validadorFornecedor(Fornecedor fornecedor){
+    private boolean validadorFornecedor(Fornecedor fornecedor) {
         return fornecedor.getQuantidadeDisponivel() > 0;
     }
 

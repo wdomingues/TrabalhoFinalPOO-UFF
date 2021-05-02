@@ -11,6 +11,7 @@ public class GerenciadorProjeto {
         GerenciadorEdificacao gerenciadorEdificacao = new GerenciadorEdificacao();
         Edificacao edificacao = gerenciadorEdificacao.ProjetarEdificacao();
 
+
         return this.projeto;
     }
 }
