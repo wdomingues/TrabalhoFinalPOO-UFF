@@ -17,4 +17,12 @@ public class Andar {
     public void setColunas(int colunas) {
         this.colunas = colunas;
     }
+
+    public ArrayList<Comodo> getComodos() {
+        return comodos;
+    }
+
+    public void setComodos(ArrayList<Comodo> comodos) {
+        this.comodos = comodos;
+    }
 }

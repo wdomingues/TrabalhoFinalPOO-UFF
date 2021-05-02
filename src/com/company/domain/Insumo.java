@@ -44,4 +44,8 @@ public class Insumo {
         this.fornecedores.add(fornecedor);
         return this.fornecedores;
     }
+
+    public void removeFornecedor(Fornecedor fornecedor) {
+        this.fornecedores.removeIf(f -> f.getCnpj().equals(fornecedor.getCnpj()));
+    }
 }

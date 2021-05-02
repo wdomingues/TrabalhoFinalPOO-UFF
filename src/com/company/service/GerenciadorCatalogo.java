@@ -14,38 +14,53 @@ import java.util.ArrayList;
 public class GerenciadorCatalogo {
     private CatalogoInsumo catalogo;
 
-    public CatalogoInsumo gerarCatalogo() throws IOException {
+    public CatalogoInsumo gerarCatalogo() {
         if (this.catalogo == null) {
-            String json
-                    = String.join(" ",
-                    Files.readAllLines(
-                            Paths.get("./src/com/company/mock.json"),
-                            StandardCharsets.UTF_8)
-            );
-            Fornecedor[] fornecedorList;
-            fornecedorList = new Gson().fromJson(json, Fornecedor[].class);
+            try {
+                String json
+                        = String.join(" ",
+                        Files.readAllLines(
+                                Paths.get("./src/com/company/mock.json"),
+                                StandardCharsets.UTF_8)
+                );
+                Fornecedor[] fornecedorList;
+                fornecedorList = new Gson().fromJson(json, Fornecedor[].class);
 
-            ArrayList<Insumo> insumos = new ArrayList<Insumo>();
-            Insumo insumo;
+                ArrayList<Insumo> insumos = new ArrayList<Insumo>();
+                Insumo insumo;
 
-            for (Fornecedor f :
-                    fornecedorList) {
-                insumo = insumos.stream().filter(ins -> f.getInsumo().equals(ins.getNome()) ).findAny().orElse(null);
-                if(insumo == null){
-                    insumo = new Insumo();
-                    insumo.setNome(f.getInsumo());
-                    insumo.addFornecedor(f);
-                    insumos.add(insumo);
-                }
-                else{
-                    for (int i = 0; i< insumos.stream().count(); i++){
-                        if(insumos.get(i).getNome().equals(f.getInsumo()))
-                            insumos.get(i).addFornecedor(f);
+                for (Fornecedor f :
+                        fornecedorList) {
+                    insumo = insumos.stream().filter(ins -> f.getInsumo().equals(ins.getNome())).findAny().orElse(null);
+                    if (insumo == null) {
+                        insumo = new Insumo();
+                        insumo.setNome(f.getInsumo());
+                        insumo.addFornecedor(f);
+                        insumos.add(insumo);
+                    } else {
+                        for (int i = 0; i < insumos.stream().count(); i++) {
+                            if (insumos.get(i).getNome().equals(f.getInsumo()))
+                                insumos.get(i).addFornecedor(f);
+                        }
                     }
                 }
-            }
 
-            this.catalogo = new CatalogoInsumo(insumos);
+                this.catalogo = new CatalogoInsumo(insumos);
+
+            } catch (IOException ex) {
+
+            }
+        }
+        else
+        {
+            ArrayList<Insumo> insumos =this.catalogo.getInsumos();
+            for (int i = 0; i < insumos.stream().count(); i++) {
+                for (Fornecedor fornecedor :
+                        insumos.get(i).getFornecedores()) {
+                    if(!validadorFornecedor(fornecedor))
+                        insumos.get(i).removeFornecedor(fornecedor);
+                }
+            }
         }
         return this.catalogo;
     }
