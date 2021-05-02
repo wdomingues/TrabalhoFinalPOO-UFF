@@ -3,8 +3,6 @@ package com.company;
 import com.company.domain.*;
 import com.company.service.*;
 
-import javax.swing.*;
-
 public class Main {
 
     public static void main(String[] args) {
