@@ -29,7 +29,7 @@ public class Andar {
     public void addComodo(Comodo comodo) {
         this.comodos.add(comodo);
     }
-}
+
     public ArrayList<Comodo> getComodos() {
         return comodos;
     }
