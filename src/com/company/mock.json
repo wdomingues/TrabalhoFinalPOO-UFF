@@ -1,67 +1,65 @@
-{
-  "Fornecedores": [
+[
     {
-      "Nome": "Zana Materiais de Construçoes LTDA",
-      "CNPJ": "05.879.152/0009-87",
-      "Insumo": "Areia",
-      "QuantidadeDisponivel": 100,
-      "ValorUnitario": 5
+      "nome": "Zana Materiais de Construçoes LTDA",
+      "cnpj": "05.879.152/0009-87",
+      "insumo": "Areia",
+      "quantidadeDisponivel": 100,
+      "valorUnitario": 5
     },
     {
-      "Nome": "Zana Materiais de Construçoes LTDA",
-      "CNPJ": "05.879.152/0009-87",
-      "Insumo": "Brita",
-      "QuantidadeDisponivel": 100,
-      "ValorUnitario": 4
+      "nome": "Zana Materiais de Construçoes LTDA",
+      "cnpj": "05.879.152/0009-87",
+      "insumo": "Brita",
+      "quantidadeDisponivel": 100,
+      "valorUnitario": 4
     },
     {
-      "Nome": "Pedro e Paulo Materiais de Construcoes LTDA",
-      "CNPJ": "05.239.152/0001-87",
-      "Insumo": "Cimento",
-      "QuantidadeDisponivel": 70,
-      "ValorUnitario": 30
+      "nome": "Pedro e Paulo Materiais de Construcoes LTDA",
+      "cnpj": "05.239.152/0001-87",
+      "insumo": "Cimento",
+      "quantidadeDisponivel": 70,
+      "valorUnitario": 30
     },
     {
-      "Nome": "Pedro e Paulo Materiais de Construcoes LTDA",
-      "CNPJ": "05.239.152/0001-87",
-      "Insumo": "Tijolo",
-      "QuantidadeDisponivel": 100,
-      "ValorUnitario": 1
+      "nome": "Pedro e Paulo Materiais de Construcoes LTDA",
+      "cnpj": "05.239.152/0001-87",
+      "insumo": "Tijolo",
+      "quantidadeDisponivel": 100,
+      "valorUnitario": 1
     },
     {
-      "Nome": "Schimit Materiais LTDA",
-      "CNPJ": "95.239.324/0001-87",
-      "Insumo": "Viga",
-      "QuantidadeDisponivel": 57,
-      "ValorUnitario": 13
+      "nome": "Schimit Materiais LTDA",
+      "cnpj": "95.239.324/0001-87",
+      "insumo": "Viga",
+      "quantidadeDisponivel": 57,
+      "valorUnitario": 13
     },
     {
-      "Nome": "Schimit Materiais LTDA",
-      "CNPJ": "95.239.324/0001-87",
-      "Insumo": "Tijolo",
-      "QuantidadeDisponivel": 500,
-      "ValorUnitario": 2
+      "nome": "Schimit Materiais LTDA",
+      "cnpj": "95.239.324/0001-87",
+      "insumo": "Tijolo",
+      "quantidadeDisponivel": 500,
+      "valorUnitario": 2
     },
     {
-      "Nome": "Russo's Materiais LTDA ",
-      "CNPJ": "79.234.445/0001-87",
-      "Insumo": "Viga",
-      "QuantidadeDisponivel": 90,
-      "ValorUnitario": 15
+      "nome": "Russo's Materiais LTDA ",
+      "cnpj": "79.234.445/0001-87",
+      "insumo": "Viga",
+      "quantidadeDisponivel": 90,
+      "valorUnitario": 15
     },
     {
-      "Nome": "Russo's Materiais LTDA ",
-      "CNPJ": "79.234.445/0001-87",
-      "Insumo": "Areia",
-      "QuantidadeDisponivel": 80,
-      "ValorUnitario": 4
+      "nome": "Russo's Materiais LTDA ",
+      "cnpj": "79.234.445/0001-87",
+      "insumo": "Areia",
+      "quantidadeDisponivel": 80,
+      "valorUnitario": 4
     },
     {
-      "Nome": "Russo's Materiais LTDA ",
-      "CNPJ": "79.234.445/0001-87",
-      "Insumo": "Cimento",
-      "QuantidadeDisponivel": 90,
-      "ValorUnitario": 29
+      "nome": "Russo's Materiais LTDA ",
+      "cnpj": "79.234.445/0001-87",
+      "insumo": "Cimento",
+      "quantidadeDisponivel": 90,
+      "valorUnitario": 29
     }
   ]
-}
