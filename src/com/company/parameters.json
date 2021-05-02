@@ -1,0 +1,18 @@
+{
+  "MetroQuadrado": {
+    "Insumos": [
+      {
+        "Nome": "Cimento",
+        "Quantidade": 10
+      },
+      {
+        "Nome": "Agua",
+        "Quantidade": 5
+      },
+      {
+        "Nome": "Argamassa",
+        "Quantidade": 12
+      }
+    ]
+  }
+}

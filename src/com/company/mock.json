@@ -1,0 +1,25 @@
+{
+  "Fornecedores": [
+    {
+      "Nome": "Zana",
+      "CNPJ": "123",
+      "Insumo": "nomeInsumo",
+      "QuantidadeDisponivel": 10,
+      "ValorUnitario": 5
+    },
+    {
+      "Nome": "Pedrin",
+      "CNPJ": "321",
+      "Insumo": "nomeInsumo",
+      "QuantidadeDisponivel": 10,
+      "ValorUnitario": 5
+    },
+    {
+      "Nome": "Tavin",
+      "CNPJ": "231",
+      "Insumo": "nomeInsumo",
+      "QuantidadeDisponivel": 10,
+      "ValorUnitario": 5
+    }
+  ]
+}
