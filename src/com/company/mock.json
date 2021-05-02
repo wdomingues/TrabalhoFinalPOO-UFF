@@ -61,5 +61,76 @@
       "insumo": "Cimento",
       "quantidadeDisponivel": 90,
       "valorUnitario": 29
+    },
+    {
+      "nome": "JBL Materiais de Construcoes LTDA ",
+      "cnpj": "87.145.560/0001-87",
+      "insumo": "Cimento",
+      "quantidadeDisponivel": 150,
+      "valorUnitario": 31
+    },
+    {
+      "nome": "JBL Materiais de Construcoes LTDA ",
+      "cnpj": "87.145.560/0001-87",
+      "insumo": "Areia",
+      "quantidadeDisponivel": 150,
+      "valorUnitario": 5
+    },
+    {
+      "nome": "JBL Materiais de Construcoes LTDA ",
+      "cnpj": "87.145.560/0001-87",
+      "insumo": "Viga",
+      "quantidadeDisponivel": 150,
+      "valorUnitario": 15
+    },
+    {
+      "nome": "JBL Materiais de Construcoes LTDA ",
+      "cnpj": "87.145.560/0001-87",
+      "insumo": "Tijolo",
+      "quantidadeDisponivel": 200,
+      "valorUnitario": 3
+    },
+    {
+      "nome": "JBL Materiais de Construcoes LTDA ",
+      "cnpj": "87.145.560/0001-87",
+      "insumo": "Brita",
+      "quantidadeDisponivel": 170,
+      "valorUnitario": 5
+    },
+    {
+      "nome": "Leroy Companhia Brasileira de Bricolagem ",
+      "cnpj": "01.123.231/0001-05",
+      "insumo": "Brita",
+      "quantidadeDisponivel": 200,
+      "valorUnitario": 6
+    },
+    {
+      "nome": "Leroy Companhia Brasileira de Bricolagem ",
+      "cnpj": "01.123.231/0001-05",
+      "insumo": "Tijolo",
+      "quantidadeDisponivel": 250,
+      "valorUnitario": 4
+    },
+    {
+      "nome": "Leroy Companhia Brasileira de Bricolagem ",
+      "cnpj": "01.123.231/0001-05",
+      "insumo": "Viga",
+      "quantidadeDisponivel": 210,
+      "valorUnitario": 17,
+    {
+      "nome": "Leroy Companhia Brasileira de Bricolagem ",
+      "cnpj": "01.123.231/0001-05",
+      "insumo": "Areia",
+      "quantidadeDisponivel": 130,
+      "valorUnitario": 6
+    },
+    {
+      "nome": "Leroy Companhia Brasileira de Bricolagem ",
+      "cnpj": "01.123.231/0001-05",
+      "insumo": "Cimento",
+      "quantidadeDisponivel": 190,
+      "valorUnitario": 32
     }
+
+
   ]
