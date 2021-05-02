@@ -1,18 +1,79 @@
 {
-  "MetroQuadrado": {
-    "Insumos": [
-      {
-        "Nome": "Cimento",
-        "Quantidade": 10
-      },
-      {
-        "Nome": "Agua",
-        "Quantidade": 5
-      },
-      {
-        "Nome": "Argamassa",
-        "Quantidade": 12
+  "MetroQuadrado": [
+    {
+      "Laje": {
+        "Insumos": [
+          {
+            "Nome": "Areia",
+            "Quantidade": 2
+          },
+          {
+            "Nome": "Cimento",
+            "Quantidade": 5
+          },
+          {
+            "Nome": "Agua",
+            "Quantidade": 1.5
+          },
+          {
+            "Nome": "Viga",
+            "Quantidade": 1
+          }
+        ]
       }
-    ]
-  }
+
+    },
+    {
+      "Parede": {
+        "Insumos": [
+          {
+            "Nome": "Areia",
+            "Quantidade": 2
+          },
+          {
+            "Nome": "Cimento",
+            "Quantidade": 5
+          },
+          {
+            "Nome": "Agua",
+            "Quantidade": 1.5
+          },
+          {
+            "Nome": "Argamassa",
+            "Quantidade": 2
+          },
+          {
+            "Nome": "Tijolo",
+            "Quantidade": 12
+          }
+        ]
+      }
+    },
+    {
+      "Coluna": {
+        "Insumos": [
+          {
+            "Nome": "Viga",
+            "Quantidade": 1
+          },
+          {
+            "Nome": "Cimento",
+            "Quantidade": 7
+          },
+          {
+            "Nome": "Areia",
+            "Quantidade": 3
+          },
+          {
+            "Nome": "Agua",
+            "Quantidade": 2
+          },
+          {
+            "Nome": "Brita",
+            "Quantidade": 5
+          }
+        ]
+      }
+    }
+  ]
 }

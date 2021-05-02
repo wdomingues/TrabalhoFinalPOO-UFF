@@ -3,23 +3,37 @@
     {
       "Nome": "Zana",
       "CNPJ": "123",
-      "Insumo": "nomeInsumo",
-      "QuantidadeDisponivel": 10,
+      "Insumo": "Areia",
+      "QuantidadeDisponivel": 100,
       "ValorUnitario": 5
+    },
+    {
+      "Nome": "Zana",
+      "CNPJ": "123",
+      "Insumo": "Brita",
+      "QuantidadeDisponivel": 100,
+      "ValorUnitario": 7
     },
     {
       "Nome": "Pedrin",
       "CNPJ": "321",
-      "Insumo": "nomeInsumo",
-      "QuantidadeDisponivel": 10,
-      "ValorUnitario": 5
+      "Insumo": "Cimento",
+      "QuantidadeDisponivel": 70,
+      "ValorUnitario": 12
     },
     {
       "Nome": "Tavin",
       "CNPJ": "231",
-      "Insumo": "nomeInsumo",
-      "QuantidadeDisponivel": 10,
-      "ValorUnitario": 5
+      "Insumo": "Viga",
+      "QuantidadeDisponivel": 57,
+      "ValorUnitario": 13
+    },
+    {
+      "Nome": "Maria",
+      "CNPJ": "132",
+      "Insumo": "Viga",
+      "QuantidadeDisponivel": 57,
+      "ValorUnitario": 13
     }
   ]
 }
