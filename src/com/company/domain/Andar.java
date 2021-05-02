@@ -1,14 +1,30 @@
 package com.company.domain;
 
-import java.util.ArrayList;
-
 public class Andar {
-    private ArrayList<Comodo> comodos;
-    private int numeroAndar;
+    private int metroQuadradoLajes;
+    private int metroQuadradoParedes;
     private int colunas;
 
-    public Andar(int colunas) {
+    public Andar(int metroQuadradoLajes, int metroQuadradoParedes, int colunas) {
+        this.metroQuadradoLajes = metroQuadradoLajes;
+        this.metroQuadradoParedes = metroQuadradoParedes;
         this.colunas = colunas;
+    }
+
+    public int getMetroQuadradoLajes() {
+        return metroQuadradoLajes;
+    }
+
+    public void setMetroQuadradoLajes(int metroQuadradoLajes) {
+        this.metroQuadradoLajes = metroQuadradoLajes;
+    }
+
+    public int getMetroQuadradoParedes() {
+        return metroQuadradoParedes;
+    }
+
+    public void setMetroQuadradoParedes(int metroQuadradoParedes) {
+        this.metroQuadradoParedes = metroQuadradoParedes;
     }
 
     public int getColunas() {
@@ -17,24 +33,5 @@ public class Andar {
 
     public void setColunas(int colunas) {
         this.colunas = colunas;
-    }
-
-    public int getNumeroAndar() {
-        return this.numeroAndar;
-    }
-    public void setNumeroAndar(int numeroAndar) {
-        this.numeroAndar = numeroAndar;
-    }
-
-    public void addComodo(Comodo comodo) {
-        this.comodos.add(comodo);
-    }
-
-    public ArrayList<Comodo> getComodos() {
-        return comodos;
-    }
-
-    public void setComodos(ArrayList<Comodo> comodos) {
-        this.comodos = comodos;
     }
 }

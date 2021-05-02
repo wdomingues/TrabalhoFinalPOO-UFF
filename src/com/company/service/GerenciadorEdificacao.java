@@ -13,32 +13,26 @@ public class GerenciadorEdificacao {
         int qtdAndares, prazoDias; //TODO reavaliar necessidade de prazoDias ou -> Projeto
 
         System.out.println("Digite quantos andares vai ter a sua edficação:");
-        qtdAndares = scanner.nextInt();
+        qtdAndares = Helpers.validaInteiroPositivo();
         this.edificacao = new Edificacao(qtdAndares);
         String proximoIgual = "N";
         Andar a = null;
 
         for (int i = 0; i<qtdAndares; i++){
             if (proximoIgual.equalsIgnoreCase("S")){
-                a.setNumeroAndar(i+1);
+                //a.setNumeroAndar(i+1);
                 this.edificacao.addAndar(a); //adiciona andar igual ao anterior
             } else{
-                a = new GerenciadorAndar().projetarAndar();
-                a.setNumeroAndar(i + 1);
+                a = new GerenciadorAndar().projetarAndar(i+1);
+                //a.setNumeroAndar(i + 1);
                 this.edificacao.addAndar(a);
             }
 
             if ( i < qtdAndares-1){
-                System.out.printf("O %do. andar será igual a este? (S/N)", i+2);
+                System.out.printf("O " + Helpers.getOrdinal(i+2) +" andar será igual a este? (S/N)", i+2);
                 proximoIgual = scanner.nextLine();
             }
         }
-
-        //TODO: pensar em deslocar para Gerenciador de projeto
-        System.out.println("Digite o prazo máximo que você deseja:");
-        this.edificacao.setPrazoDias(scanner.nextInt());
-
-        //TODO: calcular baseado em prazo, consid dias de trab x nFuncionarios para exec comodo
 
         return  this.edificacao;
     }

@@ -48,7 +48,7 @@ public class GerenciadorCatalogo {
                 this.catalogo = new CatalogoInsumo(insumos);
 
             } catch (IOException ex) {
-
+                ex.printStackTrace();
             }
         }
         else
