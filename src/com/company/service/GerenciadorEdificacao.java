@@ -13,7 +13,7 @@ public class GerenciadorEdificacao {
         int qtdAndares, prazoDias; //TODO reavaliar necessidade de prazoDias ou -> Projeto
 
         System.out.println("Digite quantos andares vai ter a sua edficação:");
-        qtdAndares = scanner.nextInt();
+        qtdAndares = Helpers.validaInteiroPositivo();
         this.edificacao = new Edificacao(qtdAndares);
         String proximoIgual = "N";
         Andar a = null;
@@ -29,7 +29,7 @@ public class GerenciadorEdificacao {
             }
 
             if ( i < qtdAndares-1){
-                System.out.printf("O %do. andar será igual a este? (S/N)", i+2);
+                System.out.printf("O " + Helpers.getOrdinal(i+2) +" andar será igual a este? (S/N)", i+2);
                 proximoIgual = scanner.nextLine();
             }
         }

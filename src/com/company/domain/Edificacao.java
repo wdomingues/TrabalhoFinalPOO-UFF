@@ -9,6 +9,7 @@ public class Edificacao {
 
     public Edificacao(int i) {
         this.numeroAndares = i;
+        this.andares = new ArrayList<Andar>();
     }
 
     public Edificacao(ArrayList<Andar> andares) {

@@ -14,11 +14,11 @@ public class GerenciadorAndar {
 
         String andarOrdinal = Helpers.getOrdinal(numeroAndar);
         System.out.println("Digite quantos metros quadrados de laje (chão e teto) \no "+ andarOrdinal + " andar deve possuir:");
-        mtQddLaje = scanner.nextInt();
+        mtQddLaje = Helpers.validaInteiroPositivo();
         System.out.println("\nDigite quantos metros quadrados de paredes (externas e internas) \no "+ andarOrdinal + " andar deve possuir:");
-        mtQddParede = scanner.nextInt();
+        mtQddParede = Helpers.validaInteiroPositivo();
         System.out.println("\nDigite quantas colunas de sustentação \no "+ andarOrdinal + " andar deve possuir:");
-        colunas = scanner.nextInt();
+        colunas = Helpers.validaInteiroPositivo();
         this.andar = new Andar(mtQddLaje,mtQddParede,colunas);
 
         return this.andar;

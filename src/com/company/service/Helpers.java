@@ -2,6 +2,8 @@ package com.company.service;
 
 import com.company.helper.Enum_ordinais;
 
+import java.util.Scanner;
+
 public class Helpers {
 
     public static String getOrdinal(int i) {
@@ -15,5 +17,22 @@ public class Helpers {
 
             return enumValues[10 + pre - 2].name() + " " + enumValues[pos - 1].name();
         }
+    }
+    public static int validaInteiroPositivo(){
+        String ret;
+        int ret2 = 0;
+        Scanner scanner = new Scanner(System.in);
+        ret = scanner.nextLine();
+
+        try {
+            ret2 = Integer.parseInt(ret);
+            if(ret2<0)
+                throw new Exception();
+        } catch (Exception e) {
+            System.out.println("Inválido.\nDigite um numero para continuar:");
+            return validaInteiroPositivo();
+        }
+
+        return ret2;
     }
 }
