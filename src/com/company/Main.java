@@ -3,11 +3,17 @@ package com.company;
 import com.company.domain.*;
 import com.company.service.*;
 
+import java.io.IOException;
+
 public class Main {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
 	// write your code here
         //lerFornecedores();
+        GerenciadorCatalogo gerenciadorCatalogo = new GerenciadorCatalogo();
+
+        CatalogoInsumo catalogo = gerenciadorCatalogo.gerarCatalogo();
+
         GerenciadorCliente gerenciadorCliente = new GerenciadorCliente();
         GerenciadorProjeto gerenciadorProjeto = new GerenciadorProjeto();
 

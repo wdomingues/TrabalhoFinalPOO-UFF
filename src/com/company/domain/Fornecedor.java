@@ -1,7 +1,7 @@
 package com.company.domain;
 
 public class Fornecedor extends Pessoa implements PessoaJuridica {
-    private Insumo insumo;
+    private String insumo;
     private int quantidadeDisponivel;
     private double valorUnitario;
 
@@ -19,11 +19,11 @@ public class Fornecedor extends Pessoa implements PessoaJuridica {
         return this.nome;
     }
 
-    public Insumo getInsumo() {
+    public String getInsumo() {
         return insumo;
     }
 
-    public void setInsumo(Insumo insumo) {
+    public void setInsumo(String insumo) {
         this.insumo = insumo;
     }
 
