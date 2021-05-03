@@ -1,6 +1,7 @@
 package com.company.domain;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -22,6 +23,14 @@ public class Orcamento extends Projeto {
         this.setEdificacao(projeto.getEdificacao());
         this.setFornecedores(projeto.getFornecedores());
         this.setInsumosNecessarios(projeto.getInsumosNecessarios());
+    }
+
+    @Override
+    public void setFuncionarios(ArrayList<Funcionario> funcionarios) {
+        super.setFuncionarios(funcionarios);
+        funcionarios.forEach(funcionario -> {
+            this.valorMovel = this.valorMovel.add(funcionario.getSalarioHora());
+        });
     }
 
     public Map<Edificacao, Integer> getMenorTempoDiasPorEdificacao() {
@@ -105,6 +114,7 @@ public class Orcamento extends Projeto {
     }
 
     public Map<Insumo, Integer> addItens(Insumo insumo, int quantidade) {
+        this.setValorFixo(this.getValorFixo().add(insumo.getFornecedores().get(0).getValorUnitario().multiply(BigDecimal.valueOf(quantidade))));
         this.itens.put(insumo, quantidade);
         return this.itens;
     }

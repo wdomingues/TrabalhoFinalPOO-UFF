@@ -1,7 +1,9 @@
 package com.company.domain;
 
+import java.math.BigDecimal;
+
 public class Funcionario extends Pessoa implements PessoaFisica, Comparable<Funcionario>{
-    private float salarioHora;
+    private BigDecimal salarioHora;
     private String cpf;
     private boolean disponivel;
 
@@ -13,11 +15,11 @@ public class Funcionario extends Pessoa implements PessoaFisica, Comparable<Func
         this.cpf = cnpj;
     }
 
-    public float getSalarioHora() {
-        return salarioHora;
+    public BigDecimal getSalarioHora() {
+        return this.salarioHora;
     }
 
-    public void setSalarioHora(float salarioHora) {
+    public void setSalarioHora(BigDecimal salarioHora) {
         this.salarioHora = salarioHora;
     }
 
@@ -40,13 +42,7 @@ public class Funcionario extends Pessoa implements PessoaFisica, Comparable<Func
 
     @Override
     public int compareTo(Funcionario o) {
-        if (this.getSalarioHora() < o.getSalarioHora())
-            return 1;
-        else
-        if (this.getSalarioHora() > o.getSalarioHora())
-            return -1;
-        else
-            return 0;
+        return this.getSalarioHora().compareTo(o.getSalarioHora());
     }
 
 }

@@ -16,6 +16,25 @@ import java.util.Scanner;
 public class GerenciadorProjeto {
     private Projeto projeto;
 
+    public static Projeto[] recuperaProjetos() {
+        Projeto[] map = null;
+        try {
+            // create Gson instance
+            Gson gson = new Gson();
+
+            // cria projeto list
+            ArrayList<Projeto> projetoList = new ArrayList<Projeto>();
+            Reader reader = Files.newBufferedReader(Paths.get("./mock-projetos.json"));
+            map = gson.fromJson(reader, Projeto[].class);
+
+            reader.close();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+
+        return map;
+    }
+
     public Projeto cadastrar() {
         Scanner scanner = new Scanner(System.in);
         String resposta = "s";
@@ -51,6 +70,37 @@ public class GerenciadorProjeto {
         return this.projeto;
     }
 
+    public Projeto selecionarProjeto(Projeto[] projetos, SituacaoProjeto[] situacoes) {
+        int aux = 1;
+        Helpers.clear();
+        System.out.println("\nSelecione o projeto para avançar situação ou deletar: ");
+        if (situacoes.length == 1) {
+            for (Projeto proj : projetos) {
+                System.out.println(aux + " - " + proj.getNome());
+                aux++;
+            }
+        } else {
+            for (SituacaoProjeto situacao : situacoes) {
+                Projeto[] projs = Arrays.stream(projetos).filter(p -> p.getSituacao().equals(situacao)).toArray(Projeto[]::new);
+                if (projs != null && projs.length > 0) {
+                    System.out.println("\n\n" + (situacao.getOrdinal()));
+                    for (Projeto proj : projs) {
+                        System.out.println(aux + " - " + proj.getNome());
+                        aux++;
+                    }
+                }
+            }
+        }
+        int res = Helpers.validaInteiroPositivo();
+        System.out.println("\n");
+        if (res <= projetos.length)
+            this.projeto = projetos[res - 1];
+        else
+            return selecionarProjeto(projetos,situacoes);
+
+
+        return this.projeto;
+    }
 
     public Projeto[] salvaProjetoEmEspera(Projeto projeto) {
         Projeto[] map = null;
@@ -83,25 +133,6 @@ public class GerenciadorProjeto {
             // close writer
             writer.close();
 
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-
-        return map;
-    }
-
-    public static Projeto[] recuperaProjetos() {
-        Projeto[] map = null;
-        try {
-            // create Gson instance
-            Gson gson = new Gson();
-
-            // cria projeto list
-            ArrayList<Projeto> projetoList = new ArrayList<Projeto>();
-            Reader reader = Files.newBufferedReader(Paths.get("./mock-projetos.json"));
-            map = gson.fromJson(reader, Projeto[].class);
-
-            reader.close();
         } catch (Exception ex) {
             ex.printStackTrace();
         }

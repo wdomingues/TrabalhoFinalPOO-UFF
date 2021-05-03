@@ -17,7 +17,21 @@ public class GerenciadorCliente {
 
 
     public Cliente getCliente() {
-        return cliente;
+        Scanner scanner = new Scanner(System.in);
+        String input;
+        boolean continua = true;
+        while (continua) {
+            System.out.println("Digite o nome ou CPF do Cliente: ");
+            input = scanner.nextLine();
+            this.cliente = usaCliente(input);
+            if (this.cliente == null) {
+                System.out.println("Inválido!");
+                System.out.println("Digite um nome ou CPF válido");
+
+            } else
+                continua = false;
+        }
+        return this.cliente;
     }
 
     public Cliente cadastrar() {
@@ -41,7 +55,7 @@ public class GerenciadorCliente {
         return new Cliente(nome, cpf);
     }
 
-    public Cliente[] salvaCliente(Cliente cliente) {
+    private Cliente[] salvaCliente(Cliente cliente) {
         Cliente[] map = null;
         try {
             // create Gson instance
@@ -70,5 +84,22 @@ public class GerenciadorCliente {
         }
 
         return map;
+    }
+
+    private Cliente usaCliente(String dadoBusca) {
+        Cliente[] map = null;
+        try {
+            // create Gson instance
+            Gson gson = new Gson();
+            Reader reader = Files.newBufferedReader(Paths.get("./mock-clientes.json"));
+            map = gson.fromJson(reader, Cliente[].class);
+            reader.close();
+            Cliente cliente = Arrays.stream(map).filter(c -> c.getNome().equals(dadoBusca) || c.getCpf().equals(dadoBusca)).findFirst().orElse(null);
+            return cliente;
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+
+        return null;
     }
 }

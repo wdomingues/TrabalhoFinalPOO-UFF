@@ -26,7 +26,7 @@ public class ValidadorProjeto {
         Map<java.lang.String, Double> materiaisColuna = metrosQuadrados.get("Coluna");
 
         Map<String, Double> insumosQuantidades = projeto.getInsumosNecessarios();
-        Map<Insumo, Double> insumosNecessarios = insumosQuantidades.entrySet().stream().map(s -> new Insumo(s.getKey())).collect(Collectors.toMap(v-> v, v -> insumosQuantidades.get(v.getNome())));
+        Map<Insumo, Double> insumosNecessarios = insumosQuantidades.entrySet().stream().map(s -> new Insumo(s.getKey())).collect(Collectors.toMap(v -> v, v -> insumosQuantidades.get(v.getNome())));
 
         //Carrega a quantidade total de insumos necessarios para o projeto
         projeto.getEdificacao().forEach(ed -> ed.getAndares().forEach(andar ->
@@ -48,8 +48,10 @@ public class ValidadorProjeto {
                 List<Fornecedor> fornecedoresDisponiveis = insumoNoCatalogo.getFornecedores().stream()
                         .filter(fornecedor -> fornecedor.getQuantidadeDisponivel() >= qtdNecessaria).collect(Collectors.toList());
                 if (fornecedoresDisponiveis.stream().count() > 0)
-                    fornecedoresDisponiveis.forEach(fornecedor -> {insumo.addFornecedor(fornecedor);});
-                insumosQuantidades.put(insumoNoCatalogo.getNome(),qtdNecessaria);
+                    fornecedoresDisponiveis.forEach(fornecedor -> {
+                        insumo.addFornecedor(fornecedor);
+                    });
+                insumosQuantidades.put(insumoNoCatalogo.getNome(), qtdNecessaria);
                 projeto.addInsumo(insumo);
             }
         });
@@ -62,7 +64,7 @@ public class ValidadorProjeto {
             insumosNecessarios.entrySet().stream()
                     .filter(insumoN -> insumoN.getKey().getFornecedores() != null && insumoN.getKey().getFornecedores().stream().count() <= 0)
                     .forEach(insumoFaltante -> {
-                        insumDetalhado.insumosFaltantes =  insumDetalhado.insumosFaltantes + "\n" + insumoFaltante.getKey().getNome() + "\t\t\t\t" + insumoFaltante.getValue();
+                        insumDetalhado.insumosFaltantes = insumDetalhado.insumosFaltantes + "\n" + insumoFaltante.getKey().getNome() + "\t\t\t\t" + insumoFaltante.getValue();
 
                     });
             System.out.println("\nNão há insumos suficientes para orçar o Projeto, \n" +

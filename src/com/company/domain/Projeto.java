@@ -8,6 +8,7 @@ import java.util.Map;
 
 public class Projeto {
     private String nome;
+    private Cliente cliente;
     private SituacaoProjeto situacao;
     private ArrayList<Edificacao> edificacao = new ArrayList<>();
     private ArrayList<Fornecedor> fornecedores = new ArrayList<>();
@@ -28,6 +29,14 @@ public class Projeto {
 
     public void setNome(String nome) {
         this.nome = nome;
+    }
+
+    public Cliente getCliente() {
+        return cliente;
+    }
+
+    public void setCliente(Cliente cliente) {
+        this.cliente = cliente;
     }
 
     public ArrayList<Edificacao> getEdificacao() {
@@ -70,6 +79,13 @@ public class Projeto {
         this.insumosNecessarios = insumosNecessarios;
     }
 
+    public ArrayList<Funcionario> getFuncionarios() {
+        return funcionarios;
+    }
+
+    public void setFuncionarios(ArrayList<Funcionario> funcionarios) {
+        this.funcionarios = funcionarios;
+    }
 
     public ArrayList<Edificacao> addEdificacao(Edificacao edi) {
         this.edificacao.add(edi);
@@ -84,5 +100,10 @@ public class Projeto {
     public ArrayList<Insumo> addInsumo(Insumo insumo){
         this.insumos.add(insumo);
         return this.insumos;
+    }
+
+    public ArrayList<Funcionario> addFuncionario(Funcionario funcionario){
+        this.funcionarios.add(funcionario);
+        return this.funcionarios;
     }
 }

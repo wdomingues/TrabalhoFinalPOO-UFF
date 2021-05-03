@@ -16,7 +16,10 @@ public class Insumo {
         this.fornecedores = new ArrayList<Fornecedor>();
     }
 
-
+    public Insumo(String nome, ArrayList<Fornecedor> fornecedores) {
+        this.nome = nome;
+        this.fornecedores = fornecedores;
+    }
 
     public String getNome() {
         return nome;

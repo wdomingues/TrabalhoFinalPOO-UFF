@@ -1,16 +1,16 @@
 package com.company.service;
 
-import com.company.domain.Fornecedor;
-import com.company.domain.Insumo;
-import com.company.domain.Orcamento;
-import com.company.domain.Projeto;
+import com.company.domain.*;
 import com.google.gson.Gson;
 
 import java.io.IOException;
 import java.io.Reader;
+import java.io.Writer;
 import java.math.BigDecimal;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -25,14 +25,14 @@ public class CalculadoraOrcamento {
         funcionariosProduzirEmUmaHora = getFuncionariosProduzirEmUmaHora();
         calculaAndarPorEdificacao(orcamento);
 
-        var a = new GerenciadorCatalogo().identificarFuncionariosDisponiveis();
+        var funcionarios = new GerenciadorCatalogo().identificarFuncionariosDisponiveis();
 
         // A quantidade máxima de funcionarios: Se todas as edificações são construidas ao mesmo tempo
         orcamento.getMaxFuncionarioPorEdificacao().forEach((edificacao, integer) -> {
             orcamento.setMaiorNumeroFuncionarios(orcamento.getMaiorNumeroFuncionarios() + integer);
         });
-        if (orcamento.getMaiorNumeroFuncionarios() > a.length)
-            orcamento.setMaiorNumeroFuncionarios(a.length);
+        if (orcamento.getMaiorNumeroFuncionarios() > funcionarios.length)
+            orcamento.setMaiorNumeroFuncionarios(funcionarios.length);
 
         // O maior tempo que o projeto pode demorar, com apenas um funcionário
         orcamento.getMaiorTempoDiasPorEdificacao().forEach((edificacao, integer) -> {
@@ -45,32 +45,45 @@ public class CalculadoraOrcamento {
 
 
         Map<String, Double> insumosQuantidades = projeto.getInsumosNecessarios();
-        Map<Insumo, Double> insumosNecessarios = insumosQuantidades.entrySet().stream().map(s -> new Insumo(s.getKey())).collect(Collectors.toMap(v-> v, v -> insumosQuantidades.get(v.getNome())));
+        Map<Insumo, Double> insumosNecessarios = insumosQuantidades.entrySet().stream().map(s -> new Insumo(s.getKey(),
+                projeto.getInsumos().stream().filter(i->i.getNome().equals(s.getKey()))
+                        .findFirst().get().getFornecedores().stream().collect(Collectors.toCollection(ArrayList::new))))
+                .collect(Collectors.toMap(v -> v, v -> insumosQuantidades.get(v.getNome())));
 
         insumosNecessarios.forEach((insumo, quantidade) -> {
             BigDecimal valorInsumoProjeto;
             List<Fornecedor> fornecedores = insumo.getFornecedores().stream().sorted((o1, o2) -> o1.compareTo(o2)).collect(Collectors.toList());
 
             Fornecedor fornecedor = fornecedores.stream().findFirst().orElse(null);
-            if (quantidade < 1) {
-                valorInsumoProjeto = fornecedor.getValorUnitario();
-                Insumo ins = new Insumo(insumo.getNome());
-                ins.addFornecedor(fornecedor);
-                orcamento.addItens(ins, 1);
-                orcamento.setValorFixo(orcamento.getValorFixo().add(valorInsumoProjeto));
-            } else {
-                int qtd = (int) Math.ceil(quantidade);
-                valorInsumoProjeto = fornecedor.getValorUnitario().multiply(BigDecimal.valueOf(qtd));
+            if (fornecedor != null)
+                if (quantidade < 1) {
+                    adicionaItensNoOrcamento(orcamento, insumo, fornecedor, 1);
+                } else {
+                    int qtd = (int) Math.ceil(quantidade);
+                    adicionaItensNoOrcamento(orcamento, insumo, fornecedor, qtd);
+                }
+            else
+            {
+                System.out.println("Existem insumos sem fornecedores nesse orçamento.");
 
-                Insumo ins = new Insumo(insumo.getNome());
-                ins.addFornecedor(fornecedor);
-                orcamento.addItens(ins, qtd);
-                orcamento.setValorFixo(orcamento.getValorFixo().add(valorInsumoProjeto.multiply(BigDecimal.valueOf(qtd))));
             }
             orcamento.addFornecedor(fornecedor);
         });
 
+        new GerenciadorCatalogo();
+        var funcionariosSelecionados = Arrays.stream(Helpers.getSliceOfArray(funcionarios, 0, orcamento.getMaiorNumeroFuncionarios())).toArray(Funcionario[]::new);
+        orcamento.setFuncionarios((ArrayList<Funcionario>) Arrays.stream(funcionariosSelecionados).collect(Collectors.toList()));
+        salvaOrcamento(orcamento);
+
+
+
         return orcamento;
+    }
+
+    private static void adicionaItensNoOrcamento(Orcamento orcamento, Insumo insumo, Fornecedor fornecedor, int qtd) {
+        Insumo ins = new Insumo(insumo.getNome());
+        ins.addFornecedor(fornecedor);
+        orcamento.addItens(ins, qtd);
     }
 
     private static void calculaAndarPorEdificacao(Orcamento orcamento) {
@@ -157,6 +170,54 @@ public class CalculadoraOrcamento {
             exception.printStackTrace();
         }
         return map;
+    }
+
+    private static Orcamento[] salvaOrcamento(Orcamento orcamento) {
+        Orcamento[] map = null;
+        try {
+            // create Gson instance
+            Gson gson = new Gson();
+            // cria Orcamento list
+            ArrayList<Orcamento> OrcamentoList = new ArrayList<Orcamento>();
+            OrcamentoList.add(orcamento);
+            Reader reader = Files.newBufferedReader(Paths.get("./mock-Orcamentos.json"));
+            map = gson.fromJson(reader, Orcamento[].class);
+            reader.close();
+
+            if (map != null && map.length > 0)
+                Arrays.stream(map).forEach(p1 -> {
+                    OrcamentoList.add(p1);
+                });
+            // create a writer
+            Writer writer = Files.newBufferedWriter(Paths.get("./mock-orcamentos.json"));
+            // convert Orcamentos object to JSON file
+            gson.toJson(OrcamentoList, writer);
+
+            // close writer
+            writer.close();
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+
+        return map;
+    }
+
+    private static Orcamento usaOrcamento(String dadoBusca) {
+        Orcamento[] map = null;
+        try {
+            // create Gson instance
+            Gson gson = new Gson();
+            Reader reader = Files.newBufferedReader(Paths.get("./mock-orcamentos.json"));
+            map = gson.fromJson(reader, Orcamento[].class);
+            reader.close();
+            Orcamento orcamento = Arrays.stream(map).filter(c -> c.getNome().equals(dadoBusca) || c.getValorFinal().equals(dadoBusca)).findFirst().orElse(null);
+            return orcamento;
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+
+        return null;
     }
 
 }

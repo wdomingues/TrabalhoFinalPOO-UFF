@@ -7,10 +7,8 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class GerenciadorCatalogo {
     private CatalogoInsumo catalogo;
@@ -30,7 +28,7 @@ public class GerenciadorCatalogo {
 
                 ArrayList<Insumo> insumos = new ArrayList<Insumo>();
                 Insumo insumo;
-                Map<Insumo,Integer> insumosQuantidade = new HashMap<>();
+                Map<Insumo, Integer> insumosQuantidade = new HashMap<>();
 
                 for (Fornecedor f :
                         fornecedorList) {
@@ -55,14 +53,12 @@ public class GerenciadorCatalogo {
             } catch (IOException ex) {
                 ex.printStackTrace();
             }
-        }
-        else
-        {
-            ArrayList<Insumo> insumos =this.catalogo.getInsumos();
+        } else {
+            ArrayList<Insumo> insumos = this.catalogo.getInsumos();
             for (int i = 0; i < insumos.stream().count(); i++) {
                 for (Fornecedor fornecedor :
                         insumos.get(i).getFornecedores()) {
-                    if(!validadorFornecedor(fornecedor))
+                    if (!validadorFornecedor(fornecedor))
                         insumos.get(i).removeFornecedor(fornecedor);
                 }
             }
@@ -71,7 +67,7 @@ public class GerenciadorCatalogo {
         return this.catalogo;
     }
 
-    public Funcionario[] identificarFuncionariosDisponiveis(){
+    public Funcionario[] identificarFuncionariosDisponiveis() {
         if (this.funcionarios == null) {
             try {
                 String json
@@ -84,28 +80,27 @@ public class GerenciadorCatalogo {
                 funcionarios = new Gson().fromJson(json, Funcionario[].class);
 
                 funcionarios = Arrays.stream(funcionarios).filter(funcionario -> funcionario.isDisponivel()).sorted((o1, o2) -> o1.compareTo(o2)).toArray(Funcionario[]::new);
-                this.funcionarios =funcionarios;
+                this.funcionarios = funcionarios;
 
             } catch (IOException ex) {
                 ex.printStackTrace();
             }
-        }
-        else
-        {
-//            List<Funcionario> funcionarioList = Arrays.stream(this.funcionarios).filter();
-            this.funcionarios =(Funcionario[])Arrays.stream(this.funcionarios).filter(funcionario -> funcionario.isDisponivel()).sorted((o1, o2) -> o1.compareTo(o2)).toArray();
+        } else {
+            this.funcionarios = Arrays.stream(this.funcionarios).filter(funcionario -> funcionario.isDisponivel()).sorted((o1, o2) -> o1.compareTo(o2)).toArray(Funcionario[]::new);
         }
 
-
+        var listF = Arrays.stream(this.funcionarios).collect(Collectors.toList());
+        Collections.shuffle(listF);
+        this.funcionarios = listF.toArray(Funcionario[]::new);
         return this.funcionarios;
     }
 
 
-    public void vincularFuncionarioProjeto(Funcionario funcionario, Projeto projeto){
+    public void vincularFuncionarioProjeto(Funcionario funcionario, Projeto projeto) {
 
     }
 
-    public void vincularInsumoProjeto(Insumo insumo, Projeto projeto){
+    public void vincularInsumoProjeto(Insumo insumo, Projeto projeto) {
 
     }
 
