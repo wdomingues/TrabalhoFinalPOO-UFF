@@ -2,8 +2,9 @@ package com.company.domain;
 
 import java.math.BigDecimal;
 
-public class Fornecedor extends Pessoa implements PessoaJuridica {
+public class Fornecedor extends Pessoa implements PessoaJuridica, Comparable<Fornecedor> {
     private String insumo;
+    private String cnpj;
     private double quantidadeDisponivel;
     private BigDecimal valorUnitario;
 
@@ -11,9 +12,14 @@ public class Fornecedor extends Pessoa implements PessoaJuridica {
         super(nome, documento);
     }
 
+    public void setCnpj(String cnpj) {
+        this.cnpj = cnpj;
+        this.documento = cnpj;
+    }
+
     @Override
     public String getCnpj() {
-        return this.documento;
+        return this.cnpj;
     }
 
     @Override
@@ -43,5 +49,10 @@ public class Fornecedor extends Pessoa implements PessoaJuridica {
 
     public void setValorUnitario(BigDecimal valorUnitario) {
         this.valorUnitario = valorUnitario;
+    }
+
+    @Override
+    public int compareTo(Fornecedor o) {
+        return this.getValorUnitario().compareTo(o.getValorUnitario());
     }
 }

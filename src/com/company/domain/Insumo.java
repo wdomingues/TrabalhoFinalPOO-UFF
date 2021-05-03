@@ -14,6 +14,7 @@ public class Insumo {
 
     public Insumo(String nome){
         this.nome = nome;
+        this.fornecedores = new ArrayList<Fornecedor>();
     }
 
 

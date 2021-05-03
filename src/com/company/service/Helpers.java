@@ -37,4 +37,12 @@ public class Helpers {
 
         return ret2;
     }
+
+    public static int minimoDiasPorHora(int horas) {
+        if (horas < 8)
+            return 1;
+
+        int dias = horas / 8;
+        return dias;
+    }
 }

@@ -2,7 +2,8 @@ package com.company.domain;
 
 import java.util.ArrayList;
 
-public class Edificacao {
+public class Edificacao  implements Cloneable {
+    private int ordem;
     private ArrayList<Andar> andares;
     private int numeroAndares;
     private int prazoDias;
@@ -13,6 +14,18 @@ public class Edificacao {
     }
 
     public Edificacao(ArrayList<Andar> andares) {
+        this.andares = andares;
+    }
+
+    public int getOrdem() {
+        return ordem;
+    }
+
+    public void setOrdem(int ordem) {
+        this.ordem = ordem;
+    }
+
+    public void setAndares(ArrayList<Andar> andares) {
         this.andares = andares;
     }
 
@@ -34,5 +47,9 @@ public class Edificacao {
 
     public void setPrazoDias(int prazoDias) {
         this.prazoDias = prazoDias;
+    }
+
+    public Object cloneEdificacao() throws CloneNotSupportedException {
+        return super.clone();
     }
 }

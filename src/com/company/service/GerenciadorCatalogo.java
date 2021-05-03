@@ -1,8 +1,6 @@
 package com.company.service;
 
-import com.company.domain.CatalogoInsumo;
-import com.company.domain.Fornecedor;
-import com.company.domain.Insumo;
+import com.company.domain.*;
 import com.google.gson.Gson;
 
 import java.io.IOException;
@@ -10,9 +8,11 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class GerenciadorCatalogo {
     private CatalogoInsumo catalogo;
+    private Funcionario[] funcionarios;
 
     public CatalogoInsumo gerarCatalogo() {
         if (this.catalogo == null) {
@@ -20,7 +20,7 @@ public class GerenciadorCatalogo {
                 String json
                         = String.join(" ",
                         Files.readAllLines(
-                                Paths.get("./src/com/company/mock.json"),
+                                Paths.get("./src/com/company/mock-fornecedores.json"),
                                 StandardCharsets.UTF_8)
                 );
                 Fornecedor[] fornecedorList;
@@ -61,9 +61,49 @@ public class GerenciadorCatalogo {
                         insumos.get(i).removeFornecedor(fornecedor);
                 }
             }
+            this.catalogo.setInsumos(insumos);
         }
         return this.catalogo;
     }
+
+    public Funcionario[] identificarFuncionariosDisponiveis(){
+        if (this.funcionarios == null) {
+            try {
+                String json
+                        = String.join(" ",
+                        Files.readAllLines(
+                                Paths.get("./src/com/company/mock-funcionarios.json"),
+                                StandardCharsets.UTF_8)
+                );
+                Funcionario[] funcionarios;
+                funcionarios = new Gson().fromJson(json, Funcionario[].class);
+
+                funcionarios = (Funcionario[])Arrays.stream(funcionarios).filter(funcionario -> funcionario.isDisponivel()).sorted((o1, o2) -> o1.compareTo(o2)).toArray();
+                this.funcionarios =funcionarios;
+
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+        }
+        else
+        {
+//            List<Funcionario> funcionarioList = Arrays.stream(this.funcionarios).filter();
+            this.funcionarios =(Funcionario[])Arrays.stream(this.funcionarios).filter(funcionario -> funcionario.isDisponivel()).sorted((o1, o2) -> o1.compareTo(o2)).toArray();
+        }
+
+
+        return this.funcionarios;
+    }
+
+
+    public void vincularFuncionarioProjeto(Funcionario funcionario, Projeto projeto){
+
+    }
+
+    public void vincularInsumoProjeto(Insumo insumo, Projeto projeto){
+
+    }
+
 
     private boolean validadorFornecedor(Fornecedor fornecedor) {
         return fornecedor.getQuantidadeDisponivel() > 0;

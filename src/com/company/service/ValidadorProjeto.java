@@ -43,14 +43,16 @@ public class ValidadorProjeto {
         insumosNecessarios.forEach((insumo, qtdNecessaria) -> {
             Insumo insumoNoCatalogo = catalogoInsumo.getInsumos().stream().filter(insumo1 -> insumo1.getNome().equals(insumo.getNome())).findFirst().orElse(null);
 
-            List<Fornecedor> fornecedoresDisponiveis = insumoNoCatalogo.getFornecedores().stream()
-                    .filter(fornecedor -> fornecedor.getQuantidadeDisponivel() >= qtdNecessaria).collect(Collectors.toList());
-
-            if (fornecedoresDisponiveis.stream().count() > 0)
-                fornecedoresDisponiveis.forEach(fornecedor -> insumo.addFornecedor(fornecedor));
-            else
-                return;
+            if (insumoNoCatalogo != null) {
+                List<Fornecedor> fornecedoresDisponiveis = insumoNoCatalogo.getFornecedores().stream()
+                        .filter(fornecedor -> fornecedor.getQuantidadeDisponivel() >= qtdNecessaria).collect(Collectors.toList());
+                if (fornecedoresDisponiveis.stream().count() > 0)
+                    fornecedoresDisponiveis.forEach(fornecedor -> insumo.addFornecedor(fornecedor));
+            }
+//            else
+//                return;
         });
+        projeto.setInsumosNecessarios(insumosNecessarios);
 
 
         // verificar  insumosNecessarios possui algum insumo sem fornecedor

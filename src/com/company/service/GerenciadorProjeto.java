@@ -13,7 +13,7 @@ public class GerenciadorProjeto {
         String resposta = "s";
         this.projeto = new Projeto();
         GerenciadorEdificacao gerenciadorEdificacao = new GerenciadorEdificacao();
-        Edificacao edificacao = gerenciadorEdificacao.ProjetarEdificacao();
+        Edificacao edificacao = gerenciadorEdificacao.projetarEdificacao();
         this.projeto.addEdificacao(edificacao);
 
         while(resposta.equalsIgnoreCase("S") || resposta.equalsIgnoreCase("sim")) {
@@ -23,10 +23,11 @@ public class GerenciadorProjeto {
                 System.out.println("As medidas serão iguais a anterior? (S/N)");
                 resposta = scanner.nextLine();
                 if (resposta.equalsIgnoreCase("S") || resposta.equalsIgnoreCase("sim"))
-                    this.projeto.addEdificacao(edificacao);
+                    this.projeto.addEdificacao(gerenciadorEdificacao.projetarEdificacao(edificacao));
                 else {
-                    edificacao = gerenciadorEdificacao.ProjetarEdificacao();
+                    edificacao = gerenciadorEdificacao.projetarEdificacao();
                     this.projeto.addEdificacao(edificacao);
+                    resposta = "S";
                 }
             }
         }

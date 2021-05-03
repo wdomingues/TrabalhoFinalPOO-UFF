@@ -1,22 +1,5 @@
 {
-  "Laje":{
-    "Areia":0.06,
-    "Cimento":0.24,
-    "Brita":0.06,
-    "Agua":0.02,
-    "Viga":2
-  },
-  "Parede":{
-    "Areola":0.037,
-    "Cimento":0.111,
-    "Agua":0.01,
-    "Tijolo":17
-  },
-  "Coluna":{
-    "Coluna de Ferro":0.50,
-    "Cimento":0.144,
-    "Areia":0.036,
-    "Agua":0.012,
-    "Brita":0.036
-  }
+  "Laje": 4,
+  "Parede":4,
+  "Coluna":3
 }

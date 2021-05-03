@@ -1,18 +1,17 @@
 package com.company.domain;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 
 public class Projeto {
     private ArrayList<Edificacao> edificacao;
     private ArrayList<Fornecedor> fornecedores;
+    private ArrayList<Funcionario> funcionarios;
 
     private Map<Insumo, Double> insumosNecessarios = new HashMap<>();
 
-    private int tempoSemanas;
-    private Calendar prazo;
+    private int qtdFuncionarios ;
 
     public Projeto() {
         this.edificacao = new ArrayList<Edificacao>();
@@ -42,21 +41,6 @@ public class Projeto {
         this.insumosNecessarios = insumosNecessarios;
     }
 
-    public int getTempoSemanas() {
-        return tempoSemanas;
-    }
-
-    public void setTempoSemanas(int tempoSemanas) {
-        this.tempoSemanas = tempoSemanas;
-    }
-
-    public Calendar getPrazo() {
-        return prazo;
-    }
-
-    public void setPrazo(Calendar prazo) {
-        this.prazo = prazo;
-    }
 
     public ArrayList<Edificacao> addEdificacao(Edificacao edi){
         this.edificacao.add(edi);
