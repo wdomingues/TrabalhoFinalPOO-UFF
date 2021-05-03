@@ -12,8 +12,8 @@ public class GerenciadorEdificacao {
     public Edificacao projetarEdificacao(Edificacao edificacao) {
         try {
             this.edificacao = (Edificacao) edificacao.cloneEdificacao();
-            this.edificacao.setOrdem(ordem);
-            ordem++;
+            this.edificacao.setOrdem(this.ordem);
+            this.ordem++;
         } catch (CloneNotSupportedException e) {
             e.printStackTrace();
         }
@@ -22,9 +22,9 @@ public class GerenciadorEdificacao {
 
     public Edificacao projetarEdificacao() {
         Scanner scanner = new Scanner(System.in);
-        int qtdAndares, prazoDias; //TODO reavaliar necessidade de prazoDias ou -> Projeto
+        int qtdAndares, prazoDias;
 
-        System.out.println("Digite quantos andares vai ter a sua edficação:");
+        System.out.println("\nDigite quantos andares vai ter a sua " + Helpers.getOrdinal(this.ordem, false) + " edficação:");
         qtdAndares = Helpers.validaInteiroPositivo();
         this.edificacao = new Edificacao(qtdAndares);
         String proximoIgual = "N";
@@ -41,12 +41,12 @@ public class GerenciadorEdificacao {
             }
 
             if (i < qtdAndares - 1) {
-                System.out.printf("O " + Helpers.getOrdinal(i + 2) + " andar será igual a este? (S/N)", i + 2);
+                System.out.println("\nO " + Helpers.getOrdinal(i + 2, true) + " andar será igual a este? (S/N)");
                 proximoIgual = scanner.nextLine();
             }
         }
-        this.edificacao.setOrdem(ordem);
-        ordem++;
+        this.edificacao.setOrdem(this.ordem);
+        this.ordem++;
 
         return this.edificacao;
     }

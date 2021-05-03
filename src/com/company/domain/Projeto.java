@@ -11,7 +11,7 @@ public class Projeto {
 
     private Map<Insumo, Double> insumosNecessarios = new HashMap<>();
 
-    private int qtdFuncionarios ;
+    private int qtdFuncionarios;
 
     public Projeto() {
         this.edificacao = new ArrayList<Edificacao>();
@@ -42,8 +42,13 @@ public class Projeto {
     }
 
 
-    public ArrayList<Edificacao> addEdificacao(Edificacao edi){
+    public ArrayList<Edificacao> addEdificacao(Edificacao edi) {
         this.edificacao.add(edi);
-        return  this.edificacao;
+        return this.edificacao;
+    }
+
+    public ArrayList<Fornecedor> addFornecedor(Fornecedor fornecedor) {
+        this.fornecedores.add(fornecedor);
+        return this.fornecedores;
     }
 }

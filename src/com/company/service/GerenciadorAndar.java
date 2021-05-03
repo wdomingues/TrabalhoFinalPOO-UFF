@@ -12,8 +12,8 @@ public class GerenciadorAndar {
         Scanner scanner = new Scanner(System.in);
         int mtQddLaje, mtQddParede, colunas;
 
-        String andarOrdinal = Helpers.getOrdinal(numeroAndar);
-        System.out.println("Digite quantos metros quadrados de laje (chão e teto) \no "+ andarOrdinal + " andar deve possuir:");
+        String andarOrdinal = Helpers.getOrdinal(numeroAndar, true);
+        System.out.println("\nDigite quantos metros quadrados de laje (chão e teto) \no "+ andarOrdinal + " andar deve possuir:");
         mtQddLaje = Helpers.validaInteiroPositivo();
         System.out.println("\nDigite quantos metros quadrados de paredes (externas e internas) \no "+ andarOrdinal + " andar deve possuir:");
         mtQddParede = Helpers.validaInteiroPositivo();

@@ -53,8 +53,18 @@ public class ValidadorProjeto {
         if (!insumosNecessarios.entrySet().stream().anyMatch(insumoN -> insumoN.getKey().getFornecedores() != null && insumoN.getKey().getFornecedores().stream().count() <= 0))
             projeto.setInsumosNecessarios(insumosNecessarios);
         else {
-            System.out.println("Não há insumos suficientes para orçar o Projeto, \n" +
-                    "entre em contato com fornecedores para atualizar a lista de insumos disponíveis");
+            var insumDetalhado = new Object() {
+                String insumosFaltantes = "";
+            };
+            insumosNecessarios.entrySet().stream()
+                    .filter(insumoN -> insumoN.getKey().getFornecedores() != null && insumoN.getKey().getFornecedores().stream().count() <= 0)
+                    .forEach(insumoFaltante -> {
+                        insumDetalhado.insumosFaltantes =  insumDetalhado.insumosFaltantes + "\n" + insumoFaltante.getKey().getNome() + "\t\t" + insumoFaltante.getValue();
+
+                    });
+            System.out.println("\nNão há insumos suficientes para orçar o Projeto, \n" +
+                    "entre em contato com fornecedores para atualizar a lista de insumos disponíveis.\nFaltam:");
+            System.out.println(insumDetalhado.insumosFaltantes);
             return false;
         }
 
@@ -84,12 +94,6 @@ public class ValidadorProjeto {
             reader = Files.newBufferedReader(Paths.get("./src/com/company/parameters/metrosQuadrados.json"));
             // convert JSON file to map
             map = gson.fromJson(reader, Map.class);
-
-            Double qtdAreiaParaLaje = (Double) map.get("Laje").get("Areia");
-            // print map entries
-            for (Map.Entry<?, ?> entry : map.entrySet()) {
-                System.out.println(entry.getKey() + "=" + entry.getValue());
-            }
             reader.close();
         } catch (IOException exception) {
             exception.printStackTrace();

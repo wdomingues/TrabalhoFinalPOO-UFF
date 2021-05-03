@@ -16,11 +16,11 @@ public class GerenciadorProjeto {
         Edificacao edificacao = gerenciadorEdificacao.projetarEdificacao();
         this.projeto.addEdificacao(edificacao);
 
-        while(resposta.equalsIgnoreCase("S") || resposta.equalsIgnoreCase("sim")) {
-            System.out.println("Alguma outra edificação? (S/N)");
+        while (resposta.equalsIgnoreCase("S") || resposta.equalsIgnoreCase("sim")) {
+            System.out.println("\nAlguma outra edificação(" + Helpers.getOrdinal(edificacao.getOrdem() + 1, false) + ")? (S/N)");
             resposta = scanner.nextLine();
             if (resposta.equalsIgnoreCase("S") || resposta.equalsIgnoreCase("sim")) {
-                System.out.println("As medidas serão iguais a anterior? (S/N)");
+                System.out.println("\nAs medidas da " + Helpers.getOrdinal(edificacao.getOrdem() + 1, false) + " edificação serão iguais a anterior? (S/N)");
                 resposta = scanner.nextLine();
                 if (resposta.equalsIgnoreCase("S") || resposta.equalsIgnoreCase("sim"))
                     this.projeto.addEdificacao(gerenciadorEdificacao.projetarEdificacao(edificacao));
@@ -33,15 +33,11 @@ public class GerenciadorProjeto {
         }
 
 
-
-
-
         //TODO: pensar em deslocar para Gerenciador de projeto
         //System.out.println("Digite o prazo máximo que você deseja:");
         //this.edificacao.setPrazoDias(scanner.nextInt());
 
         //TODO: calcular baseado em prazo, consid dias de trab x nFuncionarios para exec comodo
-
 
 
         return this.projeto;

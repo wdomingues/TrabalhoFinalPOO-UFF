@@ -6,16 +6,18 @@ import java.util.Scanner;
 
 public class Helpers {
 
-    public static String getOrdinal(int i) {
+    public static String getOrdinal(int i, boolean isMasculino) {
         Enum_ordinais[] enumValues = Enum_ordinais.values();
         if (i < 10)
-            return enumValues[i - 1].name();
+            return enumValues[i - 1].name()  + (isMasculino ? "o" : "a");
         else {
             int pre = i / 10;
             int pos = i % (pre * 10);
 
 
-            return enumValues[10 + pre - 2].name() + (pos < 0 ? "" : " " + enumValues[pos - 1].name());
+            String preStr = enumValues[10 + pre - 2].name() + (isMasculino ? "o" : "a");
+            String posStr = (pos < 0 ? "" : " " + enumValues[pos - 1].name() + (isMasculino ? "o" : "a"));
+            return preStr + posStr;
         }
     }
 

@@ -49,21 +49,23 @@ public class CalculadoraOrcamento {
             BigDecimal valorInsumoProjeto;
             List<Fornecedor> fornecedores = insumo.getFornecedores().stream().sorted((o1, o2) -> o1.compareTo(o2)).collect(Collectors.toList());
 
+            Fornecedor fornecedor = fornecedores.stream().findFirst().orElse(null);
             if (quantidade < 1) {
-                valorInsumoProjeto = fornecedores.stream().findFirst().orElse(null).getValorUnitario();
+                valorInsumoProjeto = fornecedor.getValorUnitario();
                 Insumo ins = new Insumo(insumo.getNome());
-                ins.addFornecedor(fornecedores.stream().findFirst().orElse(null));
+                ins.addFornecedor(fornecedor);
                 orcamento.addItens(ins, 1);
                 orcamento.setValorFixo(orcamento.getValorFixo().add(valorInsumoProjeto));
             } else {
                 int qtd = (int) Math.ceil(quantidade);
-                valorInsumoProjeto = fornecedores.stream().findFirst().orElse(null).getValorUnitario().multiply(BigDecimal.valueOf(qtd));
+                valorInsumoProjeto = fornecedor.getValorUnitario().multiply(BigDecimal.valueOf(qtd));
 
                 Insumo ins = new Insumo(insumo.getNome());
-                ins.addFornecedor(fornecedores.stream().findFirst().orElse(null));
+                ins.addFornecedor(fornecedor);
                 orcamento.addItens(ins, qtd);
                 orcamento.setValorFixo(orcamento.getValorFixo().add(valorInsumoProjeto.multiply(BigDecimal.valueOf(qtd))));
             }
+            orcamento.addFornecedor(fornecedor);
         });
 
         return orcamento;
