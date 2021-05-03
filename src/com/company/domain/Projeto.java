@@ -1,10 +1,14 @@
 package com.company.domain;
 
+import com.company.helper.SituacaoProjeto;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
 public class Projeto {
+    private String nome;
+    private SituacaoProjeto situacao;
     private ArrayList<Edificacao> edificacao = new ArrayList<>();
     private ArrayList<Fornecedor> fornecedores = new ArrayList<>();
     private ArrayList<Insumo> insumos = new ArrayList<>();
@@ -18,6 +22,14 @@ public class Projeto {
         this.edificacao = new ArrayList<Edificacao>();
     }
 
+    public String getNome() {
+        return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
     public ArrayList<Edificacao> getEdificacao() {
         return edificacao;
     }
@@ -28,6 +40,14 @@ public class Projeto {
 
     public ArrayList<Fornecedor> getFornecedores() {
         return fornecedores;
+    }
+
+    public SituacaoProjeto getSituacao() {
+        return situacao;
+    }
+
+    public void setSituacao(SituacaoProjeto situacao) {
+        this.situacao = situacao;
     }
 
     public void setFornecedores(ArrayList<Fornecedor> fornecedores) {

@@ -5,7 +5,6 @@ import java.util.ArrayList;
 
 public class Insumo {
     private String nome;
-    private double quantidadeDisponivel;
     private ArrayList<Fornecedor> fornecedores;
 
     public Insumo() {
