@@ -9,6 +9,8 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
 public class GerenciadorCatalogo {
     private CatalogoInsumo catalogo;
@@ -28,15 +30,18 @@ public class GerenciadorCatalogo {
 
                 ArrayList<Insumo> insumos = new ArrayList<Insumo>();
                 Insumo insumo;
+                Map<Insumo,Integer> insumosQuantidade = new HashMap<>();
 
                 for (Fornecedor f :
                         fornecedorList) {
+                    // Verifica se insumo ja foi inserido na lista de insumos que vai virar o catalogo
                     insumo = insumos.stream().filter(ins -> f.getInsumo().equals(ins.getNome())).findAny().orElse(null);
                     if (insumo == null) {
                         insumo = new Insumo();
                         insumo.setNome(f.getInsumo());
                         insumo.addFornecedor(f);
                         insumos.add(insumo);
+                        insumosQuantidade.put(insumo, (int) f.getQuantidadeDisponivel());
                     } else {
                         for (int i = 0; i < insumos.stream().count(); i++) {
                             if (insumos.get(i).getNome().equals(f.getInsumo()))

@@ -1,6 +1,6 @@
 package com.company.helper;
 
-public enum Enum_ordinais {
+public enum NumerosOrdinais {
     Primeir,
     Segund,
     Terceir,

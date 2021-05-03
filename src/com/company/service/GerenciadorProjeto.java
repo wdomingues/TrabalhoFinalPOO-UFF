@@ -2,6 +2,7 @@ package com.company.service;
 
 import com.company.domain.Edificacao;
 import com.company.domain.Projeto;
+import com.company.helper.SituacaoProjeto;
 import com.google.gson.Gson;
 
 import java.io.Reader;
@@ -57,11 +58,13 @@ public class GerenciadorProjeto {
             // create Gson instance
             Gson gson = new Gson();
 
+            projeto.setSituacao(SituacaoProjeto.AGUARDANDO);
             // cria projeto list
             ArrayList<Projeto> projetoList = new ArrayList<Projeto>();
             projetoList.add(projeto);
             Reader reader = Files.newBufferedReader(Paths.get("./mock-projetos.json"));
             map = gson.fromJson(reader, Projeto[].class);
+            reader.close();
 
             if (map != null && map.length > 0)
                 Arrays.stream(map).forEach(p1 -> {
@@ -80,6 +83,25 @@ public class GerenciadorProjeto {
             // close writer
             writer.close();
 
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+
+        return map;
+    }
+
+    public static Projeto[] recuperaProjetos() {
+        Projeto[] map = null;
+        try {
+            // create Gson instance
+            Gson gson = new Gson();
+
+            // cria projeto list
+            ArrayList<Projeto> projetoList = new ArrayList<Projeto>();
+            Reader reader = Files.newBufferedReader(Paths.get("./mock-projetos.json"));
+            map = gson.fromJson(reader, Projeto[].class);
+
+            reader.close();
         } catch (Exception ex) {
             ex.printStackTrace();
         }

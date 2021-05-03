@@ -2,7 +2,7 @@ package com.company.domain;
 
 public class Cliente extends Pessoa implements PessoaFisica, PessoaJuridica {
 
-    private boolean isPessoaFisica;
+    private boolean isPessoaFisica = true;
 
     public Cliente(String nome, String documento) {
         super(nome, documento);

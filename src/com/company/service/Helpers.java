@@ -1,15 +1,15 @@
 package com.company.service;
 
-import com.company.helper.Enum_ordinais;
+import com.company.helper.NumerosOrdinais;
 
 import java.util.Scanner;
 
 public class Helpers {
 
     public static String getOrdinal(int i, boolean isMasculino) {
-        Enum_ordinais[] enumValues = Enum_ordinais.values();
+        NumerosOrdinais[] enumValues = NumerosOrdinais.values();
         if (i < 10)
-            return enumValues[i - 1].name()  + (isMasculino ? "o" : "a");
+            return enumValues[i - 1].name() + (isMasculino ? "o" : "a");
         else {
             int pre = i / 10;
             int pos = i % (pre * 10);
@@ -47,4 +47,5 @@ public class Helpers {
         int dias = horas / 8;
         return dias;
     }
+
 }
