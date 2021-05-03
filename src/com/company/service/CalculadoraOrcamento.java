@@ -44,7 +44,9 @@ public class CalculadoraOrcamento {
         orcamento.setMenorTempo(orcamento.getMenorTempoDiasPorEdificacao().entrySet().stream().sorted((o1, o2) -> o2.getValue().compareTo(o1.getValue())).findFirst().orElse(null).getValue());
 
 
-        Map<Insumo, Double> insumosNecessarios = projeto.getInsumosNecessarios();
+        Map<String, Double> insumosQuantidades = projeto.getInsumosNecessarios();
+        Map<Insumo, Double> insumosNecessarios = insumosQuantidades.entrySet().stream().map(s -> new Insumo(s.getKey())).collect(Collectors.toMap(v-> v, v -> insumosQuantidades.get(v.getNome())));
+
         insumosNecessarios.forEach((insumo, quantidade) -> {
             BigDecimal valorInsumoProjeto;
             List<Fornecedor> fornecedores = insumo.getFornecedores().stream().sorted((o1, o2) -> o1.compareTo(o2)).collect(Collectors.toList());

@@ -5,11 +5,12 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Projeto {
-    private ArrayList<Edificacao> edificacao;
-    private ArrayList<Fornecedor> fornecedores;
-    private ArrayList<Funcionario> funcionarios;
+    private ArrayList<Edificacao> edificacao = new ArrayList<>();
+    private ArrayList<Fornecedor> fornecedores = new ArrayList<>();
+    private ArrayList<Insumo> insumos = new ArrayList<>();
+    private ArrayList<Funcionario> funcionarios = new ArrayList<>();
 
-    private Map<Insumo, Double> insumosNecessarios = new HashMap<>();
+    private Map<String, Double> insumosNecessarios = new HashMap<>();
 
     private int qtdFuncionarios;
 
@@ -33,11 +34,19 @@ public class Projeto {
         this.fornecedores = fornecedores;
     }
 
-    public Map<Insumo, Double> getInsumosNecessarios() {
+    public ArrayList<Insumo> getInsumos() {
+        return insumos;
+    }
+
+    public void setInsumos(ArrayList<Insumo> insumos) {
+        this.insumos = insumos;
+    }
+
+    public Map<String, Double> getInsumosNecessarios() {
         return insumosNecessarios;
     }
 
-    public void setInsumosNecessarios(Map<Insumo, Double> insumosNecessarios) {
+    public void setInsumosNecessarios(Map<String, Double> insumosNecessarios) {
         this.insumosNecessarios = insumosNecessarios;
     }
 
@@ -50,5 +59,10 @@ public class Projeto {
     public ArrayList<Fornecedor> addFornecedor(Fornecedor fornecedor) {
         this.fornecedores.add(fornecedor);
         return this.fornecedores;
+    }
+
+    public ArrayList<Insumo> addInsumo(Insumo insumo){
+        this.insumos.add(insumo);
+        return this.insumos;
     }
 }

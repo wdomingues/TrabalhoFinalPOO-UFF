@@ -2,7 +2,14 @@ package com.company.service;
 
 import com.company.domain.Edificacao;
 import com.company.domain.Projeto;
+import com.google.gson.Gson;
 
+import java.io.Reader;
+import java.io.Writer;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Scanner;
 
 public class GerenciadorProjeto {
@@ -41,5 +48,34 @@ public class GerenciadorProjeto {
 
 
         return this.projeto;
+    }
+
+
+    public Projeto[] salvaProjetoEmEspera(Projeto projeto) {
+        Projeto[] map = null;
+        try {
+            // create Gson instance
+            Gson gson = new Gson();
+
+            // cria projeto list
+            List<Projeto> projetoList = Arrays.asList(projeto);
+            Reader reader = Files.newBufferedReader(Paths.get("./mock-projetos.json"));
+            map = gson.fromJson(reader, Projeto[].class);
+
+
+            // create a writer
+            Writer writer = Files.newBufferedWriter(Paths.get("./mock-projetos.json"));
+
+            // convert Projetos object to JSON file
+            gson.toJson(projetoList, writer);
+
+            // close writer
+            writer.close();
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+
+        return map;
     }
 }

@@ -16,7 +16,7 @@ public class Helpers {
 
 
             String preStr = enumValues[10 + pre - 2].name() + (isMasculino ? "o" : "a");
-            String posStr = (pos < 0 ? "" : " " + enumValues[pos - 1].name() + (isMasculino ? "o" : "a"));
+            String posStr = (pos == 0 ? "" : " " + enumValues[pos - 1].name() + (isMasculino ? "o" : "a"));
             return preStr + posStr;
         }
     }

@@ -28,6 +28,8 @@ public class Main {
             Orcamento orcamento = CalculadoraOrcamento.calcula(projeto);
 
         }
+        else
+            gerenciadorProjeto.salvaProjetoEmEspera(projeto);
 
         //ValidadorProjeto
         //GeradorContrato contrato = new GeradorContrato(projeto, cliente, );

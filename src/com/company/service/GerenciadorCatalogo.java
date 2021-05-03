@@ -20,7 +20,7 @@ public class GerenciadorCatalogo {
                 String json
                         = String.join(" ",
                         Files.readAllLines(
-                                Paths.get("./src/com/company/mock-fornecedores.json"),
+                                Paths.get("./mock-fornecedores.json"),
                                 StandardCharsets.UTF_8)
                 );
                 Fornecedor[] fornecedorList;
@@ -72,7 +72,7 @@ public class GerenciadorCatalogo {
                 String json
                         = String.join(" ",
                         Files.readAllLines(
-                                Paths.get("./src/com/company/mock-funcionarios.json"),
+                                Paths.get("./mock-funcionarios.json"),
                                 StandardCharsets.UTF_8)
                 );
                 Funcionario[] funcionarios;

@@ -1,0 +1,130 @@
+[
+  {
+    "edificacao": [
+      {
+        "ordem": 1,
+        "andares": [
+          {
+            "metroQuadradoLajes": 123,
+            "metroQuadradoParedes": 123,
+            "colunas": 32
+          }
+        ],
+        "numeroAndares": 1,
+        "prazoDias": 0
+      }
+    ],
+    "fornecedores": [
+      {
+        "insumo": "Brita",
+        "cnpj": "05.879.152/0009-87",
+        "quantidadeDisponivel": 100.0,
+        "valorUnitario": 4,
+        "nome": "Zana Materiais de Construçoes LTDA"
+      },
+      {
+        "insumo": "Agua",
+        "cnpj": "79.234.445/0001-87",
+        "quantidadeDisponivel": 90.0,
+        "valorUnitario": 29,
+        "nome": "Russo\u0027s Materiais LTDA "
+      },
+      {
+        "insumo": "Coluna de Ferro",
+        "cnpj": "79.234.445/0001-87",
+        "quantidadeDisponivel": 90.0,
+        "valorUnitario": 29,
+        "nome": "Russo\u0027s Materiais LTDA "
+      },
+      {
+        "insumo": "Cimento",
+        "cnpj": "05.239.152/0001-87",
+        "quantidadeDisponivel": 70.0,
+        "valorUnitario": 30,
+        "nome": "Pedro e Paulo Materiais de Construcoes LTDA"
+      },
+      {
+        "insumo": "Cimento",
+        "cnpj": "79.234.445/0001-87",
+        "quantidadeDisponivel": 90.0,
+        "valorUnitario": 29,
+        "nome": "Russo\u0027s Materiais LTDA "
+      },
+      {
+        "insumo": "Areia",
+        "cnpj": "05.879.152/0009-87",
+        "quantidadeDisponivel": 100.0,
+        "valorUnitario": 5,
+        "nome": "Zana Materiais de Construçoes LTDA"
+      },
+      {
+        "insumo": "Areia",
+        "cnpj": "79.234.445/0001-87",
+        "quantidadeDisponivel": 80.0,
+        "valorUnitario": 4,
+        "nome": "Russo\u0027s Materiais LTDA "
+      },
+      {
+        "insumo": "Areola",
+        "cnpj": "79.234.445/0001-87",
+        "quantidadeDisponivel": 90.0,
+        "valorUnitario": 29,
+        "nome": "Russo\u0027s Materiais LTDA "
+      }
+    ],
+    "insumos": [
+      {
+        "nome": "Brita",
+        "quantidadeDisponivel": 0.0,
+        "fornecedores": []
+      },
+      {
+        "nome": "Agua",
+        "quantidadeDisponivel": 0.0,
+        "fornecedores": []
+      },
+      {
+        "nome": "Coluna de Ferro",
+        "quantidadeDisponivel": 0.0,
+        "fornecedores": []
+      },
+      {
+        "nome": "Cimento",
+        "quantidadeDisponivel": 0.0,
+        "fornecedores": []
+      },
+      {
+        "nome": "Tijolo",
+        "quantidadeDisponivel": 0.0,
+        "fornecedores": []
+      },
+      {
+        "nome": "Areia",
+        "quantidadeDisponivel": 0.0,
+        "fornecedores": []
+      },
+      {
+        "nome": "Viga",
+        "quantidadeDisponivel": 0.0,
+        "fornecedores": []
+      },
+      {
+        "nome": "Areola",
+        "quantidadeDisponivel": 0.0,
+        "fornecedores": []
+      }
+    ],
+    "funcionarios": [],
+    "insumosNecessarios": {
+      "Brita": 8.532,
+      "Areola": 4.551,
+      "Areia": 8.532,
+      "Viga": 246.0,
+      "Cimento": 47.781,
+      "Coluna de Ferro": 16.0,
+      "Agua": 4.074,
+      "Tijolo": 2091.0
+    },
+    "qtdFuncionarios": 0
+  }
+]
