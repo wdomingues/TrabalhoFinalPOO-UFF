@@ -1,6 +1,9 @@
 package com.company;
 
-import com.company.domain.*;
+import com.company.domain.CatalogoInsumo;
+import com.company.domain.Cliente;
+import com.company.domain.Orcamento;
+import com.company.domain.Projeto;
 import com.company.service.*;
 
 import java.io.IOException;

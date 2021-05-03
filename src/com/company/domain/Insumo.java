@@ -5,12 +5,16 @@ import java.util.ArrayList;
 
 public class Insumo {
     private String nome;
+    private double quantidadeDisponivel;
     private ArrayList<Fornecedor> fornecedores;
 
     public Insumo() {
         this.fornecedores = new ArrayList<Fornecedor>();
     }
 
+    public Insumo(String nome){
+        this.nome = nome;
+    }
 
 
 
@@ -30,8 +34,9 @@ public class Insumo {
         this.fornecedores = fornecedores;
     }
 
-    public int quantidadeTotal(){
-        int qtd =0;
+
+    public double quantidadeTotal(){
+        double qtd =0;
         for (Fornecedor f:
              fornecedores) {
             qtd = qtd + f.getQuantidadeDisponivel();

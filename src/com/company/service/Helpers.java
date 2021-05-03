@@ -15,10 +15,12 @@ public class Helpers {
             int pos = i % (pre * 10);
 
 
-            return enumValues[10 + pre - 2].name() + " " + enumValues[pos - 1].name();
+            return enumValues[10 + pre - 2].name() + (pos < 0 ? "" : " " + enumValues[pos - 1].name());
         }
     }
-    public static int validaInteiroPositivo(){
+
+
+    public static int validaInteiroPositivo() {
         String ret;
         int ret2 = 0;
         Scanner scanner = new Scanner(System.in);
@@ -26,7 +28,7 @@ public class Helpers {
 
         try {
             ret2 = Integer.parseInt(ret);
-            if(ret2<0)
+            if (ret2 < 0)
                 throw new Exception();
         } catch (Exception e) {
             System.out.println("Inválido.\nDigite um numero para continuar:");

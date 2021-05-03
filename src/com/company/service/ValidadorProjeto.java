@@ -1,18 +1,105 @@
 package com.company.service;
 
 import com.company.domain.CatalogoInsumo;
+import com.company.domain.Fornecedor;
+import com.company.domain.Insumo;
 import com.company.domain.Projeto;
+import com.google.gson.Gson;
+
+import java.io.IOException;
+import java.io.Reader;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 public class ValidadorProjeto {
+    private static Map<String, Map<String, Double>> metrosQuadrados;
 
 
     public static boolean validar(Projeto projeto, CatalogoInsumo catalogoInsumo) {
+        metrosQuadrados = geraMetrosQuadrados();
+
+        Map<String, Double> materiaisLaje = metrosQuadrados.get("Laje");
+        Map<String, Double> materiaisParede = metrosQuadrados.get("Parede");
+        Map<String, Double> materiaisColuna = metrosQuadrados.get("Coluna");
+
+        Map<Insumo, Double> insumosNecessarios = projeto.getInsumosNecessarios();
         //Verificar se existem insumos disponiveis para o projeto especifico
-        projeto.getEdificacao().getAndares().forEach(andar ->
+        projeto.getEdificacao().forEach(ed -> ed.getAndares().forEach(andar ->
         {
-        //    andar
+            int qtdLajes = andar.getMetroQuadradoLajes();
+            adicionaInsumosPorMaterial(materiaisLaje, insumosNecessarios, qtdLajes);
+
+            int qtdParedes = andar.getMetroQuadradoParedes();
+            adicionaInsumosPorMaterial(materiaisParede, insumosNecessarios, qtdParedes);
+
+            int qtdColunas = andar.getColunas();
+            adicionaInsumosPorMaterial(materiaisColuna, insumosNecessarios, qtdColunas);
+
+        }));
+
+        insumosNecessarios.forEach((insumo, qtdNecessaria) -> {
+            Insumo insumoNoCatalogo = catalogoInsumo.getInsumos().stream().filter(insumo1 -> insumo1.getNome().equals(insumo.getNome())).findFirst().orElse(null);
+
+            List<Fornecedor> fornecedoresDisponiveis = insumoNoCatalogo.getFornecedores().stream()
+                    .filter(fornecedor -> fornecedor.getQuantidadeDisponivel() >= qtdNecessaria).collect(Collectors.toList());
+
+            if (fornecedoresDisponiveis.stream().count() > 0)
+                fornecedoresDisponiveis.forEach(fornecedor -> insumo.addFornecedor(fornecedor));
+            else
+                return;
         });
 
+
+        // verificar  insumosNecessarios possui algum insumo sem fornecedor
+
         return true;
+    }
+
+    private static void adicionaInsumosPorMaterial(Map<String, Double> materiaisTipo, Map<Insumo, Double> listaDeInsumos, int qtdTipo) {
+        materiaisTipo.forEach((nomeInsumo, quantidade) -> {
+            if (listaDeInsumos.entrySet().stream().anyMatch(i -> i.getKey().getNome().equals(nomeInsumo)))
+                listaDeInsumos.entrySet().stream()
+                        .filter(insumoNecessario -> insumoNecessario.getKey().getNome().equals(nomeInsumo))
+                        .forEach(insumoNecessario -> {
+                            insumoNecessario.setValue(insumoNecessario.getValue() + quantidade * qtdTipo);
+                        });
+            else {
+                listaDeInsumos.put(new Insumo(nomeInsumo), quantidade * qtdTipo);
+            }
+        });
+    }
+
+    private static Map<String, Map<String, Double>> geraMetrosQuadrados() {
+        Map<String, Map<String, Double>> map = null;
+        Gson gson = new Gson();
+        Reader reader = null;
+        try {
+            reader = Files.newBufferedReader(Paths.get("./src/com/company/parameters/metrosQuadrados.json"));
+            // convert JSON file to map
+            map = gson.fromJson(reader, Map.class);
+
+            Double qtdAreiaParaLaje = (Double) map.get("Laje").get("Areia");
+            // print map entries
+            for (Map.Entry<?, ?> entry : map.entrySet()) {
+                System.out.println(entry.getKey() + "=" + entry.getValue());
+            }
+            reader.close();
+        } catch (IOException exception) {
+            exception.printStackTrace();
+        }
+        return map;
+    }
+
+    public Map<String, Map<String, Double>> getmetrosQuadrados() {
+        if (metrosQuadrados == null)
+            return geraMetrosQuadrados();
+        return metrosQuadrados;
+    }
+
+    public void setmetrosQuadrados(Map<String, Map<String, Double>> metrosQuadrados) {
+        this.metrosQuadrados = metrosQuadrados;
     }
 }

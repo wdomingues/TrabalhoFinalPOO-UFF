@@ -1,9 +1,11 @@
 package com.company.domain;
 
+import java.math.BigDecimal;
+
 public class Fornecedor extends Pessoa implements PessoaJuridica {
     private String insumo;
-    private int quantidadeDisponivel;
-    private double valorUnitario;
+    private double quantidadeDisponivel;
+    private BigDecimal valorUnitario;
 
     public Fornecedor(String nome, String documento) {
         super(nome, documento);
@@ -27,19 +29,19 @@ public class Fornecedor extends Pessoa implements PessoaJuridica {
         this.insumo = insumo;
     }
 
-    public int getQuantidadeDisponivel() {
+    public double getQuantidadeDisponivel() {
         return quantidadeDisponivel;
     }
 
-    public void setQuantidadeDisponivel(int quantidadeDisponivel) {
+    public void setQuantidadeDisponivel(double quantidadeDisponivel) {
         this.quantidadeDisponivel = quantidadeDisponivel;
     }
 
-    public double getValorUnitario() {
+    public BigDecimal getValorUnitario() {
         return valorUnitario;
     }
 
-    public void setValorUnitario(double valorUnitario) {
+    public void setValorUnitario(BigDecimal valorUnitario) {
         this.valorUnitario = valorUnitario;
     }
 }
