@@ -26,7 +26,8 @@ public class ValidadorProjeto {
         Map<String, Double> materiaisColuna = metrosQuadrados.get("Coluna");
 
         Map<Insumo, Double> insumosNecessarios = projeto.getInsumosNecessarios();
-        //Verificar se existem insumos disponiveis para o projeto especifico
+
+        //Carrega a quantidade total de insumos necessarios para o projeto
         projeto.getEdificacao().forEach(ed -> ed.getAndares().forEach(andar ->
         {
             int qtdLajes = andar.getMetroQuadradoLajes();
@@ -42,20 +43,21 @@ public class ValidadorProjeto {
 
         insumosNecessarios.forEach((insumo, qtdNecessaria) -> {
             Insumo insumoNoCatalogo = catalogoInsumo.getInsumos().stream().filter(insumo1 -> insumo1.getNome().equals(insumo.getNome())).findFirst().orElse(null);
-
             if (insumoNoCatalogo != null) {
                 List<Fornecedor> fornecedoresDisponiveis = insumoNoCatalogo.getFornecedores().stream()
                         .filter(fornecedor -> fornecedor.getQuantidadeDisponivel() >= qtdNecessaria).collect(Collectors.toList());
                 if (fornecedoresDisponiveis.stream().count() > 0)
                     fornecedoresDisponiveis.forEach(fornecedor -> insumo.addFornecedor(fornecedor));
             }
-//            else
-//                return;
         });
-        projeto.setInsumosNecessarios(insumosNecessarios);
+        if (!insumosNecessarios.entrySet().stream().anyMatch(insumoN -> insumoN.getKey().getFornecedores() != null && insumoN.getKey().getFornecedores().stream().count() <= 0))
+            projeto.setInsumosNecessarios(insumosNecessarios);
+        else {
+            System.out.println("Não há insumos suficientes para orçar o Projeto, \n" +
+                    "entre em contato com fornecedores para atualizar a lista de insumos disponíveis");
+            return false;
+        }
 
-
-        // verificar  insumosNecessarios possui algum insumo sem fornecedor
 
         return true;
     }

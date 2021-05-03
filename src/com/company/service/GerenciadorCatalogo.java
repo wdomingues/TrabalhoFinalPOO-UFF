@@ -78,7 +78,7 @@ public class GerenciadorCatalogo {
                 Funcionario[] funcionarios;
                 funcionarios = new Gson().fromJson(json, Funcionario[].class);
 
-                funcionarios = (Funcionario[])Arrays.stream(funcionarios).filter(funcionario -> funcionario.isDisponivel()).sorted((o1, o2) -> o1.compareTo(o2)).toArray();
+                funcionarios = Arrays.stream(funcionarios).filter(funcionario -> funcionario.isDisponivel()).sorted((o1, o2) -> o1.compareTo(o2)).toArray(Funcionario[]::new);
                 this.funcionarios =funcionarios;
 
             } catch (IOException ex) {

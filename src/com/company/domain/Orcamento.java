@@ -9,11 +9,16 @@ public class Orcamento extends Projeto {
     private Map<Edificacao, Integer> menorTempoDiasPorEdificacao = new HashMap<>();
     private Map<Edificacao, Integer> maiorTempoDiasPorEdificacao = new HashMap<>();
     private Map<Edificacao, Integer> maxFuncionarioPorEdificacao = new HashMap<>();
-    private BigDecimal valorFinal;
+
+
+    private BigDecimal valorFinal, valorFixo, valorMovel;
 
     private int menorTempo, maiorTempo, maiorNumeroFuncionarios;
 
     public Orcamento(Projeto projeto) {
+        setValorFixo(BigDecimal.valueOf(0));
+        setValorMovel(BigDecimal.valueOf(0));
+        setValorFinal(BigDecimal.valueOf(0));
         this.setEdificacao(projeto.getEdificacao());
         this.setFornecedores(projeto.getFornecedores());
         this.setInsumosNecessarios(projeto.getInsumosNecessarios());
@@ -75,6 +80,22 @@ public class Orcamento extends Projeto {
         this.valorFinal = valorFinal;
     }
 
+    public BigDecimal getValorFixo() {
+        return valorFixo;
+    }
+
+    public void setValorFixo(BigDecimal valorFixo) {
+        this.valorFixo = valorFixo;
+    }
+
+    public BigDecimal getValorMovel() {
+        return valorMovel;
+    }
+
+    public void setValorMovel(BigDecimal valorMovel) {
+        this.valorMovel = valorMovel;
+    }
+
     public Map<Insumo, Integer> getItens() {
         return itens;
     }
@@ -88,15 +109,17 @@ public class Orcamento extends Projeto {
         return this.itens;
     }
 
-    public Map<Edificacao, Integer> addMenorTempoDiasEdificacao(Edificacao edificacao, int menorTempo){
+    public Map<Edificacao, Integer> addMenorTempoDiasEdificacao(Edificacao edificacao, int menorTempo) {
         this.menorTempoDiasPorEdificacao.put(edificacao, menorTempo);
         return this.menorTempoDiasPorEdificacao;
     }
-    public Map<Edificacao, Integer> addmaxFuncionarioEdificacao(Edificacao edificacao, int maxFunc){
+
+    public Map<Edificacao, Integer> addmaxFuncionarioEdificacao(Edificacao edificacao, int maxFunc) {
         this.maxFuncionarioPorEdificacao.put(edificacao, maxFunc);
         return this.maxFuncionarioPorEdificacao;
     }
-    public Map<Edificacao, Integer> addMaiorTempoDiasEdificacao(Edificacao edificacao, int maiorTempo){
+
+    public Map<Edificacao, Integer> addMaiorTempoDiasEdificacao(Edificacao edificacao, int maiorTempo) {
         this.maiorTempoDiasPorEdificacao.put(edificacao, maiorTempo);
         return this.maiorTempoDiasPorEdificacao;
     }

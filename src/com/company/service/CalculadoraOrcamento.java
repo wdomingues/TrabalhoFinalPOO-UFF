@@ -23,6 +23,53 @@ public class CalculadoraOrcamento {
         Orcamento orcamento = new Orcamento(projeto);
         funcionarioProduzEmHoras = getFuncionarioProduzEmHoras();
         funcionariosProduzirEmUmaHora = getFuncionariosProduzirEmUmaHora();
+        calculaAndarPorEdificacao(orcamento);
+
+        var a = new GerenciadorCatalogo().identificarFuncionariosDisponiveis();
+
+        // A quantidade máxima de funcionarios: Se todas as edificações são construidas ao mesmo tempo
+        orcamento.getMaxFuncionarioPorEdificacao().forEach((edificacao, integer) -> {
+            orcamento.setMaiorNumeroFuncionarios(orcamento.getMaiorNumeroFuncionarios() + integer);
+        });
+        if (orcamento.getMaiorNumeroFuncionarios() > a.length)
+            orcamento.setMaiorNumeroFuncionarios(a.length);
+
+        // O maior tempo que o projeto pode demorar, com apenas um funcionário
+        orcamento.getMaiorTempoDiasPorEdificacao().forEach((edificacao, integer) -> {
+            orcamento.setMaiorTempo(orcamento.getMaiorTempo() + integer);
+        });
+
+        // O menor tempo possível para obra ocorrer: todas as edificações são construidas ao mesmo tempo
+        // (A edificação que demorar mais será o menor tempo possivel para o fim do projeto
+        orcamento.setMenorTempo(orcamento.getMenorTempoDiasPorEdificacao().entrySet().stream().sorted((o1, o2) -> o2.getValue().compareTo(o1.getValue())).findFirst().orElse(null).getValue());
+
+
+        Map<Insumo, Double> insumosNecessarios = projeto.getInsumosNecessarios();
+        insumosNecessarios.forEach((insumo, quantidade) -> {
+            BigDecimal valorInsumoProjeto;
+            List<Fornecedor> fornecedores = insumo.getFornecedores().stream().sorted((o1, o2) -> o1.compareTo(o2)).collect(Collectors.toList());
+
+            if (quantidade < 1) {
+                valorInsumoProjeto = fornecedores.stream().findFirst().orElse(null).getValorUnitario();
+                Insumo ins = new Insumo(insumo.getNome());
+                ins.addFornecedor(fornecedores.stream().findFirst().orElse(null));
+                orcamento.addItens(ins, 1);
+                orcamento.setValorFixo(orcamento.getValorFixo().add(valorInsumoProjeto));
+            } else {
+                int qtd = (int) Math.ceil(quantidade);
+                valorInsumoProjeto = fornecedores.stream().findFirst().orElse(null).getValorUnitario().multiply(BigDecimal.valueOf(qtd));
+
+                Insumo ins = new Insumo(insumo.getNome());
+                ins.addFornecedor(fornecedores.stream().findFirst().orElse(null));
+                orcamento.addItens(ins, qtd);
+                orcamento.setValorFixo(orcamento.getValorFixo().add(valorInsumoProjeto.multiply(BigDecimal.valueOf(qtd))));
+            }
+        });
+
+        return orcamento;
+    }
+
+    private static void calculaAndarPorEdificacao(Orcamento orcamento) {
         int tempoLajeProduzidaPorUmFuncionario = (int) Math.ceil(funcionarioProduzEmHoras.get("Laje"));
         int funcionariosParaProduzirEmUmaHora_Laje = (int) Math.ceil(funcionariosProduzirEmUmaHora.get("Laje"));
 
@@ -67,46 +114,6 @@ public class CalculadoraOrcamento {
         orcamento.setMaiorNumeroFuncionarios(0);
         orcamento.setMenorTempo(0);
         orcamento.setMaiorTempo(0);
-
-        // A quantidade máxima de funcionarios: Se todas as edificações são construidas ao mesmo tempo
-        orcamento.getMaxFuncionarioPorEdificacao().forEach((edificacao, integer) -> {
-            orcamento.setMaiorNumeroFuncionarios(orcamento.getMaiorNumeroFuncionarios()+ integer);
-        });
-
-        // O maior tempo que o projeto pode demorar, com apenas um funcionário
-        orcamento.getMaiorTempoDiasPorEdificacao().forEach((edificacao, integer) -> {
-            orcamento.setMaiorTempo(orcamento.getMaiorTempo() + integer);
-        });
-
-        // O menor tempo possível para obra ocorrer: todas as edificações são construidas ao mesmo tempo
-        // (A edificação que demorar mais será o menor tempo possivel para o fim do projeto
-        orcamento.setMenorTempo(orcamento.getMenorTempoDiasPorEdificacao().entrySet().stream().sorted((o1, o2) -> o2.getValue().compareTo(o1.getValue())).findFirst().orElse(null).getValue());
-
-
-        Map<Insumo, Double> insumosNecessarios = projeto.getInsumosNecessarios();
-        insumosNecessarios.forEach((insumo, quantidade) -> {
-            BigDecimal valorInsumoProjeto;
-            List<Fornecedor> fornecedores = insumo.getFornecedores().stream().sorted((o1, o2) -> o1.compareTo(o2)).collect(Collectors.toList());
-
-            if (quantidade < 1) {
-                valorInsumoProjeto = fornecedores.stream().findFirst().orElse(null).getValorUnitario();
-                Insumo ins = new Insumo(insumo.getNome());
-                ins.addFornecedor(fornecedores.stream().findFirst().orElse(null));
-                orcamento.addItens(ins, 1);
-            } else {
-                int qtd = (int) Math.ceil(quantidade);
-                valorInsumoProjeto = fornecedores.stream().findFirst().orElse(null).getValorUnitario().multiply(BigDecimal.valueOf(qtd));
-
-                Insumo ins = new Insumo(insumo.getNome());
-                ins.addFornecedor(fornecedores.stream().findFirst().orElse(null));
-                orcamento.addItens(ins, qtd);
-            }
-
-        });
-
-
-
-        return orcamento;
     }
 
     // Exibe quantas HORAS um funcionário gasta para produzir cada item
@@ -134,7 +141,6 @@ public class CalculadoraOrcamento {
     }
 
     private static Map<String, Double> getFileMapStringDouble(String path) {
-
         Map<String, Double> map = null;
         Gson gson = new Gson();
         Reader reader = null;
