@@ -1,6 +1,6 @@
 package com.company.service;
 
-import com.company.domain.CatalogoInsumo;
+import com.company.domain.Catalogo;
 import com.company.domain.Fornecedor;
 import com.company.domain.Insumo;
 import com.company.domain.Projeto;
@@ -18,7 +18,7 @@ public class ValidadorProjeto {
     private static Map<java.lang.String, Map<java.lang.String, Double>> metrosQuadrados;
 
 
-    public static boolean validar(Projeto projeto, CatalogoInsumo catalogoInsumo) {
+    public static boolean validar(Projeto projeto, Catalogo catalogo) {
         metrosQuadrados = geraMetrosQuadrados();
 
         Map<java.lang.String, Double> materiaisLaje = metrosQuadrados.get("Laje");
@@ -43,7 +43,7 @@ public class ValidadorProjeto {
         }));
 
         insumosNecessarios.forEach((insumo, qtdNecessaria) -> {
-            Insumo insumoNoCatalogo = catalogoInsumo.getInsumos().stream().filter(insumo1 -> insumo1.getNome().equals(insumo.getNome())).findFirst().orElse(null);
+            Insumo insumoNoCatalogo = catalogo.getInsumos().stream().filter(insumo1 -> insumo1.getNome().equals(insumo.getNome())).findFirst().orElse(null);
             if (insumoNoCatalogo != null) {
                 List<Fornecedor> fornecedoresDisponiveis = insumoNoCatalogo.getFornecedores().stream()
                         .filter(fornecedor -> fornecedor.getQuantidadeDisponivel() >= qtdNecessaria).collect(Collectors.toList());
@@ -52,7 +52,7 @@ public class ValidadorProjeto {
                         insumo.addFornecedor(fornecedor);
                     });
                 insumosQuantidades.put(insumoNoCatalogo.getNome(), qtdNecessaria);
-                projeto.addInsumo(insumo);
+                 new GerenciadorCatalogo().vincularInsumoProjeto(insumo,projeto);
             }
         });
         if (!insumosNecessarios.entrySet().stream().anyMatch(insumoN -> insumoN.getKey().getFornecedores() != null && insumoN.getKey().getFornecedores().stream().count() <= 0))

@@ -1,6 +1,6 @@
 package com.company;
 
-import com.company.domain.CatalogoInsumo;
+import com.company.domain.Catalogo;
 import com.company.domain.Cliente;
 import com.company.domain.Orcamento;
 import com.company.domain.Projeto;
@@ -18,7 +18,7 @@ public class Main {
         String opcaoSelecionada, input = new String();
         Scanner scanner = new Scanner(System.in);
         GerenciadorCatalogo gerenciadorCatalogo = new GerenciadorCatalogo();
-        CatalogoInsumo catalogo = gerenciadorCatalogo.gerarCatalogo();
+        Catalogo catalogo = gerenciadorCatalogo.gerarCatalogo();
         Cliente cliente;
         Orcamento orcamento = null;
 
@@ -50,15 +50,7 @@ public class Main {
                     Projeto projeto = gerenciadorProjeto.cadastrar();
                     projeto.setCliente(cliente);
 
-                    if (ValidadorProjeto.validar(projeto, catalogo)) {
-                        orcamento = CalculadoraOrcamento.calcula(projeto);
-
-                    } else {
-                        new Scanner(System.in).next();
-                        System.out.println("Vamos salvar o projeto para aguardar a atualização da lista de insumos através dos Fornecedores.");
-                        new Scanner(System.in).next();
-                        gerenciadorProjeto.salvaProjetoEmEspera(projeto);
-                    }
+                    orcamento = validaProjetoGeraOrcamento(catalogo, gerenciadorProjeto, projeto);
 
                     break;
                 case "2":
@@ -81,6 +73,7 @@ public class Main {
                             projetos = Arrays.stream(projetos).filter(p -> p.getSituacao().equals(situacoes[res - 2])).toArray(Projeto[]::new);
                             projeto = gerenciadorProjeto.selecionarProjeto(projetos, Arrays.stream(situacoes).filter(s -> (s.getNumero() == (res - 2))).toArray(SituacaoProjeto[]::new));
                         }
+                        orcamento = validaProjetoGeraOrcamento(catalogo, gerenciadorProjeto, projeto);
 
                     }
                     break;
@@ -95,6 +88,20 @@ public class Main {
             //ValidadorProjeto
             //GeradorContrato contrato = new GeradorContrato(projeto, cliente, );
         }
+    }
+
+    private static Orcamento validaProjetoGeraOrcamento(Catalogo catalogo, GerenciadorProjeto gerenciadorProjeto, Projeto projeto) {
+        Orcamento orcamento = null;
+        if (ValidadorProjeto.validar(projeto, catalogo)) {
+            orcamento = CalculadoraOrcamento.calcula(projeto);
+
+        } else {
+            new Scanner(System.in).next();
+            System.out.println("Vamos salvar o projeto para aguardar a atualização da lista de insumos através dos Fornecedores.");
+            new Scanner(System.in).next();
+            gerenciadorProjeto.salvaProjetoEmEspera(projeto);
+        }
+        return orcamento;
     }
 
 }

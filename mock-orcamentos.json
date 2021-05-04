@@ -1,1 +1,188 @@
-[{"itens":{"com.company.domain.Insumo@52af6cff":204,"com.company.domain.Insumo@3551a94":24,"com.company.domain.Insumo@54a097cc":2,"com.company.domain.Insumo@735b478":1,"com.company.domain.Insumo@5a61f5df":5,"com.company.domain.Insumo@531be3c5":1,"com.company.domain.Insumo@36f6e879":1,"com.company.domain.Insumo@2c9f9fb0":1},"menorTempoDiasPorEdificacao":{"com.company.domain.Edificacao@79698539":3},"maiorTempoDiasPorEdificacao":{"com.company.domain.Edificacao@79698539":13},"maxFuncionarioPorEdificacao":{"com.company.domain.Edificacao@79698539":12},"valorFinal":0,"valorFixo":6161213.5,"valorMovel":0,"menorTempo":3,"maiorTempo":13,"maiorNumeroFuncionarios":12,"edificacao":[{"ordem":1,"andares":[{"metroQuadradoLajes":12,"metroQuadradoParedes":12,"colunas":3}],"numeroAndares":1,"prazoDias":0}],"fornecedores":[{"insumo":"Coluna de Ferro","cnpj":"56.924.110/0001-69","quantidadeDisponivel":43836.0,"valorUnitario":149.8,"nome":"Holt et LTDA"},{"insumo":"Brita","cnpj":"44.515.376/0001-37","quantidadeDisponivel":18914.0,"valorUnitario":149.6,"nome":"Roberts eu LTDA"},{"insumo":"Cimento","cnpj":"82.929.470/0001-33","quantidadeDisponivel":24391.0,"valorUnitario":147.4,"nome":"Porter exercitation LTDA"},{"insumo":"Viga","cnpj":"59.578.508/0001-60","quantidadeDisponivel":37591.0,"valorUnitario":146.8,"nome":"Vang reprehenderit LTDA"},{"insumo":"Areola","cnpj":"64.851.453/0001-78","quantidadeDisponivel":46632.0,"valorUnitario":148.7,"nome":"Mitchell eu LTDA"},{"insumo":"Tijolo","cnpj":"64.914.115/0001-40","quantidadeDisponivel":35446.0,"valorUnitario":145.9,"nome":"Oliver fugiat LTDA"},{"insumo":"Agua","cnpj":"77.789.680/0001-88","quantidadeDisponivel":34599.0,"valorUnitario":149.9,"nome":"Fitzgerald eiusmod LTDA"},{"insumo":"Areia","cnpj":"72.957.410/0001-58","quantidadeDisponivel":30648.0,"valorUnitario":149.9,"nome":"Russell proident LTDA"}],"insumos":[],"funcionarios":[],"insumosNecessarios":{"Brita":0.828,"Areola":0.44399999999999995,"Areia":0.828,"Viga":24.0,"Cimento":4.644,"Coluna de Ferro":1.5,"Agua":0.396,"Tijolo":204.0},"qtdFuncionarios":0}]
+[
+  {
+    "itens": {
+      "Brita": 1,
+      "Areola": 1,
+      "Areia": 1,
+      "Viga": 24,
+      "Cimento": 5,
+      "Coluna de Ferro": 2,
+      "Agua": 1,
+      "Tijolo": 204
+    },
+    "menorTempoDiasPorEdificacao": {
+      "1": 3
+    },
+    "maiorTempoDiasPorEdificacao": {
+      "1": 13
+    },
+    "maxFuncionarioPorEdificacao": {
+      "1": 12
+    },
+    "valorFinal": 0,
+    "valorFixo": 2806.3,
+    "valorMovel": 526.2,
+    "menorTempo": 3,
+    "maiorTempo": 13,
+    "maiorNumeroFuncionarios": 12,
+    "situacao": "PENDENTE",
+    "edificacao": [
+      {
+        "ordem": 1,
+        "andares": [
+          {
+            "metroQuadradoLajes": 12,
+            "metroQuadradoParedes": 12,
+            "colunas": 3
+          }
+        ],
+        "numeroAndares": 1,
+        "prazoDias": 0
+      }
+    ],
+    "fornecedores": [
+      {
+        "insumo": "Brita",
+        "cnpj": "28.394.742/0001-21",
+        "quantidadeDisponivel": 37211.0,
+        "valorUnitario": 8.5,
+        "nome": "Gonzalez qui LTDA"
+      },
+      {
+        "insumo": "Areia",
+        "cnpj": "81.637.585/0001-99",
+        "quantidadeDisponivel": 28225.0,
+        "valorUnitario": 10.9,
+        "nome": "Dotson reprehenderit LTDA"
+      },
+      {
+        "insumo": "Agua",
+        "cnpj": "59.915.283/0001-84",
+        "quantidadeDisponivel": 45578.0,
+        "valorUnitario": 8.1,
+        "nome": "Byrd sit LTDA"
+      },
+      {
+        "insumo": "Cimento",
+        "cnpj": "39.332.411/0001-70",
+        "quantidadeDisponivel": 35447.0,
+        "valorUnitario": 14.4,
+        "nome": "Moss duis LTDA"
+      },
+      {
+        "insumo": "Coluna de Ferro",
+        "cnpj": "77.212.397/0001-31",
+        "quantidadeDisponivel": 1709.0,
+        "valorUnitario": 9.4,
+        "nome": "Carter esse LTDA"
+      },
+      {
+        "insumo": "Tijolo",
+        "cnpj": "19.460.531/0001-94",
+        "quantidadeDisponivel": 1613.0,
+        "valorUnitario": 11.9,
+        "nome": "Koch elit LTDA"
+      },
+      {
+        "insumo": "Viga",
+        "cnpj": "16.110.616/0001-44",
+        "quantidadeDisponivel": 45045.0,
+        "valorUnitario": 10.3,
+        "nome": "Jordan mollit LTDA"
+      },
+      {
+        "insumo": "Areola",
+        "cnpj": "16.478.682/0001-83",
+        "quantidadeDisponivel": 37665.0,
+        "valorUnitario": 13.2,
+        "nome": "Kelley reprehenderit LTDA"
+      }
+    ],
+    "insumos": [],
+    "funcionarios": [
+      {
+        "salarioHora": 16.9,
+        "cpf": "462.386.796-55",
+        "disponivel": false,
+        "nome": "Guzman qui Keller"
+      },
+      {
+        "salarioHora": 8.5,
+        "cpf": "159.534.575-5",
+        "disponivel": false,
+        "nome": "Mcfadden ex Olson"
+      },
+      {
+        "salarioHora": 12.4,
+        "cpf": "984.209.905-4",
+        "disponivel": false,
+        "nome": "Hull non Todd"
+      },
+      {
+        "salarioHora": 14,
+        "cpf": "980.301.177-70",
+        "disponivel": false,
+        "nome": "George voluptate Calhoun"
+      },
+      {
+        "salarioHora": 18.8,
+        "cpf": "357.974.510-1",
+        "disponivel": false,
+        "nome": "Olsen Lorem Ferrell"
+      },
+      {
+        "salarioHora": 15.1,
+        "cpf": "421.216.841-0",
+        "disponivel": false,
+        "nome": "Manning nostrud Burton"
+      },
+      {
+        "salarioHora": 19.1,
+        "cpf": "311.997.100-79",
+        "disponivel": false,
+        "nome": "Terra ex Doyle"
+      },
+      {
+        "salarioHora": 14.2,
+        "cpf": "458.495.454-56",
+        "disponivel": false,
+        "nome": "Leona mollit Macias"
+      },
+      {
+        "salarioHora": 15.8,
+        "cpf": "260.260.999-88",
+        "disponivel": false,
+        "nome": "Elise duis Grant"
+      },
+      {
+        "salarioHora": 16.4,
+        "cpf": "719.733.873-16",
+        "disponivel": false,
+        "nome": "Yang ullamco Swanson"
+      },
+      {
+        "salarioHora": 12.6,
+        "cpf": "626.711.663-59",
+        "disponivel": false,
+        "nome": "Mavis id Holcomb"
+      },
+      {
+        "salarioHora": 11.6,
+        "cpf": "196.688.159-93",
+        "disponivel": false,
+        "nome": "Young dolore Rutledge"
+      }
+    ],
+    "insumosNecessarios": {
+      "Areola": 0.44399999999999995,
+      "Brita": 0.828,
+      "Viga": 24.0,
+      "Areia": 0.828,
+      "Cimento": 4.644,
+      "Coluna de Ferro": 1.5,
+      "Agua": 0.396,
+      "Tijolo": 204.0
+    },
+    "qtdFuncionarios": 0
+  }
+]

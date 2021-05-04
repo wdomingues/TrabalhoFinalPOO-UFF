@@ -33,7 +33,7 @@ public class Funcionario extends Pessoa implements PessoaFisica, Comparable<Func
 
     @Override
     public String getCpf() {
-        return this.documento;
+        return this.cpf;
     }
     @Override
     public String getNome() {

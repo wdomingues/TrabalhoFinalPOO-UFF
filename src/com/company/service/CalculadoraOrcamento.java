@@ -1,6 +1,7 @@
 package com.company.service;
 
 import com.company.domain.*;
+import com.company.helper.SituacaoProjeto;
 import com.google.gson.Gson;
 
 import java.io.IOException;
@@ -9,10 +10,7 @@ import java.io.Writer;
 import java.math.BigDecimal;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class CalculadoraOrcamento {
@@ -46,7 +44,7 @@ public class CalculadoraOrcamento {
 
         Map<String, Double> insumosQuantidades = projeto.getInsumosNecessarios();
         Map<Insumo, Double> insumosNecessarios = insumosQuantidades.entrySet().stream().map(s -> new Insumo(s.getKey(),
-                projeto.getInsumos().stream().filter(i->i.getNome().equals(s.getKey()))
+                projeto.getInsumos().stream().filter(i -> i.getNome().equals(s.getKey()))
                         .findFirst().get().getFornecedores().stream().collect(Collectors.toCollection(ArrayList::new))))
                 .collect(Collectors.toMap(v -> v, v -> insumosQuantidades.get(v.getNome())));
 
@@ -62,21 +60,18 @@ public class CalculadoraOrcamento {
                     int qtd = (int) Math.ceil(quantidade);
                     adicionaItensNoOrcamento(orcamento, insumo, fornecedor, qtd);
                 }
-            else
-            {
+            else {
                 System.out.println("Existem insumos sem fornecedores nesse orçamento.");
 
             }
             orcamento.addFornecedor(fornecedor);
         });
 
-        new GerenciadorCatalogo();
         var funcionariosSelecionados = Arrays.stream(Helpers.getSliceOfArray(funcionarios, 0, orcamento.getMaiorNumeroFuncionarios())).toArray(Funcionario[]::new);
         orcamento.setFuncionarios((ArrayList<Funcionario>) Arrays.stream(funcionariosSelecionados).collect(Collectors.toList()));
-        salvaOrcamento(orcamento);
-
-
-
+        orcamento.setValorMovel(orcamento.getValorMovel().multiply(BigDecimal.valueOf(orcamento.getMenorTempo())));
+        salvaOrcamentoPendenteAprovacao(orcamento);
+        new GerenciadorProjeto().salvaProjetoPendenteAprovacao(orcamento);
         return orcamento;
     }
 
@@ -172,13 +167,29 @@ public class CalculadoraOrcamento {
         return map;
     }
 
-    private static Orcamento[] salvaOrcamento(Orcamento orcamento) {
+
+    public static Projeto[] salvaOrcamentoPendenteAprovacao(Orcamento orcamento) {
+        return salvaOrcamento(orcamento, SituacaoProjeto.PENDENTE);
+    }
+
+    public static Projeto[] salvaOrcamentoOrcamentoRevisao(Orcamento orcamento) {
+        return salvaOrcamento(orcamento, SituacaoProjeto.REVISAO);
+    }
+
+    public static Projeto[] salvaOrcamentoAprovado(Orcamento orcamento) {
+        return salvaOrcamento(orcamento, SituacaoProjeto.APROVADO);
+    }
+
+
+    private static Orcamento[] salvaOrcamento(Orcamento orcamento, SituacaoProjeto situacao) {
         Orcamento[] map = null;
         try {
             // create Gson instance
             Gson gson = new Gson();
             // cria Orcamento list
             ArrayList<Orcamento> OrcamentoList = new ArrayList<Orcamento>();
+
+            orcamento.setSituacao(situacao);
             OrcamentoList.add(orcamento);
             Reader reader = Files.newBufferedReader(Paths.get("./mock-Orcamentos.json"));
             map = gson.fromJson(reader, Orcamento[].class);
@@ -186,7 +197,8 @@ public class CalculadoraOrcamento {
 
             if (map != null && map.length > 0)
                 Arrays.stream(map).forEach(p1 -> {
-                    OrcamentoList.add(p1);
+                    if (!p1.getNome().equals(orcamento.getNome()))
+                        OrcamentoList.add(p1);
                 });
             // create a writer
             Writer writer = Files.newBufferedWriter(Paths.get("./mock-orcamentos.json"));

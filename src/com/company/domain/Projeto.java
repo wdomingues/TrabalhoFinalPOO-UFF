@@ -1,6 +1,7 @@
 package com.company.domain;
 
 import com.company.helper.SituacaoProjeto;
+import com.company.service.GerenciadorCatalogo;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -84,7 +85,11 @@ public class Projeto {
     }
 
     public void setFuncionarios(ArrayList<Funcionario> funcionarios) {
-        this.funcionarios = funcionarios;
+        GerenciadorCatalogo catalogo = new GerenciadorCatalogo();
+        funcionarios.forEach(f-> {
+            catalogo.vincularFuncionarioProjeto(f,this);
+        });
+        //this.funcionarios = funcionarios;
     }
 
     public ArrayList<Edificacao> addEdificacao(Edificacao edi) {

@@ -96,19 +96,40 @@ public class GerenciadorProjeto {
         if (res <= projetos.length)
             this.projeto = projetos[res - 1];
         else
-            return selecionarProjeto(projetos,situacoes);
+            return selecionarProjeto(projetos, situacoes);
 
 
         return this.projeto;
     }
 
     public Projeto[] salvaProjetoEmEspera(Projeto projeto) {
+        return salvaProjeto(projeto, SituacaoProjeto.AGUARDANDO);
+    }
+
+    public Projeto[] salvaProjetoPendenteAprovacao(Projeto projeto) {
+        return salvaProjeto(projeto, SituacaoProjeto.PENDENTE);
+    }
+
+    public Projeto[] salvaProjetoOrcamentoRevisao(Projeto projeto) {
+        return salvaProjeto(projeto, SituacaoProjeto.REVISAO);
+    }
+
+    public Projeto[] salvaProjetoAprovado(Projeto projeto) {
+        return salvaProjeto(projeto, SituacaoProjeto.APROVADO);
+    }
+
+    public Projeto[] finalizaProjeto(Projeto projeto) {
+        return salvaProjeto(projeto, SituacaoProjeto.FINALIZADO);
+    }
+
+
+    private Projeto[] salvaProjeto(Projeto projeto, SituacaoProjeto situacao) {
         Projeto[] map = null;
         try {
             // create Gson instance
             Gson gson = new Gson();
 
-            projeto.setSituacao(SituacaoProjeto.AGUARDANDO);
+            projeto.setSituacao(situacao);
             // cria projeto list
             ArrayList<Projeto> projetoList = new ArrayList<Projeto>();
             projetoList.add(projeto);
@@ -118,7 +139,8 @@ public class GerenciadorProjeto {
 
             if (map != null && map.length > 0)
                 Arrays.stream(map).forEach(p1 -> {
-                    projetoList.add(p1);
+                    if (!p1.getNome().equals(projeto.getNome()))
+                        projetoList.add(p1);
                 });
             // create a writer
             Writer writer = Files.newBufferedWriter(Paths.get("./mock-projetos.json"));
