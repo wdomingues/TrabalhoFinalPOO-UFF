@@ -33,6 +33,7 @@ public class Main {
             System.out.println("\n\nEscolha uma opção (ou tecle apenas enter para sair): ");
             System.out.println("\n1 - Cadastrar Projeto");
             System.out.println("2 - Cadastrar Cliente");
+            System.out.print("\b\b\b");
             if (projetos != null && Arrays.stream(projetos).count() > 0) {
                 System.out.println("3 - Selecionar Projeto");
             }

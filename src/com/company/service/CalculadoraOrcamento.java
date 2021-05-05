@@ -197,9 +197,13 @@ public class CalculadoraOrcamento {
 
             if (map != null && map.length > 0)
                 Arrays.stream(map).forEach(p1 -> {
-                    if (!p1.getNome().equals(orcamento.getNome()))
-                        OrcamentoList.add(p1);
+                    if (p1.getNome() != null && !p1.getNome().isEmpty() && !p1.getNome().isBlank())
+                        if (!p1.getNome().equals(orcamento.getNome()))
+                            OrcamentoList.add(p1);
+                        //else
+
                 });
+            //Arrays.stream(map).reduce()
             // create a writer
             Writer writer = Files.newBufferedWriter(Paths.get("./mock-orcamentos.json"));
             // convert Orcamentos object to JSON file

@@ -3,12 +3,12 @@
     "itens": {
       "Brita": 1,
       "Areola": 1,
-      "Areia": 1,
       "Viga": 24,
+      "Areia": 1,
       "Cimento": 5,
       "Coluna de Ferro": 2,
-      "Agua": 1,
-      "Tijolo": 204
+      "Tijolo": 204,
+      "Agua": 1
     },
     "menorTempoDiasPorEdificacao": {
       "1": 3
@@ -21,7 +21,7 @@
     },
     "valorFinal": 0,
     "valorFixo": 2806.3,
-    "valorMovel": 526.2,
+    "valorMovel": 530.1,
     "menorTempo": 3,
     "maiorTempo": 13,
     "maiorNumeroFuncionarios": 12,
@@ -43,6 +43,13 @@
     ],
     "fornecedores": [
       {
+        "insumo": "Tijolo",
+        "cnpj": "19.460.531/0001-94",
+        "quantidadeDisponivel": 1613.0,
+        "valorUnitario": 11.9,
+        "nome": "Koch elit LTDA"
+      },
+      {
         "insumo": "Brita",
         "cnpj": "28.394.742/0001-21",
         "quantidadeDisponivel": 37211.0,
@@ -50,18 +57,18 @@
         "nome": "Gonzalez qui LTDA"
       },
       {
+        "insumo": "Viga",
+        "cnpj": "16.110.616/0001-44",
+        "quantidadeDisponivel": 45045.0,
+        "valorUnitario": 10.3,
+        "nome": "Jordan mollit LTDA"
+      },
+      {
         "insumo": "Areia",
         "cnpj": "81.637.585/0001-99",
         "quantidadeDisponivel": 28225.0,
         "valorUnitario": 10.9,
         "nome": "Dotson reprehenderit LTDA"
-      },
-      {
-        "insumo": "Agua",
-        "cnpj": "59.915.283/0001-84",
-        "quantidadeDisponivel": 45578.0,
-        "valorUnitario": 8.1,
-        "nome": "Byrd sit LTDA"
       },
       {
         "insumo": "Cimento",
@@ -78,46 +85,51 @@
         "nome": "Carter esse LTDA"
       },
       {
-        "insumo": "Tijolo",
-        "cnpj": "19.460.531/0001-94",
-        "quantidadeDisponivel": 1613.0,
-        "valorUnitario": 11.9,
-        "nome": "Koch elit LTDA"
-      },
-      {
-        "insumo": "Viga",
-        "cnpj": "16.110.616/0001-44",
-        "quantidadeDisponivel": 45045.0,
-        "valorUnitario": 10.3,
-        "nome": "Jordan mollit LTDA"
-      },
-      {
         "insumo": "Areola",
         "cnpj": "16.478.682/0001-83",
         "quantidadeDisponivel": 37665.0,
         "valorUnitario": 13.2,
         "nome": "Kelley reprehenderit LTDA"
+      },
+      {
+        "insumo": "Agua",
+        "cnpj": "59.915.283/0001-84",
+        "quantidadeDisponivel": 45578.0,
+        "valorUnitario": 8.1,
+        "nome": "Byrd sit LTDA"
       }
     ],
     "insumos": [],
     "funcionarios": [
       {
+        "salarioHora": 23.9,
+        "cpf": "562.765.808-79",
+        "disponivel": false,
+        "nome": "Mercedes aliquip Franks"
+      },
+      {
+        "salarioHora": 11.7,
+        "cpf": "832.907.845-80",
+        "disponivel": false,
+        "nome": "Nellie esse Briggs"
+      },
+      {
+        "salarioHora": 17,
+        "cpf": "193.292.926-86",
+        "disponivel": false,
+        "nome": "Barbara Lorem Sanders"
+      },
+      {
+        "salarioHora": 22.5,
+        "cpf": "676.933.677-77",
+        "disponivel": false,
+        "nome": "Barnes non Livingston"
+      },
+      {
         "salarioHora": 16.9,
         "cpf": "462.386.796-55",
         "disponivel": false,
         "nome": "Guzman qui Keller"
-      },
-      {
-        "salarioHora": 8.5,
-        "cpf": "159.534.575-5",
-        "disponivel": false,
-        "nome": "Mcfadden ex Olson"
-      },
-      {
-        "salarioHora": 12.4,
-        "cpf": "984.209.905-4",
-        "disponivel": false,
-        "nome": "Hull non Todd"
       },
       {
         "salarioHora": 14,
@@ -126,52 +138,40 @@
         "nome": "George voluptate Calhoun"
       },
       {
-        "salarioHora": 18.8,
-        "cpf": "357.974.510-1",
+        "salarioHora": 16.6,
+        "cpf": "386.571.861-8",
         "disponivel": false,
-        "nome": "Olsen Lorem Ferrell"
+        "nome": "Cherry consequat Frost"
       },
       {
-        "salarioHora": 15.1,
-        "cpf": "421.216.841-0",
+        "salarioHora": 12.4,
+        "cpf": "984.209.905-4",
         "disponivel": false,
-        "nome": "Manning nostrud Burton"
+        "nome": "Hull non Todd"
       },
       {
-        "salarioHora": 19.1,
-        "cpf": "311.997.100-79",
+        "salarioHora": 8.9,
+        "cpf": "982.533.474-72",
         "disponivel": false,
-        "nome": "Terra ex Doyle"
+        "nome": "Wanda occaecat Martin"
       },
       {
-        "salarioHora": 14.2,
-        "cpf": "458.495.454-56",
+        "salarioHora": 9.7,
+        "cpf": "974.303.670-86",
         "disponivel": false,
-        "nome": "Leona mollit Macias"
+        "nome": "Perez minim Mendez"
       },
       {
-        "salarioHora": 15.8,
-        "cpf": "260.260.999-88",
+        "salarioHora": 7.7,
+        "cpf": "909.201.350-61",
         "disponivel": false,
-        "nome": "Elise duis Grant"
+        "nome": "Williamson consectetur Buckner"
       },
       {
-        "salarioHora": 16.4,
-        "cpf": "719.733.873-16",
+        "salarioHora": 15.4,
+        "cpf": "670.106.527-19",
         "disponivel": false,
-        "nome": "Yang ullamco Swanson"
-      },
-      {
-        "salarioHora": 12.6,
-        "cpf": "626.711.663-59",
-        "disponivel": false,
-        "nome": "Mavis id Holcomb"
-      },
-      {
-        "salarioHora": 11.6,
-        "cpf": "196.688.159-93",
-        "disponivel": false,
-        "nome": "Young dolore Rutledge"
+        "nome": "Barker elit Marquez"
       }
     ],
     "insumosNecessarios": {
@@ -181,9 +181,26 @@
       "Areia": 0.828,
       "Cimento": 4.644,
       "Coluna de Ferro": 1.5,
-      "Agua": 0.396,
-      "Tijolo": 204.0
+      "Tijolo": 204.0,
+      "Agua": 0.396
     },
+    "qtdFuncionarios": 0
+  },
+  {
+    "nome": "Projeto_1",
+    "situacao": "PENDENTE",
+    "edificacao": [
+      {
+        "ordem": 1,
+        "andares": [],
+        "numeroAndares": 0,
+        "prazoDias": 0
+      }
+    ],
+    "fornecedores": [],
+    "insumos": [],
+    "funcionarios": [],
+    "insumosNecessarios": {},
     "qtdFuncionarios": 0
   }
 ]
