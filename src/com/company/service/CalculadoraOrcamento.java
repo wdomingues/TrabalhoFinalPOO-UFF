@@ -67,15 +67,18 @@ public class CalculadoraOrcamento {
             orcamento.addFornecedor(fornecedor);
         });
 
-        var funcionariosSelecionados = Arrays.stream(Helpers.getSliceOfArray(funcionarios, 0, orcamento.getMaiorNumeroFuncionarios())).toArray(Funcionario[]::new);
-        orcamento.setFuncionarios((ArrayList<Funcionario>) Arrays.stream(funcionariosSelecionados).collect(Collectors.toList()));
+        var funcionariosSelecionados = Arrays.stream(Helpers.getSliceOfArray(funcionarios, 0,
+                orcamento.getMaiorNumeroFuncionarios())).toArray(Funcionario[]::new);
+        orcamento.setFuncionarios(
+                (ArrayList<Funcionario>) Arrays.stream(funcionariosSelecionados).collect(Collectors.toList()));
         orcamento.setValorMovel(orcamento.getValorMovel().multiply(BigDecimal.valueOf(orcamento.getMenorTempo())));
         salvaOrcamentoPendenteAprovacao(orcamento);
         new GerenciadorProjeto().salvaProjetoPendenteAprovacao(orcamento);
         return orcamento;
     }
 
-    private static void adicionaItensNoOrcamento(Orcamento orcamento, Insumo insumo, Fornecedor fornecedor, int qtd) {
+    private static void adicionaItensNoOrcamento(Orcamento orcamento, Insumo insumo,
+                                                 Fornecedor fornecedor, int qtd) {
         Insumo ins = new Insumo(insumo.getNome());
         ins.addFornecedor(fornecedor);
         orcamento.addItens(ins, qtd);
@@ -172,7 +175,7 @@ public class CalculadoraOrcamento {
         return salvaOrcamento(orcamento, SituacaoProjeto.PENDENTE);
     }
 
-    public static Projeto[] salvaOrcamentoOrcamentoRevisao(Orcamento orcamento) {
+    public static Projeto[] salvaOrcamentoRevisao(Orcamento orcamento) {
         return salvaOrcamento(orcamento, SituacaoProjeto.REVISAO);
     }
 

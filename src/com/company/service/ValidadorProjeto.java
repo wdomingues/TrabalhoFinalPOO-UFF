@@ -77,7 +77,8 @@ public class ValidadorProjeto {
         return true;
     }
 
-    private static void adicionaInsumosPorMaterial(Map<java.lang.String, Double> materiaisTipo, Map<Insumo, Double> listaDeInsumos, int qtdTipo) {
+    private static void adicionaInsumosPorMaterial(Map<java.lang.String, Double> materiaisTipo,
+                                                   Map<Insumo, Double> listaDeInsumos, int qtdTipo) {
         materiaisTipo.forEach((nomeInsumo, quantidade) -> {
             if (listaDeInsumos.entrySet().stream().anyMatch(i -> i.getKey().getNome().equals(nomeInsumo)))
                 listaDeInsumos.entrySet().stream()

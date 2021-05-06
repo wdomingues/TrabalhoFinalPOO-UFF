@@ -7,9 +7,9 @@ public enum SituacaoProjeto {
     APROVADO(4,"Projeto iniciado."),
     FINALIZADO(5,"Projeto finalizado.");
 
-
     private int numero;
     private String ordinal;
+
     SituacaoProjeto(int s, String situacao) {
         this.numero = s;
         this.ordinal = situacao;

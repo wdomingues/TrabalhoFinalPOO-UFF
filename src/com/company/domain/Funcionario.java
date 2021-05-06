@@ -24,7 +24,7 @@ public class Funcionario extends Pessoa implements PessoaFisica, Comparable<Func
     }
 
     public boolean isDisponivel() {
-        return disponivel;
+        return this.disponivel;
     }
 
     public void setDisponivel(boolean disponivel) {

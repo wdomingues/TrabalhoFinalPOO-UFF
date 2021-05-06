@@ -86,7 +86,8 @@ public class GerenciadorCatalogo {
     }
 
 
-    public Catalogo atualizarCatalogo(Catalogo catalogo, Fornecedor fornecedorAlterado, Funcionario funcionarioAlterado) {
+    public Catalogo atualizarCatalogo(Catalogo catalogo, Fornecedor fornecedorAlterado,
+                                      Funcionario funcionarioAlterado) {
         Fornecedor[] mapFornecedor = null;
         Funcionario[] mapFuncionario = null;
         try {
