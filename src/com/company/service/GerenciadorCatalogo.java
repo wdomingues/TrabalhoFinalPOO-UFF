@@ -75,7 +75,7 @@ public class GerenciadorCatalogo {
         fornecedor.setQuantidadeDisponivel(fornecedor.getQuantidadeDisponivel() + projeto.getInsumosNecessarios().get(insumo.getNome()));
         atualizarCatalogo(this.catalogo, fornecedor, null);
         projeto.addInsumo(insumo);
-        //projeto.addFornecedor(fornecedor);
+        projeto.addFornecedor(fornecedor);
     }
 
 

@@ -18,10 +18,35 @@ public class CalculadoraOrcamento {
     private static Map<String, Double> funcionariosProduzirEmUmaHora;
 
     public static Orcamento calcula(Projeto projeto) {
-        Orcamento orcamento = new Orcamento(projeto);
+
         funcionarioProduzEmHoras = getFuncionarioProduzEmHoras();
         funcionariosProduzirEmUmaHora = getFuncionariosProduzirEmUmaHora();
+        Orcamento orcamento = new Orcamento(projeto);
         calculaAndarPorEdificacao(orcamento, null);
+
+
+        Map<String, Double> insumosQuantidades = projeto.getInsumosNecessarios();
+        Map<Insumo, Double> insumosNecessarios = insumosQuantidades.entrySet().stream().map(s -> new Insumo(s.getKey(),
+                projeto.getInsumos().stream().filter(i -> i.getNome().equals(s.getKey()))
+                        .findFirst().get().getFornecedores().stream().collect(Collectors.toCollection(ArrayList::new))))
+                .collect(Collectors.toMap(v -> v, v -> insumosQuantidades.get(v.getNome())));
+
+        insumosNecessarios.forEach((insumo, quantidade) -> {
+            BigDecimal valorInsumoProjeto;
+            List<Fornecedor> fornecedores = insumo.getFornecedores().stream().sorted((o1, o2) -> o1.compareTo(o2)).collect(Collectors.toList());
+
+            Fornecedor fornecedor = fornecedores.stream().findFirst().orElse(null);
+            if (fornecedor != null)
+                if (quantidade < 1) {
+                    adicionaItensNoOrcamento(orcamento, insumo, fornecedor, 1);
+                } else {
+                    int qtd = (int) Math.ceil(quantidade);
+                    adicionaItensNoOrcamento(orcamento, insumo, fornecedor, qtd);
+                }
+            else {
+                System.out.println("Existem insumos sem fornecedores nesse orçamento.");
+            }
+        });
 
         var funcionariosDisponiveis = new GerenciadorCatalogo().identificarFuncionariosDisponiveis();
 
@@ -50,30 +75,6 @@ public class CalculadoraOrcamento {
 
         orcamento.setTempoEmDias(true);
 
-        Map<String, Double> insumosQuantidades = projeto.getInsumosNecessarios();
-        Map<Insumo, Double> insumosNecessarios = insumosQuantidades.entrySet().stream().map(s -> new Insumo(s.getKey(),
-                projeto.getInsumos().stream().filter(i -> i.getNome().equals(s.getKey()))
-                        .findFirst().get().getFornecedores().stream().collect(Collectors.toCollection(ArrayList::new))))
-                .collect(Collectors.toMap(v -> v, v -> insumosQuantidades.get(v.getNome())));
-
-        insumosNecessarios.forEach((insumo, quantidade) -> {
-            BigDecimal valorInsumoProjeto;
-            List<Fornecedor> fornecedores = insumo.getFornecedores().stream().sorted((o1, o2) -> o1.compareTo(o2)).collect(Collectors.toList());
-
-            Fornecedor fornecedor = fornecedores.stream().findFirst().orElse(null);
-            if (fornecedor != null)
-                if (quantidade < 1) {
-                    adicionaItensNoOrcamento(orcamento, insumo, fornecedor, 1);
-                } else {
-                    int qtd = (int) Math.ceil(quantidade);
-                    adicionaItensNoOrcamento(orcamento, insumo, fornecedor, qtd);
-                    new GerenciadorCatalogo().vincularInsumoProjeto(insumo, projeto);
-                }
-            else {
-                System.out.println("Existem insumos sem fornecedores nesse orçamento.");
-            }
-        });
-
         var funcionariosSelecionados = Arrays.stream(Helpers.getSliceOfArray(funcionariosDisponiveis, 0, orcamento.getMaiorNumeroFuncionarios())).toArray(Funcionario[]::new);
         orcamento.setFuncionarios((ArrayList<Funcionario>) Arrays.stream(funcionariosSelecionados).collect(Collectors.toList()));
         orcamento.setValorMovel(orcamento.getValorMovel().multiply(BigDecimal.valueOf(orcamento.getMenorTempo())));
@@ -85,6 +86,7 @@ public class CalculadoraOrcamento {
     private static void adicionaItensNoOrcamento(Orcamento orcamento, Insumo insumo, Fornecedor fornecedor, int qtd) {
         Insumo ins = new Insumo(insumo.getNome());
         ins.addFornecedor(fornecedor);
+        new GerenciadorCatalogo().vincularInsumoProjeto(insumo, orcamento);
         orcamento.addItens(ins, qtd);
     }
 

@@ -15,6 +15,11 @@ public class GerenciadorCliente {
 
     private Cliente cliente;
 
+    public boolean existeClienteCadastrado(){
+
+        return todosCliente() != null && Arrays.stream(todosCliente()).count() > 0;
+    }
+
 
     public Cliente getCliente() {
         Scanner scanner = new Scanner(System.in);
@@ -84,6 +89,23 @@ public class GerenciadorCliente {
         }
 
         return map;
+    }
+
+    private Cliente[] todosCliente(){
+
+        Cliente[] map = null;
+        try {
+            // create Gson instance
+            Gson gson = new Gson();
+            Reader reader = Files.newBufferedReader(Paths.get("./mock-clientes.json"));
+            map = gson.fromJson(reader, Cliente[].class);
+            reader.close();
+            return map;
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+
+        return null;
     }
 
     private Cliente usaCliente(String dadoBusca) {

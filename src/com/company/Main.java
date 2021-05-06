@@ -49,13 +49,16 @@ public class Main {
 
             switch (opcaoSelecionada) {
                 case "1":
-                    System.out.println("\nJá existe cliente cadastrado? (S/N)");
-                    opcaoSelecionada = scanner.nextLine();
-                    if (opcaoSelecionada.equalsIgnoreCase("sim") || opcaoSelecionada.equalsIgnoreCase("S")) {
-                        cliente = gerenciadorCliente.getCliente();
-                    } else
+                    if(gerenciadorCliente.existeClienteCadastrado()) {
+                        System.out.println("\nJá existe cliente cadastrado? (S/N)");
+                        opcaoSelecionada = scanner.nextLine();
+                        if (opcaoSelecionada.equalsIgnoreCase("sim") || opcaoSelecionada.equalsIgnoreCase("S")) {
+                            cliente = gerenciadorCliente.getCliente();
+                        } else
+                            cliente = gerenciadorCliente.cadastrar();
+                    }
+                    else
                         cliente = gerenciadorCliente.cadastrar();
-
                     Projeto projeto = gerenciadorProjeto.cadastrar();
                     projeto.setCliente(cliente);
 

@@ -82,10 +82,10 @@ public class GerenciadorProjeto {
                     Helpers.monetarioBigDecimal(fornecedor.getValorUnitario().multiply(BigDecimal.valueOf(orcamento.getItens().get(fornecedor.getInsumo()))))
             );
         });
-        System.out.println("Valor total dos insumos: \t\t\t" + Helpers.monetarioBigDecimal(orcamento.getValorFixo()));
+        System.out.println("Valor total dos insumos: \t\t\t\t" + Helpers.monetarioBigDecimal(orcamento.getValorFixo()));
 //        System.out.println("------------------------------------------------------------------------------");
-        System.out.println("Mão de obra (" + orcamento.getMaiorNumeroFuncionarios() + " funcionários): \t\t\t\t\t\t" + Helpers.monetarioBigDecimal(orcamento.getValorMovel()));
-        System.out.println("Preço final: \t\t\t\t\t\t" + Helpers.monetarioBigDecimal(orcamento.getValorFinal()));
+        System.out.println("Mão de obra (" + orcamento.getMaiorNumeroFuncionarios() + " funcionários): \t\t\t\t\t" + Helpers.monetarioBigDecimal(orcamento.getValorMovel()));
+        System.out.println("Preço final: \t\t\t\t\t\t\t" + Helpers.monetarioBigDecimal(orcamento.getValorFinal()));
         System.out.println("O Cliente aprovou esse orçamento? (S/N)");
 
         return null;
