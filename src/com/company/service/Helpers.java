@@ -3,6 +3,8 @@ package com.company.service;
 import com.company.helper.NumerosOrdinais;
 
 import java.io.IOException;
+import java.math.BigDecimal;
+import java.text.DecimalFormat;
 import java.util.Scanner;
 
 public class Helpers {
@@ -49,20 +51,24 @@ public class Helpers {
         return dias;
     }
 
-    public static void clear()
-    {
-        try
-        {
+    public static String monetarioBigDecimal(BigDecimal valor) {
+        DecimalFormat decFormat = new DecimalFormat("'R$'0.##\t");
+        return decFormat.format(valor);
+    }
+
+    public static void clear() {
+        try {
             if (System.getProperty("os.name").contains("Windows"))
                 new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
             else
                 Runtime.getRuntime().exec("clear");
-        } catch (IOException | InterruptedException ex) {}
+        } catch (IOException | InterruptedException ex) {
+        }
+        System.out.println("");
     }
 
     public static Object[] getSliceOfArray(Object[] arr,
-                                        int start, int end)
-    {
+                                           int start, int end) {
 
         // Get the slice of the Array
         Object[] slice = new Object[end - start];

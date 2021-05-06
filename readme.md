@@ -1,0 +1,1 @@
+javac -d . domain/*.java helper/*.java service/*.java -cp lib/*.jar -Xlint -nowarn Main.java

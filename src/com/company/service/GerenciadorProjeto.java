@@ -1,12 +1,14 @@
 package com.company.service;
 
 import com.company.domain.Edificacao;
+import com.company.domain.Orcamento;
 import com.company.domain.Projeto;
 import com.company.helper.SituacaoProjeto;
 import com.google.gson.Gson;
 
 import java.io.Reader;
 import java.io.Writer;
+import java.math.BigDecimal;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -59,22 +61,41 @@ public class GerenciadorProjeto {
             }
         }
 
-
-        //TODO: pensar em deslocar para Gerenciador de projeto
-        //System.out.println("Digite o prazo máximo que você deseja:");
-        //this.edificacao.setPrazoDias(scanner.nextInt());
-
-        //TODO: calcular baseado em prazo, consid dias de trab x nFuncionarios para exec comodo
-
-
         return this.projeto;
+    }
+
+    public Orcamento avancaProjetoOrcamento(Orcamento orcamento) {
+        Helpers.clear();
+        System.out.println("Orçamento do projeto: \t" + orcamento.getNome());
+        if (orcamento.isTempoEmDias())
+            System.out.println("Menor Prazo (em dias): \t" + orcamento.getMenorTempo());
+        else
+            System.out.println("Menor Prazo (em horas): " + orcamento.getMenorTempo());
+        System.out.println("Insumos:");
+        orcamento.getFornecedores().forEach(fornecedor -> {
+            String fornecedorInsumo = fornecedor.getInsumo();
+            var contadorCaracteres = fornecedorInsumo.length();
+            var contadorCaracteres_qtdItens = orcamento.getItens().get(fornecedor.getInsumo()).toString().length();
+            System.out.println("* - " + fornecedor.getInsumo() + (contadorCaracteres > 7 ? "\t\t" : "\t\t\t\t") +
+                    orcamento.getItens().get(fornecedor.getInsumo()) +  (contadorCaracteres_qtdItens > 3 ? "\t" : "\t\t")  +
+                    Helpers.monetarioBigDecimal(fornecedor.getValorUnitario()) + "\t" +
+                    Helpers.monetarioBigDecimal(fornecedor.getValorUnitario().multiply(BigDecimal.valueOf(orcamento.getItens().get(fornecedor.getInsumo()))))
+            );
+        });
+        System.out.println("Valor total dos insumos: \t\t\t" + Helpers.monetarioBigDecimal(orcamento.getValorFixo()));
+//        System.out.println("------------------------------------------------------------------------------");
+        System.out.println("Mão de obra (" + orcamento.getMaiorNumeroFuncionarios() + " funcionários): \t\t\t\t\t\t" + Helpers.monetarioBigDecimal(orcamento.getValorMovel()));
+        System.out.println("Preço final: \t\t\t\t\t\t" + Helpers.monetarioBigDecimal(orcamento.getValorFinal()));
+        System.out.println("O Cliente aprovou esse orçamento? (S/N)");
+
+        return null;
     }
 
     public Projeto selecionarProjeto(Projeto[] projetos, SituacaoProjeto[] situacoes) {
         int aux = 1;
         Helpers.clear();
         System.out.println("\nSelecione o projeto para avançar situação ou deletar: ");
-        if (situacoes.length == 1) {
+        if (situacoes.length == 1 || situacoes.length == 0) {
             for (Projeto proj : projetos) {
                 System.out.println(aux + " - " + proj.getNome());
                 aux++;
@@ -93,7 +114,7 @@ public class GerenciadorProjeto {
         }
         int res = Helpers.validaInteiroPositivo();
         System.out.println("\n");
-        if (res <= projetos.length)
+        if (res <= projetos.length && res > 0)
             this.projeto = projetos[res - 1];
         else
             return selecionarProjeto(projetos, situacoes);

@@ -7,14 +7,14 @@ public enum NumerosOrdinais {
     Quart,
     Quint,
     Sext,
-    Sétim,
+    Setim,
     Oitav,
     Non,
-    Décim,
-    Vigésim,
-    Trigésim,
-    Quadragésim,
-    Quincagésim;
+    Decim,
+    Vigesim,
+    Trigesim,
+    Quadragesim,
+    Quincagesim;
 
     
 }

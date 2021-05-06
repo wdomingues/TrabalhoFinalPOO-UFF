@@ -10,11 +10,7 @@ public class Orcamento extends Projeto {
     private Map<String, Integer> menorTempoDiasPorEdificacao = new HashMap<>();
     private Map<String, Integer> maiorTempoDiasPorEdificacao = new HashMap<>();
     private Map<String, Integer> maxFuncionarioPorEdificacao = new HashMap<>();
-
-//    private Map<String,Double> itensJSON = new HashMap<>();
-//    private Map<String,Double> menorTempoDiasPorEdificacaoJSON = new HashMap<>();
-//    private Map<String,Double> maiorTempoDiasPorEdificacaoJSON = new HashMap<>();
-//    private Map<String,Double> maxFuncionarioPorEdificacaoJSON = new HashMap<>();
+    private boolean tempoEmDias = false;
 
     private BigDecimal valorFinal, valorFixo, valorMovel;
 
@@ -24,6 +20,7 @@ public class Orcamento extends Projeto {
         setValorFixo(BigDecimal.valueOf(0));
         setValorMovel(BigDecimal.valueOf(0));
         setValorFinal(BigDecimal.valueOf(0));
+        this.setNome(projeto.getNome());
         this.setEdificacao(projeto.getEdificacao());
         this.setFornecedores(projeto.getFornecedores());
         this.setInsumosNecessarios(projeto.getInsumosNecessarios());
@@ -32,7 +29,7 @@ public class Orcamento extends Projeto {
     @Override
     public void setFuncionarios(ArrayList<Funcionario> funcionarios) {
         funcionarios.forEach(funcionario -> {
-            this.valorMovel = this.valorMovel.add(funcionario.getSalarioHora());
+            setValorMovel(getValorMovel().add(funcionario.getSalarioHora()));
         });
         super.setFuncionarios(funcionarios);
     }
@@ -86,7 +83,7 @@ public class Orcamento extends Projeto {
     }
 
     public BigDecimal getValorFinal() {
-        return valorFinal;
+        return this.valorFinal;
     }
 
     public void setValorFinal(BigDecimal valorFinal) {
@@ -98,14 +95,18 @@ public class Orcamento extends Projeto {
     }
 
     public void setValorFixo(BigDecimal valorFixo) {
+        setValorFinal(valorFixo.add(getValorMovel()));
         this.valorFixo = valorFixo;
     }
 
     public BigDecimal getValorMovel() {
-        return valorMovel;
+        if (this.valorMovel == null)
+            return BigDecimal.valueOf(0);
+        return this.valorMovel;
     }
 
     public void setValorMovel(BigDecimal valorMovel) {
+        setValorFinal(valorMovel.add(getValorFixo()));
         this.valorMovel = valorMovel;
     }
 
@@ -117,6 +118,13 @@ public class Orcamento extends Projeto {
         this.itens = itens;
     }
 
+    public boolean isTempoEmDias() {
+        return tempoEmDias;
+    }
+
+    public void setTempoEmDias(boolean tempoEmDias) {
+        this.tempoEmDias = tempoEmDias;
+    }
 
     public Map<String, Integer> addItens(Insumo insumo, int quantidade) {
         this.setValorFixo(this.getValorFixo().add(insumo.getFornecedores().get(0).getValorUnitario().multiply(BigDecimal.valueOf(quantidade))));

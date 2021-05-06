@@ -9,7 +9,8 @@ import java.io.Writer;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.*;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.stream.Collectors;
 
 public class GerenciadorCatalogo {
@@ -74,6 +75,7 @@ public class GerenciadorCatalogo {
         fornecedor.setQuantidadeDisponivel(fornecedor.getQuantidadeDisponivel() + projeto.getInsumosNecessarios().get(insumo.getNome()));
         atualizarCatalogo(this.catalogo, fornecedor, null);
         projeto.addInsumo(insumo);
+        //projeto.addFornecedor(fornecedor);
     }
 
 

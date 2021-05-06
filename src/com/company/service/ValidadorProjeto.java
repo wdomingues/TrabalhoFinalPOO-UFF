@@ -10,6 +10,8 @@ import java.io.IOException;
 import java.io.Reader;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -28,7 +30,7 @@ public class ValidadorProjeto {
         Map<String, Double> insumosQuantidades = projeto.getInsumosNecessarios();
         Map<Insumo, Double> insumosNecessarios = insumosQuantidades.entrySet().stream().map(s -> new Insumo(s.getKey())).collect(Collectors.toMap(v -> v, v -> insumosQuantidades.get(v.getNome())));
 
-        //Carrega a quantidade total de insumos necessarios para o projeto
+        //Calcula a quantidade total de insumos necessarios para o projeto
         projeto.getEdificacao().forEach(ed -> ed.getAndares().forEach(andar ->
         {
             int qtdLajes = andar.getMetroQuadradoLajes();
@@ -42,6 +44,7 @@ public class ValidadorProjeto {
 
         }));
 
+        // Verificar quais fornecedores de cada insumo necessário para o projeto e criar uma lista de fornecedores válidos e disponíveis
         insumosNecessarios.forEach((insumo, qtdNecessaria) -> {
             Insumo insumoNoCatalogo = catalogo.getInsumos().stream().filter(insumo1 -> insumo1.getNome().equals(insumo.getNome())).findFirst().orElse(null);
             if (insumoNoCatalogo != null) {
@@ -52,9 +55,11 @@ public class ValidadorProjeto {
                         insumo.addFornecedor(fornecedor);
                     });
                 insumosQuantidades.put(insumoNoCatalogo.getNome(), qtdNecessaria);
-                 new GerenciadorCatalogo().vincularInsumoProjeto(insumo,projeto);
             }
         });
+
+        projeto.setInsumos((ArrayList<Insumo>)insumosNecessarios.keySet().stream().collect(Collectors.toList()));
+
         if (!insumosNecessarios.entrySet().stream().anyMatch(insumoN -> insumoN.getKey().getFornecedores() != null && insumoN.getKey().getFornecedores().stream().count() <= 0))
             projeto.setInsumosNecessarios(insumosQuantidades);
         else {
@@ -92,27 +97,24 @@ public class ValidadorProjeto {
     }
 
     private static Map<java.lang.String, Map<java.lang.String, Double>> geraMetrosQuadrados() {
-        Map<java.lang.String, Map<java.lang.String, Double>> map = null;
+        Map map = new HashMap<>();
         Gson gson = new Gson();
         Reader reader = null;
         try {
             reader = Files.newBufferedReader(Paths.get("./src/com/company/parameters/metrosQuadrados.json"));
             // convert JSON file to map
+
             map = gson.fromJson(reader, Map.class);
+            //map.forEach((o, o2) -> mapReturn.put(o.toString(), ((Map<java.lang.String, Double>) o2)));
             reader.close();
         } catch (IOException exception) {
             exception.printStackTrace();
         }
-        return map;
+
+
+        @SuppressWarnings("unchecked")
+        Map<java.lang.String, Map<java.lang.String, Double>> mapReturn = (Map<java.lang.String, Map<java.lang.String, Double>>) map;
+        return mapReturn;
     }
 
-    public Map<java.lang.String, Map<java.lang.String, Double>> getmetrosQuadrados() {
-        if (metrosQuadrados == null)
-            return geraMetrosQuadrados();
-        return metrosQuadrados;
-    }
-
-    public void setmetrosQuadrados(Map<java.lang.String, Map<java.lang.String, Double>> metrosQuadrados) {
-        this.metrosQuadrados = metrosQuadrados;
-    }
 }

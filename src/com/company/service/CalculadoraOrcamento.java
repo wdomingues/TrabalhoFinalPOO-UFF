@@ -21,16 +21,23 @@ public class CalculadoraOrcamento {
         Orcamento orcamento = new Orcamento(projeto);
         funcionarioProduzEmHoras = getFuncionarioProduzEmHoras();
         funcionariosProduzirEmUmaHora = getFuncionariosProduzirEmUmaHora();
-        calculaAndarPorEdificacao(orcamento);
+        calculaAndarPorEdificacao(orcamento, null);
 
-        var funcionarios = new GerenciadorCatalogo().identificarFuncionariosDisponiveis();
+        var funcionariosDisponiveis = new GerenciadorCatalogo().identificarFuncionariosDisponiveis();
 
         // A quantidade máxima de funcionarios: Se todas as edificações são construidas ao mesmo tempo
         orcamento.getMaxFuncionarioPorEdificacao().forEach((edificacao, integer) -> {
             orcamento.setMaiorNumeroFuncionarios(orcamento.getMaiorNumeroFuncionarios() + integer);
         });
-        if (orcamento.getMaiorNumeroFuncionarios() > funcionarios.length)
-            orcamento.setMaiorNumeroFuncionarios(funcionarios.length);
+
+        if (orcamento.getMaiorNumeroFuncionarios() > funcionariosDisponiveis.length) {
+            // Se a quantidade de funcionários for menor, recalcula com o número de funcionarios disponívels
+            orcamento.setMaiorNumeroFuncionarios(funcionariosDisponiveis.length);
+            calculaAndarPorEdificacao(orcamento, funcionariosDisponiveis.length);
+            orcamento.getMaxFuncionarioPorEdificacao().forEach((edificacao, integer) -> {
+                orcamento.setMaiorNumeroFuncionarios(orcamento.getMaiorNumeroFuncionarios() + integer);
+            });
+        }
 
         // O maior tempo que o projeto pode demorar, com apenas um funcionário
         orcamento.getMaiorTempoDiasPorEdificacao().forEach((edificacao, integer) -> {
@@ -41,6 +48,7 @@ public class CalculadoraOrcamento {
         // (A edificação que demorar mais será o menor tempo possivel para o fim do projeto
         orcamento.setMenorTempo(orcamento.getMenorTempoDiasPorEdificacao().entrySet().stream().sorted((o1, o2) -> o2.getValue().compareTo(o1.getValue())).findFirst().orElse(null).getValue());
 
+        orcamento.setTempoEmDias(true);
 
         Map<String, Double> insumosQuantidades = projeto.getInsumosNecessarios();
         Map<Insumo, Double> insumosNecessarios = insumosQuantidades.entrySet().stream().map(s -> new Insumo(s.getKey(),
@@ -59,15 +67,14 @@ public class CalculadoraOrcamento {
                 } else {
                     int qtd = (int) Math.ceil(quantidade);
                     adicionaItensNoOrcamento(orcamento, insumo, fornecedor, qtd);
+                    new GerenciadorCatalogo().vincularInsumoProjeto(insumo, projeto);
                 }
             else {
                 System.out.println("Existem insumos sem fornecedores nesse orçamento.");
-
             }
-            orcamento.addFornecedor(fornecedor);
         });
 
-        var funcionariosSelecionados = Arrays.stream(Helpers.getSliceOfArray(funcionarios, 0, orcamento.getMaiorNumeroFuncionarios())).toArray(Funcionario[]::new);
+        var funcionariosSelecionados = Arrays.stream(Helpers.getSliceOfArray(funcionariosDisponiveis, 0, orcamento.getMaiorNumeroFuncionarios())).toArray(Funcionario[]::new);
         orcamento.setFuncionarios((ArrayList<Funcionario>) Arrays.stream(funcionariosSelecionados).collect(Collectors.toList()));
         orcamento.setValorMovel(orcamento.getValorMovel().multiply(BigDecimal.valueOf(orcamento.getMenorTempo())));
         salvaOrcamentoPendenteAprovacao(orcamento);
@@ -81,7 +88,7 @@ public class CalculadoraOrcamento {
         orcamento.addItens(ins, qtd);
     }
 
-    private static void calculaAndarPorEdificacao(Orcamento orcamento) {
+    private static void calculaAndarPorEdificacao(Orcamento orcamento, Integer nFuncionario) {
         int tempoLajeProduzidaPorUmFuncionario = (int) Math.ceil(funcionarioProduzEmHoras.get("Laje"));
         int funcionariosParaProduzirEmUmaHora_Laje = (int) Math.ceil(funcionariosProduzirEmUmaHora.get("Laje"));
 
@@ -91,7 +98,7 @@ public class CalculadoraOrcamento {
         int tempoColunaProduzidaPorUmFuncionario = (int) Math.ceil(funcionarioProduzEmHoras.get("Coluna"));
         int funcionariosParaProduzirEmUmaHora_Coluna = (int) Math.ceil(funcionariosProduzirEmUmaHora.get("Coluna"));
 
-        int maiorNumeroFuncionarios = Math.max(funcionariosParaProduzirEmUmaHora_Laje, Math.max(funcionariosParaProduzirEmUmaHora_Parede, funcionariosParaProduzirEmUmaHora_Coluna));
+        int maiorNumeroFuncionarios = (nFuncionario == null ? Math.max(funcionariosParaProduzirEmUmaHora_Laje, Math.max(funcionariosParaProduzirEmUmaHora_Parede, funcionariosParaProduzirEmUmaHora_Coluna)) : 0);
 
         orcamento.getEdificacao().forEach(ed -> {
             orcamento.setMenorTempo(0);
@@ -135,7 +142,7 @@ public class CalculadoraOrcamento {
         return funcionarioProduzEmHoras;
     }
 
-    // Exibe quantos FUNCIONÁRIOS precisam para produzir cada item em uma hora
+    // Exibe quantos FUNCIONARIOS precisam para produzir cada item em uma hora
     public static Map<String, Double> getFuncionariosProduzirEmUmaHora() {
         if (funcionariosProduzirEmUmaHora == null)
             return gerarTempoFuncionarios();
@@ -153,18 +160,23 @@ public class CalculadoraOrcamento {
     }
 
     private static Map<String, Double> getFileMapStringDouble(String path) {
-        Map<String, Double> map = null;
+        Map map = new HashMap<>();
         Gson gson = new Gson();
         Reader reader = null;
         try {
             reader = Files.newBufferedReader(Paths.get(path));
             // convert JSON file to map
             map = gson.fromJson(reader, Map.class);
+            //((Map<String, Double>) map).forEach((o, o2) -> mapStringDouble.put(o.toString(), ((Double) o2)));
             reader.close();
         } catch (IOException exception) {
             exception.printStackTrace();
         }
-        return map;
+
+
+        @SuppressWarnings("unchecked")
+        Map<String, Double> mapStringDouble = (Map<String, Double>) map;
+        return mapStringDouble;
     }
 
 
@@ -200,7 +212,7 @@ public class CalculadoraOrcamento {
                     if (p1.getNome() != null && !p1.getNome().isEmpty() && !p1.getNome().isBlank())
                         if (!p1.getNome().equals(orcamento.getNome()))
                             OrcamentoList.add(p1);
-                        //else
+                    //else
 
                 });
             //Arrays.stream(map).reduce()

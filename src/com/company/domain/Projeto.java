@@ -52,16 +52,16 @@ public class Projeto {
         return fornecedores;
     }
 
+    public void setFornecedores(ArrayList<Fornecedor> fornecedores) {
+        this.fornecedores = fornecedores;
+    }
+
     public SituacaoProjeto getSituacao() {
         return situacao;
     }
 
     public void setSituacao(SituacaoProjeto situacao) {
         this.situacao = situacao;
-    }
-
-    public void setFornecedores(ArrayList<Fornecedor> fornecedores) {
-        this.fornecedores = fornecedores;
     }
 
     public ArrayList<Insumo> getInsumos() {
@@ -86,8 +86,8 @@ public class Projeto {
 
     public void setFuncionarios(ArrayList<Funcionario> funcionarios) {
         GerenciadorCatalogo catalogo = new GerenciadorCatalogo();
-        funcionarios.forEach(f-> {
-            catalogo.vincularFuncionarioProjeto(f,this);
+        funcionarios.forEach(f -> {
+            catalogo.vincularFuncionarioProjeto(f, this);
         });
         //this.funcionarios = funcionarios;
     }
@@ -98,16 +98,19 @@ public class Projeto {
     }
 
     public ArrayList<Fornecedor> addFornecedor(Fornecedor fornecedor) {
-        this.fornecedores.add(fornecedor);
+        if (!this.fornecedores.stream().anyMatch(f -> f.getInsumo().equals(fornecedor.getInsumo())))
+            this.fornecedores.add(fornecedor);
         return this.fornecedores;
     }
 
-    public ArrayList<Insumo> addInsumo(Insumo insumo){
-        this.insumos.add(insumo);
+    public ArrayList<Insumo> addInsumo(Insumo insumo) {
+        insumo.setFornecedores(null);
+        if (!this.insumos.stream().anyMatch(i -> i.getNome().equals(insumo.getNome())))
+            this.insumos.add(insumo);
         return this.insumos;
     }
 
-    public ArrayList<Funcionario> addFuncionario(Funcionario funcionario){
+    public ArrayList<Funcionario> addFuncionario(Funcionario funcionario) {
         this.funcionarios.add(funcionario);
         return this.funcionarios;
     }
