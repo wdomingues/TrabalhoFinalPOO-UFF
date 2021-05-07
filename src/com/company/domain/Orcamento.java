@@ -19,6 +19,7 @@ public class Orcamento extends Projeto {
     private BigDecimal valorFinal, valorFixo, valorMovel;
 
     private int menorTempo, maiorTempo, maiorNumeroFuncionarios;
+    private String nomeProjeto; //aslam
 
     public Orcamento(Projeto projeto) {
         setValorFixo(BigDecimal.valueOf(0));
@@ -27,6 +28,7 @@ public class Orcamento extends Projeto {
         this.setEdificacao(projeto.getEdificacao());
         this.setFornecedores(projeto.getFornecedores());
         this.setInsumosNecessarios(projeto.getInsumosNecessarios());
+        this.nomeProjeto = projeto.getNome();
     }
 
     @Override
@@ -137,5 +139,13 @@ public class Orcamento extends Projeto {
     public Map<String, Integer> addMaiorTempoDiasEdificacao(Edificacao edificacao, int maiorTempo) {
         this.maiorTempoDiasPorEdificacao.put(String.valueOf(edificacao.getOrdem()), maiorTempo);
         return this.maiorTempoDiasPorEdificacao;
+    }
+
+    public String getNomeProjeto() {//aslam
+        return nomeProjeto;
+    }
+
+    public void setNomeProjeto(String nomeProjeto) {//aslam
+        this.nomeProjeto = nomeProjeto;
     }
 }

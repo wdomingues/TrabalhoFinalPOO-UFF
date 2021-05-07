@@ -30,6 +30,7 @@ public class Main {
             Helpers.clear();
             Projeto[] projetos = gerenciadorProjeto.recuperaProjetos();
             System.out.flush();
+            System.out.print("\n\nCalcProj - A Calculadora de Projetos da Constrora NewCo"); //aslam
             System.out.println("\n\nEscolha uma opção (ou tecle apenas enter para sair): ");
             System.out.println("\n1 - Cadastrar Projeto");
             System.out.println("2 - Cadastrar Cliente");
@@ -75,9 +76,11 @@ public class Main {
                             projeto = gerenciadorProjeto.selecionarProjeto(projetos, Arrays.stream(situacoes).filter(s -> (s.getNumero() == (res - 2))).toArray(SituacaoProjeto[]::new));
                         }
                         orcamento = validaProjetoGeraOrcamento(catalogo, gerenciadorProjeto, projeto);
-
+                        //System.out.flush(); //aslam
+                        imprimeOrcamento(orcamento);
                     }
                     break;
+
                 case "":
                     sair = true;
                     break;
@@ -89,6 +92,17 @@ public class Main {
             //ValidadorProjeto
             //GeradorContrato contrato = new GeradorContrato(projeto, cliente, );
         }
+    }
+
+    private static void imprimeOrcamento(Orcamento orcamento) {//aslam
+        System.out.println("Orçamento");
+
+        System.out.println("\tItens");
+        System.out.println("\t\t"+orcamento.getItens());
+
+        System.out.println("\tValor:");
+        System.out.println("\t\t"+orcamento.getValorMovel().toPlainString());
+
     }
 
     private static Orcamento validaProjetoGeraOrcamento(Catalogo catalogo, GerenciadorProjeto gerenciadorProjeto, Projeto projeto) {

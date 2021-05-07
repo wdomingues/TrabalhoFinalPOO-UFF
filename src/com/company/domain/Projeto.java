@@ -8,7 +8,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Projeto {
-    private String nome;
+    private String nome = "";
     private Cliente cliente;
     private SituacaoProjeto situacao;
     private ArrayList<Edificacao> edificacao = new ArrayList<>();

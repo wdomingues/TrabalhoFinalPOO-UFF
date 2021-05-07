@@ -44,10 +44,12 @@ public class GerenciadorProjeto {
         this.projeto.addEdificacao(edificacao);
 
         while (resposta.equalsIgnoreCase("S") || resposta.equalsIgnoreCase("sim")) {
-            System.out.println("\nAlguma outra edificação(" + Helpers.getOrdinal(edificacao.getOrdem() + 1, false) + ")? (S/N)");
+            System.out.println("\nAlguma outra edificação(" + Helpers.getOrdinal(edificacao.getOrdem() + 1,
+                    false) + ")? (S/N)");
             resposta = scanner.nextLine();
             if (resposta.equalsIgnoreCase("S") || resposta.equalsIgnoreCase("sim")) {
-                System.out.println("\nAs medidas da " + Helpers.getOrdinal(edificacao.getOrdem() + 1, false) + " edificação serão iguais a anterior? (S/N)");
+                System.out.println("\nAs medidas da " + Helpers.getOrdinal(edificacao.getOrdem() + 1, false)
+                        + " edificação serão iguais a anterior? (S/N)");
                 resposta = scanner.nextLine();
                 if (resposta.equalsIgnoreCase("S") || resposta.equalsIgnoreCase("sim"))
                     this.projeto.addEdificacao(gerenciadorEdificacao.projetarEdificacao(edificacao));
@@ -60,7 +62,7 @@ public class GerenciadorProjeto {
         }
 
 
-        //TODO: pensar em deslocar para Gerenciador de projeto
+        //TODO:
         //System.out.println("Digite o prazo máximo que você deseja:");
         //this.edificacao.setPrazoDias(scanner.nextInt());
 
@@ -73,10 +75,11 @@ public class GerenciadorProjeto {
     public Projeto selecionarProjeto(Projeto[] projetos, SituacaoProjeto[] situacoes) {
         int aux = 1;
         Helpers.clear();
-        System.out.println("\nSelecione o projeto para avançar situação ou deletar: ");
+        System.out.println("\nSelecione o projeto para avançar situação: "); // ou deletar
         if (situacoes.length == 1) {
             for (Projeto proj : projetos) {
                 System.out.println(aux + " - " + proj.getNome());
+                //System.out.println(proj.getCliente().getNome()); //aslam
                 aux++;
             }
         } else {
@@ -146,8 +149,9 @@ public class GerenciadorProjeto {
             Writer writer = Files.newBufferedWriter(Paths.get("./mock-projetos.json"));
 
             for (Projeto projeto1 : projetoList) {
-                if (projeto1.getNome() == null || projeto1.getNome().isEmpty())
+                //if (projeto1.getNome().equals("") || projeto1.getNome().isEmpty()) //aslam
                     projeto1.setNome("Projeto_" + (projetoList.indexOf(projeto1) + 1));
+
             }
             // convert Projetos object to JSON file
             gson.toJson(projetoList, writer);

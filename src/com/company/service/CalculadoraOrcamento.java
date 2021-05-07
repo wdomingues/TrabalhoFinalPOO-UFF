@@ -175,7 +175,7 @@ public class CalculadoraOrcamento {
         return salvaOrcamento(orcamento, SituacaoProjeto.PENDENTE);
     }
 
-    public static Projeto[] salvaOrcamentoRevisao(Orcamento orcamento) {
+    public static Projeto[] salvaOrcamentoOrcamentoRevisao(Orcamento orcamento) {
         return salvaOrcamento(orcamento, SituacaoProjeto.REVISAO);
     }
 
