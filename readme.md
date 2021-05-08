@@ -1,9 +1,9 @@
 # Trabalho Final de POO - 2020.2
-UFF - Universidade Federal Fluminense
-IC - Instituto de Computação
-Disciplina: Programação Orientada a Objetos - 2020.2
-Professora: Vania De Oliveira Neves
-Integrantes: Danilo Siqueira e Winne Domingues
+UFF - Universidade Federal Fluminense</br>
+IC - Instituto de Computação</br>
+Disciplina: Programação Orientada a Objetos - 2020.2</br>
+Professora: Vania De Oliveira Neves</br>
+Integrantes: Danilo Siqueira e Winne Domingues</br>
 Repositório: https://github.com/igorcordeiro08/TrabalhoFinal *(verificar nota ao final) 
 
 
@@ -18,78 +18,74 @@ Trata-se de um sistema de gerenciamento de orçamentos de uma construtora, a fim
 
 ## Atribuições:
 
-**-Criação e Levantamento de Requisitos:** Danilo, Igor e Winne.
-**-Modelagem e Diagramação do Projeto:** Danilo, Igor e Winne.
-**-Classes de Domínio:** Danilo e Winne.
-**-helper (Enums):** Danilo.
-**-Helpers (métodos auxiliares):** Danilo e Winne.
-**-Classes de service:**
+**-Criação e Levantamento de Requisitos:** Danilo, Igor e Winne.</br>
+**-Modelagem e Diagramação do Projeto:** Danilo, Igor e Winne.</br>
+**-Classes de Domínio:** Danilo e Winne.</br>
+**-helper (Enums):** Danilo.</br>
+**-Helpers (métodos auxiliares):** Danilo e Winne.</br>
+**-Classes de service:**</br>
+``` java
+-CalculadoraOrcamento, GerenciadorProjeto, ValidadorProjeto, GerenciadorCliente, GerenciadorCatalogo, GerenciadorContrato: Danilo.
+-GerenciadorAndar, GerenciadorEdificacao: Winne.
+ ```
+ 
+**-mocks:** Danilo.</br>
+**-Apresentação:** Winne.</br>
+**-Revisão:** Danilo e Winne</br>
 
-    **-CalculadoraOrcamento, GerenciadorProjeto, ValidadorProjeto, GerenciadorCliente, GerenciadorCatalogo, GerenciadorContrato:** Danilo.
-    **-GerenciadorAndar, GerenciadorEdificacao:** Winne.
-
-**-mocks:** Danilo.
-**-Apresentação:** Winne.
-**-Revisão:** Danilo e Winne
-
-Apesar das atribuições iniciais, houve jornadas de programação e revisões conjuntas.
-
-
-
+Apesar das atribuições iniciais, houve jornadas de programação e revisões conjuntas.</br>
 
 ## Itens de Java Utilizados
 
 
-    - **Coleções utilizadas:** ArrayList, HashMap, Map
-
-
-    - **Bibliotecas externas utilizadas:** Para a leitura dos JSONs utilizados para persistência de dados.
+   -**Coleções utilizadas:** ArrayList, HashMap, Map</br>
+   -**Bibliotecas externas utilizadas:** Para a leitura dos JSONs utilizados para persistência de dados.</br>
+      
       com.google.gson.Gson
-
-
-
-    - **Condicionais:** for, switch … case
-    - **Interfaces:** PessoaFisica, PessoaJuridica, Interface Comparable
-    - **Classes Abstratas:** Contrato, Pessoa
-    - **Funções anônimas, Lambda expressions**
-    - **Modificadores de de Acesso:** private, protected, public
-    - **Interface Comparable e compareTo()** em Fornecedor
-    - **BigDecimal:** para ter mais precisão
-    - **Lançamento de exceções com throws**
-    - **Tratamento de exceções**
-    - **java.io.IOException**
-    - **java.io.Reader**
-    - **java.io.Writer**
-    - **java.nio.file.Files**
-    - **java.nio.file.Paths**
-    - **Collectors**
-    - **Sobrecarga de métodos**
-    - **Sobrescrita de métodos**
-    - **Polimorfismo**
+   -**Condicionais:** for, switch … case</br>
+   -**Interfaces:** PessoaFisica, PessoaJuridica, Interface Comparable</br>
+   -**Classes Abstratas:** Contrato, Pessoa</br>
+   -**Funções anônimas, Lambda expressions**</br>
+   -**Modificadores de de Acesso:** private, protected, public</br>
+   -**Interface Comparable e compareTo()** em Fornecedor</br>
+   -**BigDecimal:** para ter mais precisão</br>
+   -**Lançamento de exceções com throws**</br>
+   -**Tratamento de exceções**</br>
+   -**java.io.IOException**</br>
+   -**java.io.Reader**</br>
+   -**java.io.Writer**</br>
+   -**java.nio.file.Files**</br>
+   -**java.nio.file.Paths**</br>
+   -**Collectors**</br>
+   -**Sobrecarga de métodos**</br>
+   -**Sobrescrita de métodos**
+   -**Polimorfismo**</br>
     
-    - JSON para armazenamento de instâncias de Clientes, Projetos, Funcionarios, Fornecedores e mocks de dados.
+   -JSON para armazenamento de instâncias de Clientes, Projetos, Funcionarios, Fornecedores e mocks de dados.
     
-    - **Enum:** 
-            - Enum_mocks 
-            - NumerosOrdinais
-            - SituacaoProjeto, para representar os possíveis estados do Projeto
+   -**Enum:** 
+      -Enum_mocks 
+      -NumerosOrdinais
+      -SituacaoProjeto, para representar os possíveis estados do Projeto
         
-    - Parâmetros no JSONS: 
-        - funcionariosTempo: representando quanto tempo leva 1 funcionario para realizar cada tarefa de construção.
-        - tempoFuncionarios: representando quantos funcionarios são necessarios para cada tarefa de construcao por unidade de tempo (hora).
-        - metrosQuadrados:  representando o consumo de insumos para cada a execução de cada item da construção
+   -Parâmetros no JSONS: 
+     -funcionariosTempo: representando quanto tempo leva 1 funcionario para realizar cada tarefa de construção.
+     -tempoFuncionarios: representando quantos funcionarios são necessarios para cada tarefa de construcao por unidade de tempo (hora).
+     -metrosQuadrados:  representando o consumo de insumos para cada a execução de cada item da construção
 
 
-    - **Helpers (métodos auxiliares criados - nomes bem descritivos):**
-    ```java
-    String getOrdinal(int i, boolean isMasculino)
-    int validaInteiroPositivo()
-    int minimoDiasPorHora(int horas)
-    public static void clear() //limpa a tela de acordo com o S.O.
-    Object[] getSliceOfArray(Object[] arr, int start, int end)
-    ```
-
-
+   -**Helpers (métodos auxiliares criados - nomes bem descritivos):**</br>
+   ```java
+   String getOrdinal(int i, boolean isMasculino)
+   
+   int validaInteiroPositivo()
+   
+   int minimoDiasPorHora(int horas)
+   
+   public static void clear() //limpa a tela de acordo com o S.O.
+   
+   Object[] getSliceOfArray(Object[] arr, int start, int end)
+   ```
 
 ## Arquitetura da Interface com o usuário (CLI):
 
@@ -141,7 +137,7 @@ Apesar das atribuições iniciais, houve jornadas de programação e revisões c
 
 
                     
-                    
+                
 
 *Obs: O repositório pertence ao ****Igor Cordeiro , que era integrante do grupo, contribuiu com a modelagem do Sistema, mas resolveu não continuar na disciplina neste momento.
 
