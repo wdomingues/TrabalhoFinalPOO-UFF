@@ -15,47 +15,35 @@ import java.util.stream.Collectors;
 public class GerenciadorCatalogo {
     private Catalogo catalogo;
 
-    public Catalogo gerarCatalogo() {
-        try {
-            String json
-                    = String.join(" ",
-                    Files.readAllLines(
-                            Paths.get("./mock-fornecedores.json"),
-                            StandardCharsets.UTF_8)
-            );
-            Fornecedor[] fornecedorList;
-            fornecedorList = new Gson().fromJson(json, Fornecedor[].class);
+    public Catalogo gerarCatalogo() throws IOException {
+        String json
+                = String.join(" ",
+                Files.readAllLines(
+                        Paths.get("./mock-fornecedores.json"),
+                        StandardCharsets.UTF_8)
+        );
+        Fornecedor[] fornecedorList;
+        fornecedorList = new Gson().fromJson(json, Fornecedor[].class);
 
-            this.catalogo = new Catalogo(fornecedorList);
-
-        } catch (IOException ex) {
-            ex.printStackTrace();
-        }
-
-
+        this.catalogo = new Catalogo(fornecedorList);
         return this.catalogo;
     }
 
-    public Funcionario[] identificarFuncionariosDisponiveis() {
+    public Funcionario[] identificarFuncionariosDisponiveis() throws IOException {
         if (this.catalogo == null)
             this.catalogo = gerarCatalogo();
         if (this.catalogo.getFuncionarios() == null) {
-            try {
-                String json
-                        = String.join(" ",
-                        Files.readAllLines(
-                                Paths.get("./mock-funcionarios.json"),
-                                StandardCharsets.UTF_8)
-                );
-                Funcionario[] funcionarios;
-                funcionarios = new Gson().fromJson(json, Funcionario[].class);
+            String json
+                    = String.join(" ",
+                    Files.readAllLines(
+                            Paths.get("./mock-funcionarios.json"),
+                            StandardCharsets.UTF_8)
+            );
+            Funcionario[] funcionarios;
+            funcionarios = new Gson().fromJson(json, Funcionario[].class);
 
-                funcionarios = Arrays.stream(funcionarios).filter(funcionario -> funcionario.isDisponivel()).sorted((o1, o2) -> o1.compareTo(o2)).toArray(Funcionario[]::new);
-                this.catalogo.setFuncionarios(funcionarios);
-
-            } catch (IOException ex) {
-                ex.printStackTrace();
-            }
+            funcionarios = Arrays.stream(funcionarios).filter(funcionario -> funcionario.isDisponivel()).sorted((o1, o2) -> o1.compareTo(o2)).toArray(Funcionario[]::new);
+            this.catalogo.setFuncionarios(funcionarios);
         } else {
             this.catalogo.setFuncionarios(Arrays.stream(this.catalogo.getFuncionarios()).filter(funcionario -> funcionario.isDisponivel()).sorted((o1, o2) -> o1.compareTo(o2)).toArray(Funcionario[]::new));
         }
@@ -67,7 +55,7 @@ public class GerenciadorCatalogo {
     }
 
 
-    public void vincularInsumoProjeto(Insumo insumo, Projeto projeto) {
+    public void vincularInsumoProjeto(Insumo insumo, Projeto projeto) throws IOException {
         if (this.catalogo == null)
             this.catalogo = gerarCatalogo();
         Fornecedor fornecedor = insumo.getFornecedores().get(0);
@@ -77,7 +65,7 @@ public class GerenciadorCatalogo {
     }
 
 
-    public void vincularFuncionarioProjeto(Funcionario funcionario, Projeto projeto) {
+    public void vincularFuncionarioProjeto(Funcionario funcionario, Projeto projeto) throws IOException {
         if (this.catalogo == null)
             this.catalogo = gerarCatalogo();
         funcionario.setDisponivel(false);
@@ -87,52 +75,44 @@ public class GerenciadorCatalogo {
 
 
     public Catalogo atualizarCatalogo(Catalogo catalogo, Fornecedor fornecedorAlterado,
-                                      Funcionario funcionarioAlterado) {
+                                      Funcionario funcionarioAlterado) throws IOException{
         Fornecedor[] mapFornecedor = null;
         Funcionario[] mapFuncionario = null;
-        try {
-            // create Gson instance
-            Gson gson = new Gson();
-            Reader readerFornecedor = Files.newBufferedReader(Paths.get("./mock-fornecedores.json"));
-            mapFornecedor = gson.fromJson(readerFornecedor, Fornecedor[].class);
-            readerFornecedor.close();
+        // create Gson instance
+        Gson gson = new Gson();
+        Reader readerFornecedor = Files.newBufferedReader(Paths.get("./mock-fornecedores.json"));
+        mapFornecedor = gson.fromJson(readerFornecedor, Fornecedor[].class);
+        readerFornecedor.close();
 
-            Reader readerFuncionario = Files.newBufferedReader(Paths.get("./mock-funcionarios.json"));
-            mapFuncionario = gson.fromJson(readerFuncionario, Funcionario[].class);
-            readerFuncionario.close();
+        Reader readerFuncionario = Files.newBufferedReader(Paths.get("./mock-funcionarios.json"));
+        mapFuncionario = gson.fromJson(readerFuncionario, Funcionario[].class);
+        readerFuncionario.close();
 
-            if (fornecedorAlterado != null) {
-                if (mapFornecedor != null && mapFornecedor.length > 0)
-                    Arrays.stream(mapFornecedor).forEach(p1 -> {
-                        if (!p1.getCnpj().equals(fornecedorAlterado.getCnpj()) && !p1.getInsumo().equals(fornecedorAlterado.getInsumo()))
-                            p1 = fornecedorAlterado;
-                        //fornecedorList.add(p1);
-                    });
-                Writer writerFornecedor = Files.newBufferedWriter(Paths.get("./mock-fornecedores.json"));
-                gson.toJson(mapFornecedor, writerFornecedor);
-                writerFornecedor.close();
-                catalogo.setFornecedores(mapFornecedor);
-            }
-
-            if (funcionarioAlterado != null) {
-                if (mapFuncionario != null && mapFuncionario.length > 0)
-                    Arrays.stream(mapFuncionario).forEach(p1 -> {
-                        if (!p1.getCpf().equals(funcionarioAlterado.getCpf()) && !p1.getNome().equals(funcionarioAlterado.getNome()))
-                            p1 = funcionarioAlterado;
-                        //fornecedorList.add(p1);
-                    });
-                Writer writerFuncionario = Files.newBufferedWriter(Paths.get("./mock-funcionarios.json"));
-                gson.toJson(mapFuncionario, writerFuncionario);
-                writerFuncionario.close();
-                catalogo.setFuncionarios(mapFuncionario);
-            }
-
-
-        } catch (IOException ex) {
-            ex.printStackTrace();
+        if (fornecedorAlterado != null) {
+            if (mapFornecedor != null && mapFornecedor.length > 0)
+                Arrays.stream(mapFornecedor).forEach(p1 -> {
+                    if (!p1.getCnpj().equals(fornecedorAlterado.getCnpj()) && !p1.getInsumo().equals(fornecedorAlterado.getInsumo()))
+                        p1 = fornecedorAlterado;
+                    //fornecedorList.add(p1);
+                });
+            Writer writerFornecedor = Files.newBufferedWriter(Paths.get("./mock-fornecedores.json"));
+            gson.toJson(mapFornecedor, writerFornecedor);
+            writerFornecedor.close();
+            catalogo.setFornecedores(mapFornecedor);
         }
 
-
+        if (funcionarioAlterado != null) {
+            if (mapFuncionario != null && mapFuncionario.length > 0)
+                Arrays.stream(mapFuncionario).forEach(p1 -> {
+                    if (!p1.getCpf().equals(funcionarioAlterado.getCpf()) && !p1.getNome().equals(funcionarioAlterado.getNome()))
+                        p1 = funcionarioAlterado;
+                    //fornecedorList.add(p1);
+                });
+            Writer writerFuncionario = Files.newBufferedWriter(Paths.get("./mock-funcionarios.json"));
+            gson.toJson(mapFuncionario, writerFuncionario);
+            writerFuncionario.close();
+            catalogo.setFuncionarios(mapFuncionario);
+        }
         return catalogo;
     }
 

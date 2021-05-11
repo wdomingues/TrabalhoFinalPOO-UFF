@@ -5,6 +5,7 @@ import com.company.domain.Projeto;
 import com.company.helper.SituacaoProjeto;
 import com.google.gson.Gson;
 
+import java.io.IOException;
 import java.io.Reader;
 import java.io.Writer;
 import java.nio.file.Files;
@@ -16,9 +17,8 @@ import java.util.Scanner;
 public class GerenciadorProjeto {
     private Projeto projeto;
 
-    public static Projeto[] recuperaProjetos() {
+    public static Projeto[] recuperaProjetos() throws IOException {
         Projeto[] map = null;
-        try {
             // create Gson instance
             Gson gson = new Gson();
 
@@ -28,9 +28,6 @@ public class GerenciadorProjeto {
             map = gson.fromJson(reader, Projeto[].class);
 
             reader.close();
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
 
         return map;
     }
@@ -60,14 +57,11 @@ public class GerenciadorProjeto {
                 }
             }
         }
-
-
         //TODO:
         //System.out.println("Digite o prazo máximo que você deseja:");
         //this.edificacao.setPrazoDias(scanner.nextInt());
 
         //TODO: calcular baseado em prazo, consid dias de trab x nFuncionarios para exec comodo
-
 
         return this.projeto;
     }
@@ -100,69 +94,61 @@ public class GerenciadorProjeto {
             this.projeto = projetos[res - 1];
         else
             return selecionarProjeto(projetos, situacoes);
-
-
         return this.projeto;
     }
 
-    public Projeto[] salvaProjetoEmEspera(Projeto projeto) {
+    public Projeto[] salvaProjetoEmEspera(Projeto projeto) throws IOException{
         return salvaProjeto(projeto, SituacaoProjeto.AGUARDANDO);
     }
 
-    public Projeto[] salvaProjetoPendenteAprovacao(Projeto projeto) {
+    public Projeto[] salvaProjetoPendenteAprovacao(Projeto projeto) throws IOException{
         return salvaProjeto(projeto, SituacaoProjeto.PENDENTE);
     }
 
-    public Projeto[] salvaProjetoOrcamentoRevisao(Projeto projeto) {
+    public Projeto[] salvaProjetoOrcamentoRevisao(Projeto projeto) throws IOException{
         return salvaProjeto(projeto, SituacaoProjeto.REVISAO);
     }
 
-    public Projeto[] salvaProjetoAprovado(Projeto projeto) {
+    public Projeto[] salvaProjetoAprovado(Projeto projeto) throws IOException{
         return salvaProjeto(projeto, SituacaoProjeto.APROVADO);
     }
 
-    public Projeto[] finalizaProjeto(Projeto projeto) {
+    public Projeto[] finalizaProjeto(Projeto projeto) throws IOException{
         return salvaProjeto(projeto, SituacaoProjeto.FINALIZADO);
     }
 
 
-    private Projeto[] salvaProjeto(Projeto projeto, SituacaoProjeto situacao) {
+    private Projeto[] salvaProjeto(Projeto projeto, SituacaoProjeto situacao) throws IOException{
         Projeto[] map = null;
-        try {
-            // create Gson instance
-            Gson gson = new Gson();
+        // create Gson instance
+        Gson gson = new Gson();
 
-            projeto.setSituacao(situacao);
-            // cria projeto list
-            ArrayList<Projeto> projetoList = new ArrayList<Projeto>();
-            projetoList.add(projeto);
-            Reader reader = Files.newBufferedReader(Paths.get("./mock-projetos.json"));
-            map = gson.fromJson(reader, Projeto[].class);
-            reader.close();
+        projeto.setSituacao(situacao);
+        // cria projeto list
+        ArrayList<Projeto> projetoList = new ArrayList<Projeto>();
+        projetoList.add(projeto);
+        Reader reader = Files.newBufferedReader(Paths.get("./mock-projetos.json"));
+        map = gson.fromJson(reader, Projeto[].class);
+        reader.close();
 
-            if (map != null && map.length > 0)
-                Arrays.stream(map).forEach(p1 -> {
-                    if (!p1.getNome().equals(projeto.getNome()))
-                        projetoList.add(p1);
-                });
-            // create a writer
-            Writer writer = Files.newBufferedWriter(Paths.get("./mock-projetos.json"));
+        if (map != null && map.length > 0)
+            Arrays.stream(map).forEach(p1 -> {
+                if (!p1.getNome().equals(projeto.getNome()))
+                    projetoList.add(p1);
+            });
+        // create a writer
+        Writer writer = Files.newBufferedWriter(Paths.get("./mock-projetos.json"));
 
-            for (Projeto projeto1 : projetoList) {
-                //if (projeto1.getNome().equals("") || projeto1.getNome().isEmpty()) //aslam
-                    projeto1.setNome("Projeto_" + (projetoList.indexOf(projeto1) + 1));
+        for (Projeto projeto1 : projetoList) {
+            //if (projeto1.getNome().equals("") || projeto1.getNome().isEmpty()) //aslam
+                projeto1.setNome("Projeto_" + (projetoList.indexOf(projeto1) + 1));
 
-            }
-            // convert Projetos object to JSON file
-            gson.toJson(projetoList, writer);
-
-            // close writer
-            writer.close();
-
-        } catch (Exception ex) {
-            ex.printStackTrace();
         }
+        // convert Projetos object to JSON file
+        gson.toJson(projetoList, writer);
 
+        // close writer
+        writer.close();
         return map;
     }
 }

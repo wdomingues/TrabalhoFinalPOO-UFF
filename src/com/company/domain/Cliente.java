@@ -8,6 +8,10 @@ public class Cliente extends Pessoa implements PessoaFisica, PessoaJuridica {
         super(nome, documento);
     }
 
+    public Cliente() {
+        super();
+    }
+
     @Override
     public String getCpf() {
         return this.isPessoaFisica ? this.documento : null;

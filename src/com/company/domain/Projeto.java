@@ -3,6 +3,7 @@ package com.company.domain;
 import com.company.helper.SituacaoProjeto;
 import com.company.service.GerenciadorCatalogo;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -84,11 +85,11 @@ public class Projeto {
         return funcionarios;
     }
 
-    public void setFuncionarios(ArrayList<Funcionario> funcionarios) {
+    public void setFuncionarios(ArrayList<Funcionario> funcionarios) throws IOException {
         GerenciadorCatalogo catalogo = new GerenciadorCatalogo();
-        funcionarios.forEach(f-> {
-            catalogo.vincularFuncionarioProjeto(f,this);
-        });
+        for (Funcionario f : funcionarios) {
+            catalogo.vincularFuncionarioProjeto(f, this);
+        }
         //this.funcionarios = funcionarios;
     }
 

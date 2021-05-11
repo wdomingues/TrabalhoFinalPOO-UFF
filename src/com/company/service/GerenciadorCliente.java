@@ -1,8 +1,10 @@
 package com.company.service;
 
 import com.company.domain.Cliente;
+import com.company.exceptions.CPFInvalidoException;
 import com.google.gson.Gson;
 
+import java.io.IOException;
 import java.io.Reader;
 import java.io.Writer;
 import java.nio.file.Files;
@@ -16,7 +18,7 @@ public class GerenciadorCliente {
     private Cliente cliente;
 
 
-    public Cliente getCliente() {
+    public Cliente getCliente() throws IOException {
         Scanner scanner = new Scanner(System.in);
         String input;
         boolean continua = true;
@@ -34,7 +36,7 @@ public class GerenciadorCliente {
         return this.cliente;
     }
 
-    public Cliente cadastrar() {
+    public Cliente cadastrar() throws IOException, CPFInvalidoException{ //usando a primeira exception criada
         Scanner scanner = new Scanner(System.in);
         String nome, cpf;
 
@@ -44,10 +46,13 @@ public class GerenciadorCliente {
         nome = scanner.nextLine();
         System.out.println("Digite o CPF do Cliente: ");
         cpf = scanner.nextLine();
+        if (cpf.replace(".", "").replace("-", "").matches("")) { //especificar regex
+            throw new CPFInvalidoException("CPF Inválido. Tente Novamente");
+        } else {
+            this.cliente = new Cliente(nome, cpf);
+            salvaCliente(this.cliente);
+        }
 
-        this.cliente = new Cliente(nome, cpf);
-
-        salvaCliente(this.cliente);
         return this.cliente;
     }
 
@@ -55,51 +60,39 @@ public class GerenciadorCliente {
         return new Cliente(nome, cpf);
     }
 
-    private Cliente[] salvaCliente(Cliente cliente) {
+    private Cliente[] salvaCliente(Cliente cliente) throws IOException{
         Cliente[] map = null;
-        try {
-            // create Gson instance
-            Gson gson = new Gson();
-            // cria Cliente list
-            ArrayList<Cliente> ClienteList = new ArrayList<Cliente>();
-            ClienteList.add(cliente);
-            Reader reader = Files.newBufferedReader(Paths.get("./mock-Clientes.json"));
-            map = gson.fromJson(reader, Cliente[].class);
-            reader.close();
+        // create Gson instance
+        Gson gson = new Gson();
+        // cria Cliente list
+        ArrayList<Cliente> ClienteList = new ArrayList<Cliente>();
+        ClienteList.add(cliente);
+        Reader reader = Files.newBufferedReader(Paths.get("./mock-Clientes.json"));
+        map = gson.fromJson(reader, Cliente[].class);
+        reader.close();
 
-            if (map != null && map.length > 0)
-                Arrays.stream(map).forEach(p1 -> {
-                    ClienteList.add(p1);
-                });
-            // create a writer
-            Writer writer = Files.newBufferedWriter(Paths.get("./mock-Clientes.json"));
-            // convert Clientes object to JSON file
-            gson.toJson(ClienteList, writer);
+        if (map != null && map.length > 0)
+            Arrays.stream(map).forEach(p1 -> {
+                ClienteList.add(p1);
+            });
+        // create a writer
+        Writer writer = Files.newBufferedWriter(Paths.get("./mock-Clientes.json"));
+        // convert Clientes object to JSON file
+        gson.toJson(ClienteList, writer);
 
-            // close writer
-            writer.close();
-
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-
+        // close writer
+        writer.close();
         return map;
     }
 
-    private Cliente usaCliente(String dadoBusca) {
+    private Cliente usaCliente(String dadoBusca) throws IOException{
         Cliente[] map = null;
-        try {
-            // create Gson instance
-            Gson gson = new Gson();
-            Reader reader = Files.newBufferedReader(Paths.get("./mock-clientes.json"));
-            map = gson.fromJson(reader, Cliente[].class);
-            reader.close();
-            Cliente cliente = Arrays.stream(map).filter(c -> c.getNome().equals(dadoBusca) || c.getCpf().equals(dadoBusca)).findFirst().orElse(null);
-            return cliente;
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-
-        return null;
+        // create Gson instance
+        Gson gson = new Gson();
+        Reader reader = Files.newBufferedReader(Paths.get("./mock-clientes.json"));
+        map = gson.fromJson(reader, Cliente[].class);
+        reader.close();
+        Cliente cliente = Arrays.stream(map).filter(c -> c.getNome().equals(dadoBusca) || c.getCpf().equals(dadoBusca)).findFirst().orElse(null);
+        return cliente;
     }
 }

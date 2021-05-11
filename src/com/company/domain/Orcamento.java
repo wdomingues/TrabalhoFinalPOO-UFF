@@ -1,5 +1,6 @@
 package com.company.domain;
 
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -32,7 +33,7 @@ public class Orcamento extends Projeto {
     }
 
     @Override
-    public void setFuncionarios(ArrayList<Funcionario> funcionarios) {
+    public void setFuncionarios(ArrayList<Funcionario> funcionarios) throws IOException {
         funcionarios.forEach(funcionario -> {
             this.valorMovel = this.valorMovel.add(funcionario.getSalarioHora());
         });

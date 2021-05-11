@@ -17,7 +17,7 @@ public class CalculadoraOrcamento {
     private static Map<String, Double> funcionarioProduzEmHoras;
     private static Map<String, Double> funcionariosProduzirEmUmaHora;
 
-    public static Orcamento calcula(Projeto projeto) {
+    public static Orcamento calcula(Projeto projeto) throws IOException{
         Orcamento orcamento = new Orcamento(projeto);
         funcionarioProduzEmHoras = getFuncionarioProduzEmHoras();
         funcionariosProduzirEmUmaHora = getFuncionariosProduzirEmUmaHora();
@@ -132,111 +132,95 @@ public class CalculadoraOrcamento {
     }
 
     // Exibe quantas HORAS um funcionário gasta para produzir cada item
-    public static Map<String, Double> getFuncionarioProduzEmHoras() {
+    public static Map<String, Double> getFuncionarioProduzEmHoras() throws IOException{
         if (funcionarioProduzEmHoras == null)
             return geraFuncionarioTempo();
         return funcionarioProduzEmHoras;
     }
 
     // Exibe quantos FUNCIONÁRIOS precisam para produzir cada item em uma hora
-    public static Map<String, Double> getFuncionariosProduzirEmUmaHora() {
+    public static Map<String, Double> getFuncionariosProduzirEmUmaHora() throws IOException{
         if (funcionariosProduzirEmUmaHora == null)
             return gerarTempoFuncionarios();
         return funcionariosProduzirEmUmaHora;
     }
 
     //Carrega o arquivo da relação de produção: tempo (horas) para um produto por funcionário
-    private static Map<String, Double> geraFuncionarioTempo() {
+    private static Map<String, Double> geraFuncionarioTempo() throws IOException{
         return getFileMapStringDouble("./src/com/company/parameters/funcionarioTempo.json");
     }
 
     //Carrega o arquivo da relaçao de produção: funcinários para um produto em uma hora
-    private static Map<String, Double> gerarTempoFuncionarios() {
+    private static Map<String, Double> gerarTempoFuncionarios() throws IOException {
         return getFileMapStringDouble("./src/com/company/parameters/tempoFuncionarios.json");
     }
 
-    private static Map<String, Double> getFileMapStringDouble(String path) {
+    private static Map<String, Double>getFileMapStringDouble(String path) throws IOException{
         Map<String, Double> map = null;
         Gson gson = new Gson();
         Reader reader = null;
-        try {
             reader = Files.newBufferedReader(Paths.get(path));
             // convert JSON file to map
             map = gson.fromJson(reader, Map.class);
             reader.close();
-        } catch (IOException exception) {
-            exception.printStackTrace();
-        }
         return map;
     }
 
 
-    public static Projeto[] salvaOrcamentoPendenteAprovacao(Orcamento orcamento) {
+    public static Projeto[] salvaOrcamentoPendenteAprovacao(Orcamento orcamento) throws IOException{
         return salvaOrcamento(orcamento, SituacaoProjeto.PENDENTE);
     }
 
-    public static Projeto[] salvaOrcamentoOrcamentoRevisao(Orcamento orcamento) {
+    public static Projeto[] salvaOrcamentoOrcamentoRevisao(Orcamento orcamento) throws IOException{
         return salvaOrcamento(orcamento, SituacaoProjeto.REVISAO);
     }
 
-    public static Projeto[] salvaOrcamentoAprovado(Orcamento orcamento) {
+    public static Projeto[] salvaOrcamentoAprovado(Orcamento orcamento) throws IOException{
         return salvaOrcamento(orcamento, SituacaoProjeto.APROVADO);
     }
 
 
-    private static Orcamento[] salvaOrcamento(Orcamento orcamento, SituacaoProjeto situacao) {
+    private static Orcamento[] salvaOrcamento(Orcamento orcamento, SituacaoProjeto situacao) throws IOException{
         Orcamento[] map = null;
-        try {
-            // create Gson instance
-            Gson gson = new Gson();
-            // cria Orcamento list
-            ArrayList<Orcamento> OrcamentoList = new ArrayList<Orcamento>();
+        // create Gson instance
+        Gson gson = new Gson();
+        // cria Orcamento list
+        ArrayList<Orcamento> OrcamentoList = new ArrayList<Orcamento>();
 
-            orcamento.setSituacao(situacao);
-            OrcamentoList.add(orcamento);
-            Reader reader = Files.newBufferedReader(Paths.get("./mock-Orcamentos.json"));
-            map = gson.fromJson(reader, Orcamento[].class);
-            reader.close();
+        orcamento.setSituacao(situacao);
+        OrcamentoList.add(orcamento);
+        Reader reader = Files.newBufferedReader(Paths.get("./mock-Orcamentos.json"));
+        map = gson.fromJson(reader, Orcamento[].class);
+        reader.close();
 
-            if (map != null && map.length > 0)
-                Arrays.stream(map).forEach(p1 -> {
-                    if (p1.getNome() != null && !p1.getNome().isEmpty() && !p1.getNome().isBlank())
-                        if (!p1.getNome().equals(orcamento.getNome()))
-                            OrcamentoList.add(p1);
-                        //else
+        if (map != null && map.length > 0)
+            Arrays.stream(map).forEach(p1 -> {
+                if (p1.getNome() != null && !p1.getNome().isEmpty() && !p1.getNome().isBlank())
+                    if (!p1.getNome().equals(orcamento.getNome()))
+                        OrcamentoList.add(p1);
+                    //else
 
-                });
-            //Arrays.stream(map).reduce()
-            // create a writer
-            Writer writer = Files.newBufferedWriter(Paths.get("./mock-orcamentos.json"));
-            // convert Orcamentos object to JSON file
-            gson.toJson(OrcamentoList, writer);
+            });
+        //Arrays.stream(map).reduce()
+        // create a writer
+        Writer writer = Files.newBufferedWriter(Paths.get("./mock-orcamentos.json"));
+        // convert Orcamentos object to JSON file
+        gson.toJson(OrcamentoList, writer);
 
-            // close writer
-            writer.close();
-
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-
+        // close writer
+        writer.close();
         return map;
     }
 
-    private static Orcamento usaOrcamento(String dadoBusca) {
+    private static Orcamento usaOrcamento(String dadoBusca) throws IOException{
         Orcamento[] map = null;
-        try {
-            // create Gson instance
-            Gson gson = new Gson();
-            Reader reader = Files.newBufferedReader(Paths.get("./mock-orcamentos.json"));
-            map = gson.fromJson(reader, Orcamento[].class);
-            reader.close();
-            Orcamento orcamento = Arrays.stream(map).filter(c -> c.getNome().equals(dadoBusca) || c.getValorFinal().equals(dadoBusca)).findFirst().orElse(null);
-            return orcamento;
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-
-        return null;
+        // create Gson instance
+        Gson gson = new Gson();
+        Reader reader = Files.newBufferedReader(Paths.get("./mock-orcamentos.json"));
+        map = gson.fromJson(reader, Orcamento[].class);
+        reader.close();
+        Orcamento orcamento = Arrays.stream(map).filter(c -> c.getNome().equals(dadoBusca) || c.getValorFinal().equals(dadoBusca)).findFirst().orElse(null);
+        return orcamento;
     }
 
 }

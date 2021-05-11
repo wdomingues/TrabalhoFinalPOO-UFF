@@ -4,6 +4,7 @@ import com.company.domain.Catalogo;
 import com.company.domain.Cliente;
 import com.company.domain.Orcamento;
 import com.company.domain.Projeto;
+import com.company.exceptions.CPFInvalidoException;
 import com.company.helper.SituacaoProjeto;
 import com.company.service.*;
 
@@ -13,13 +14,18 @@ import java.util.Scanner;
 
 public class Main {
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args){
         boolean sair = false;
         String opcaoSelecionada, input = new String();
         Scanner scanner = new Scanner(System.in);
         GerenciadorCatalogo gerenciadorCatalogo = new GerenciadorCatalogo();
-        Catalogo catalogo = gerenciadorCatalogo.gerarCatalogo();
-        Cliente cliente;
+        Catalogo catalogo = null;
+        try {
+            catalogo = gerenciadorCatalogo.gerarCatalogo();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        Cliente cliente = null;
         Orcamento orcamento = null;
 
         GerenciadorCliente gerenciadorCliente = new GerenciadorCliente();
@@ -28,7 +34,12 @@ public class Main {
         while (!sair) {
             orcamento = null;
             Helpers.clear();
-            Projeto[] projetos = gerenciadorProjeto.recuperaProjetos();
+            Projeto[] projetos = new Projeto[0];
+            try {
+                projetos = gerenciadorProjeto.recuperaProjetos();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
             System.out.flush();
             System.out.print("\n\nCalcProj - A Calculadora de Projetos da Constrora NewCo"); //aslam
             System.out.println("\n\nEscolha uma opção (ou tecle apenas enter para sair): ");
@@ -44,19 +55,41 @@ public class Main {
                 case "1":
                     System.out.println("\nJá existe cliente cadastrado? (S/N)");
                     opcaoSelecionada = scanner.nextLine();
-                    if (opcaoSelecionada.equalsIgnoreCase("sim") || opcaoSelecionada.equalsIgnoreCase("S")) {
-                        cliente = gerenciadorCliente.getCliente();
-                    } else
-                        cliente = gerenciadorCliente.cadastrar();
-
-                    Projeto projeto = gerenciadorProjeto.cadastrar();
-                    projeto.setCliente(cliente);
-
-                    orcamento = validaProjetoGeraOrcamento(catalogo, gerenciadorProjeto, projeto);
-
-                    break;
+                    try {
+                        if (opcaoSelecionada.equalsIgnoreCase("sim") || opcaoSelecionada.equalsIgnoreCase("S")) {
+                            cliente = gerenciadorCliente.getCliente();
+                        } else {
+                            try {
+                                cliente = gerenciadorCliente.cadastrar();
+                            } catch (CPFInvalidoException exc){
+                                exc.printStackTrace();
+                            }
+                        }
+                    }
+                    catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    finally {
+                        Projeto projeto = gerenciadorProjeto.cadastrar();
+                        try{
+                            projeto.setCliente(cliente);
+                        } catch(ExceptionInInitializerError e){
+                            e.printStackTrace();
+                            projeto.setCliente(new Cliente());
+                        }
+                        try {
+                            orcamento = validaProjetoGeraOrcamento(catalogo, gerenciadorProjeto, projeto);
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                        break;
+                    }
                 case "2":
-                    cliente = gerenciadorCliente.cadastrar();
+                    try {
+                        cliente = gerenciadorCliente.cadastrar();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                     break;
                 case "3":
                     if (projetos == null || Arrays.stream(projetos).count() == 0) {
@@ -69,13 +102,18 @@ public class Main {
                             System.out.println((situacao.getNumero() + 1) + " - " + situacao.getOrdinal());
                         int res = Helpers.validaInteiroPositivo();
                         System.out.println("\n");
+                        Projeto projeto;//aslam
                         if (res == 1)
                             projeto = gerenciadorProjeto.selecionarProjeto(projetos, situacoes);
                         else {
                             projetos = Arrays.stream(projetos).filter(p -> p.getSituacao().equals(situacoes[res - 2])).toArray(Projeto[]::new);
                             projeto = gerenciadorProjeto.selecionarProjeto(projetos, Arrays.stream(situacoes).filter(s -> (s.getNumero() == (res - 2))).toArray(SituacaoProjeto[]::new));
                         }
-                        orcamento = validaProjetoGeraOrcamento(catalogo, gerenciadorProjeto, projeto);
+                        try {
+                            orcamento = validaProjetoGeraOrcamento(catalogo, gerenciadorProjeto, projeto);
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
                         //System.out.flush(); //aslam
                         imprimeOrcamento(orcamento);
                     }
@@ -105,7 +143,7 @@ public class Main {
 
     }
 
-    private static Orcamento validaProjetoGeraOrcamento(Catalogo catalogo, GerenciadorProjeto gerenciadorProjeto, Projeto projeto) {
+    private static Orcamento validaProjetoGeraOrcamento (Catalogo catalogo, GerenciadorProjeto gerenciadorProjeto, Projeto projeto) throws IOException{
         Orcamento orcamento = null;
         if (ValidadorProjeto.validar(projeto, catalogo)) {
             orcamento = CalculadoraOrcamento.calcula(projeto);

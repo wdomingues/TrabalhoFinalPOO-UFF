@@ -18,7 +18,7 @@ public class ValidadorProjeto {
     private static Map<java.lang.String, Map<java.lang.String, Double>> metrosQuadrados;
 
 
-    public static boolean validar(Projeto projeto, Catalogo catalogo) {
+    public static boolean validar(Projeto projeto, Catalogo catalogo) throws IOException {
         metrosQuadrados = geraMetrosQuadrados();
 
         Map<java.lang.String, Double> materiaisLaje = metrosQuadrados.get("Laje");
@@ -52,7 +52,11 @@ public class ValidadorProjeto {
                         insumo.addFornecedor(fornecedor);
                     });
                 insumosQuantidades.put(insumoNoCatalogo.getNome(), qtdNecessaria);
-                 new GerenciadorCatalogo().vincularInsumoProjeto(insumo,projeto);
+                try {
+                    new GerenciadorCatalogo().vincularInsumoProjeto(insumo,projeto);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
         });
         if (!insumosNecessarios.entrySet().stream().anyMatch(insumoN -> insumoN.getKey().getFornecedores() != null && insumoN.getKey().getFornecedores().stream().count() <= 0))
@@ -92,22 +96,18 @@ public class ValidadorProjeto {
         });
     }
 
-    private static Map<java.lang.String, Map<java.lang.String, Double>> geraMetrosQuadrados() {
+    private static Map<java.lang.String, Map<java.lang.String, Double>> geraMetrosQuadrados() throws IOException{
         Map<java.lang.String, Map<java.lang.String, Double>> map = null;
         Gson gson = new Gson();
         Reader reader = null;
-        try {
             reader = Files.newBufferedReader(Paths.get("./src/com/company/parameters/metrosQuadrados.json"));
             // convert JSON file to map
             map = gson.fromJson(reader, Map.class);
             reader.close();
-        } catch (IOException exception) {
-            exception.printStackTrace();
-        }
         return map;
     }
 
-    public Map<java.lang.String, Map<java.lang.String, Double>> getmetrosQuadrados() {
+    public Map<java.lang.String, Map<java.lang.String, Double>> getmetrosQuadrados() throws IOException {
         if (metrosQuadrados == null)
             return geraMetrosQuadrados();
         return metrosQuadrados;

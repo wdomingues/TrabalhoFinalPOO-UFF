@@ -9,6 +9,10 @@ public abstract class Pessoa {
         this.documento = documento;
     }
 
+    public Pessoa() {
+
+    }
+
     public String getDocumento() {
         return documento;
     }
