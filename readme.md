@@ -1,11 +1,11 @@
 # Trabalho Final de POO - 2020.2
-UFF - Universidade Federal Fluminense
-IC - Instituto de Computação
-Disciplina: Programação Orientada a Objetos - 2020.2
-Professora: Vania De Oliveira Neves
-Integrantes: Danilo Siqueira e Winne Domingues
-Repositório: https://github.com/igorcordeiro08/TrabalhoFinal *(verificar nota ao final) 
-
+UFF - Universidade Federal Fluminense</br>
+IC - Instituto de Computação</br>
+Disciplina: Programação Orientada a Objetos - 2020.2</br>
+Professora: Vania De Oliveira Neves</br>
+Integrantes: Danilo Siqueira e Winne Domingues</br>
+Repositório: https://github.com/igorcordeiro08/TrabalhoFinal *(verificar nota ao final) </br>
+Para a atividade Individual: https://github.com/wdomingues/TrabalhoFinalPOO-UFF 
 
 
 # Relatório do Trabalho Final
