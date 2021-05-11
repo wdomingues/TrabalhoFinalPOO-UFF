@@ -1,4 +1,4 @@
-package com.company.service;
+package com.company.helper;
 
 import com.company.domain.Projeto;
 

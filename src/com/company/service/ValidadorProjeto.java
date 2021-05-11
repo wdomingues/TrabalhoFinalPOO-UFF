@@ -42,8 +42,11 @@ public class ValidadorProjeto {
 
         }));
 
-        insumosNecessarios.forEach((insumo, qtdNecessaria) -> {
-            Insumo insumoNoCatalogo = catalogo.getInsumos().stream().filter(insumo1 -> insumo1.getNome().equals(insumo.getNome())).findFirst().orElse(null);
+        for (Map.Entry<Insumo, Double> entry : insumosNecessarios.entrySet()) {
+            Insumo insumo = entry.getKey();
+            Double qtdNecessaria = entry.getValue();
+            Insumo insumoNoCatalogo = catalogo.getInsumos().stream().filter(
+                    insumo1 -> insumo1.getNome().equals(insumo.getNome())).findFirst().orElse(null);
             if (insumoNoCatalogo != null) {
                 List<Fornecedor> fornecedoresDisponiveis = insumoNoCatalogo.getFornecedores().stream()
                         .filter(fornecedor -> fornecedor.getQuantidadeDisponivel() >= qtdNecessaria).collect(Collectors.toList());
@@ -52,13 +55,10 @@ public class ValidadorProjeto {
                         insumo.addFornecedor(fornecedor);
                     });
                 insumosQuantidades.put(insumoNoCatalogo.getNome(), qtdNecessaria);
-                try {
-                    new GerenciadorCatalogo().vincularInsumoProjeto(insumo,projeto);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+                new GerenciadorCatalogo().vincularInsumoProjeto(insumo, projeto);
             }
-        });
+        }
+
         if (!insumosNecessarios.entrySet().stream().anyMatch(insumoN -> insumoN.getKey().getFornecedores() != null && insumoN.getKey().getFornecedores().stream().count() <= 0))
             projeto.setInsumosNecessarios(insumosQuantidades);
         else {

@@ -4,7 +4,8 @@ import com.company.domain.Catalogo;
 import com.company.domain.Cliente;
 import com.company.domain.Orcamento;
 import com.company.domain.Projeto;
-import com.company.exceptions.CPFInvalidoException;
+import com.company.exceptions.DocumentoInvalidoException;
+import com.company.exceptions.ObjetoNaoEncontradoException;
 import com.company.helper.SituacaoProjeto;
 import com.company.service.*;
 
@@ -13,6 +14,50 @@ import java.util.Arrays;
 import java.util.Scanner;
 
 public class Main {
+/*
+Avaliação individual
+2.a) Para persistir em bancos de dados, em mais de 1 SGBD:
+
+o que será persistido?
+	Os conteúdos que também são guardados nos arquivos chamados de mocks, os quais contém  separadamente:
+		-Clientes
+		-Fornecedores
+		-Funcionários
+		-Orçamentos
+		-Projetos
+
+- TIPO adequado de persistência
+	Pela maneira como foi modelado o sistema, com geração de dados em Listas e Maps (Dicionários), em seguida convertidas
+	em JSONs (persistência em arquivos), seria natural utilizar um banco de dados não relacional, noSQL, como o MongoDB,
+	que persiste dados em forma de documentos, com suporte a JSON. Seria uma solução atual e objetiva.
+
+	Também seria possível utilizar SGBDs relacionais, como o PostgreSQL. Para isso, seria necessário fazer a modelagem
+	conceitual, identificando as entidades e relacionamentos, baseada no diagrama de classes (UML) deste projeto, a fim
+	de fazer o projeto lógico no SGBD.
+
+	Então, poderia ser, então feito o carregamento dos dados já existentes nos SGBDs.
+
+	Em seguida, através da interface criada Persistencia, com a assinatura dos métodos de persistência em bancos de dados,
+	podem ser implementadas classes de persistência para cada SGBD com pelo menos os métodos CRUD criados na interface,
+	sendo sobrescritos de acordo com as especificidades do SGBD.
+
+	Em seguida, as instãncias de persistência, poderiam ser invocadas sequencialmente à persistência de arquivos previamente
+	existente (dos JSONs), fazendo as devidas conexões com os SGBDs e executando as transações desejadas.
+
+	b)Implementação
+	Foram criadas as classes de permanencia que implementan a interface Persistencia em com.company.helper:
+		-PersistenciaMongo
+		-PersistenciaPostgres
+
+	Após instância com criação de cada Conexão ao seu respectivo SGBD, os métodos tem que ser implementados a fim de
+	realizar as operações CRUD especificadas.
+		Por exemplo, no caso do Postgres, como é relacional, o trabalho será maior, pois tem que ser selecionado atributo
+		por atributo de cada registro, ou validar um registro completo, tendo tratamento.
+	Cada método de interesse seria invocado nos classes Gerenciadoras, para inserir (salvar) paralelamente aos arquivos
+	JSON, por exemplo.
+	Já onde houver consultas, os métodos de busca ou listagem são invocados.
+	A mesma analogia vai para a deleção e atualização.
+*/
 
     public static void main(String[] args){
         boolean sair = false;
@@ -23,7 +68,7 @@ public class Main {
         try {
             catalogo = gerenciadorCatalogo.gerarCatalogo();
         } catch (IOException e) {
-            e.printStackTrace();
+            System.out.println(e.getMessage());
         }
         Cliente cliente = null;
         Orcamento orcamento = null;
@@ -38,7 +83,7 @@ public class Main {
             try {
                 projetos = gerenciadorProjeto.recuperaProjetos();
             } catch (IOException e) {
-                e.printStackTrace();
+                System.out.println(e.getMessage());
             }
             System.out.flush();
             System.out.print("\n\nCalcProj - A Calculadora de Projetos da Constrora NewCo"); //aslam
@@ -61,36 +106,46 @@ public class Main {
                         } else {
                             try {
                                 cliente = gerenciadorCliente.cadastrar();
-                            } catch (CPFInvalidoException exc){
-                                exc.printStackTrace();
+                            } catch (DocumentoInvalidoException exc){ //Uso da exception criada para validar documentos
+                                System.out.println(exc.getMessage());
+                            }
+                            finally{
+                                break;
                             }
                         }
                     }
                     catch (IOException e) {
-                        e.printStackTrace();
+                        System.out.println(e.getMessage());
                     }
                     finally {
                         Projeto projeto = gerenciadorProjeto.cadastrar();
                         try{
                             projeto.setCliente(cliente);
                         } catch(ExceptionInInitializerError e){
-                            e.printStackTrace();
+                            System.out.println(e.getMessage());
                             projeto.setCliente(new Cliente());
                         }
-                        try {
-                            orcamento = validaProjetoGeraOrcamento(catalogo, gerenciadorProjeto, projeto);
-                        } catch (IOException e) {
-                            e.printStackTrace();
+                        finally {
+                            try {
+                                orcamento = validaProjetoGeraOrcamento(catalogo, gerenciadorProjeto, projeto);
+                            } catch (IOException e) {
+                                System.out.println(e.getMessage());
+                            }catch (ObjetoNaoEncontradoException o) {
+                                System.out.println(o.getMessage());
+                            } finally {
+                                break;
+                            }
                         }
-                        break;
                     }
                 case "2":
                     try {
                         cliente = gerenciadorCliente.cadastrar();
                     } catch (IOException e) {
-                        e.printStackTrace();
+                        System.out.println(e.getMessage());
                     }
-                    break;
+                    finally {
+                        break;
+                    }
                 case "3":
                     if (projetos == null || Arrays.stream(projetos).count() == 0) {
                         System.out.println("Não há projeto para selecionar");
@@ -111,19 +166,24 @@ public class Main {
                         }
                         try {
                             orcamento = validaProjetoGeraOrcamento(catalogo, gerenciadorProjeto, projeto);
+                            //System.out.flush(); //aslam
+                            imprimeOrcamento(orcamento);
                         } catch (IOException e) {
-                            e.printStackTrace();
+                            System.out.println(e.getMessage());
+                        } catch (ObjetoNaoEncontradoException o){
+                            System.out.println(o.getMessage());
                         }
-                        //System.out.flush(); //aslam
-                        imprimeOrcamento(orcamento);
+
+                        finally{
+                            break;
+                        }
                     }
-                    break;
 
                 case "":
                     sair = true;
                     break;
             }
-            if (orcamento != null) {
+            if (orcamento != null) {//TODO
 
             }
 
@@ -140,19 +200,31 @@ public class Main {
 
         System.out.println("\tValor:");
         System.out.println("\t\t"+orcamento.getValorMovel().toPlainString());
-
+        Scanner tec = new Scanner(System.in);
+        System.out.println("Digite enter para continuar.");
+        tec.nextLine();
     }
 
-    private static Orcamento validaProjetoGeraOrcamento (Catalogo catalogo, GerenciadorProjeto gerenciadorProjeto, Projeto projeto) throws IOException{
+    private static Orcamento validaProjetoGeraOrcamento (Catalogo catalogo, GerenciadorProjeto gerenciadorProjeto, Projeto projeto)
+            throws IOException, ObjetoNaoEncontradoException {
         Orcamento orcamento = null;
         if (ValidadorProjeto.validar(projeto, catalogo)) {
-            orcamento = CalculadoraOrcamento.calcula(projeto);
-
+            try {
+                orcamento = CalculadoraOrcamento.calcula(projeto);
+            } catch(ObjetoNaoEncontradoException o){
+                System.out.println(o.getMessage());
+                return null;
+            }
         } else {
             new Scanner(System.in).next();
             System.out.println("Vamos salvar o projeto para aguardar a atualização da lista de insumos através dos Fornecedores.");
             new Scanner(System.in).next();
-            gerenciadorProjeto.salvaProjetoEmEspera(projeto);
+            try{
+                gerenciadorProjeto.salvaProjetoEmEspera(projeto);
+            } catch(ObjetoNaoEncontradoException o){
+                System.out.println(o.getMessage());
+                return null;
+            }
         }
         return orcamento;
     }

@@ -2,6 +2,7 @@ package com.company.service;
 
 import com.company.domain.Edificacao;
 import com.company.domain.Projeto;
+import com.company.exceptions.ObjetoNaoEncontradoException;
 import com.company.helper.SituacaoProjeto;
 import com.google.gson.Gson;
 
@@ -97,28 +98,28 @@ public class GerenciadorProjeto {
         return this.projeto;
     }
 
-    public Projeto[] salvaProjetoEmEspera(Projeto projeto) throws IOException{
+    public Projeto[] salvaProjetoEmEspera(Projeto projeto) throws IOException, ObjetoNaoEncontradoException {
         return salvaProjeto(projeto, SituacaoProjeto.AGUARDANDO);
     }
 
-    public Projeto[] salvaProjetoPendenteAprovacao(Projeto projeto) throws IOException{
+    public Projeto[] salvaProjetoPendenteAprovacao(Projeto projeto) throws IOException, ObjetoNaoEncontradoException {
         return salvaProjeto(projeto, SituacaoProjeto.PENDENTE);
     }
 
-    public Projeto[] salvaProjetoOrcamentoRevisao(Projeto projeto) throws IOException{
+    public Projeto[] salvaProjetoOrcamentoRevisao(Projeto projeto) throws IOException, ObjetoNaoEncontradoException {
         return salvaProjeto(projeto, SituacaoProjeto.REVISAO);
     }
 
-    public Projeto[] salvaProjetoAprovado(Projeto projeto) throws IOException{
+    public Projeto[] salvaProjetoAprovado(Projeto projeto) throws IOException, ObjetoNaoEncontradoException {
         return salvaProjeto(projeto, SituacaoProjeto.APROVADO);
     }
 
-    public Projeto[] finalizaProjeto(Projeto projeto) throws IOException{
+    public Projeto[] finalizaProjeto(Projeto projeto) throws IOException, ObjetoNaoEncontradoException {
         return salvaProjeto(projeto, SituacaoProjeto.FINALIZADO);
     }
 
 
-    private Projeto[] salvaProjeto(Projeto projeto, SituacaoProjeto situacao) throws IOException{
+    private Projeto[] salvaProjeto(Projeto projeto, SituacaoProjeto situacao) throws IOException, ObjetoNaoEncontradoException {
         Projeto[] map = null;
         // create Gson instance
         Gson gson = new Gson();
@@ -131,11 +132,14 @@ public class GerenciadorProjeto {
         map = gson.fromJson(reader, Projeto[].class);
         reader.close();
 
-        if (map != null && map.length > 0)
+        if (map != null && map.length > 0){
             Arrays.stream(map).forEach(p1 -> {
                 if (!p1.getNome().equals(projeto.getNome()))
                     projetoList.add(p1);
             });
+        } else{
+            throw new ObjetoNaoEncontradoException("Arquivo de Projetos Inválido");
+        }
         // create a writer
         Writer writer = Files.newBufferedWriter(Paths.get("./mock-projetos.json"));
 

@@ -1,7 +1,7 @@
 package com.company.service;
 
 import com.company.domain.Cliente;
-import com.company.exceptions.CPFInvalidoException;
+import com.company.exceptions.DocumentoInvalidoException;
 import com.google.gson.Gson;
 
 import java.io.IOException;
@@ -36,21 +36,23 @@ public class GerenciadorCliente {
         return this.cliente;
     }
 
-    public Cliente cadastrar() throws IOException, CPFInvalidoException{ //usando a primeira exception criada
+    public Cliente cadastrar() throws IOException, DocumentoInvalidoException { //usando a primeira exception criada
         Scanner scanner = new Scanner(System.in);
-        String nome, cpf;
+        String nome, documento;
 
         //TODO identificar se o cliente é pessoa física
 
         System.out.println("Digite o nome do Cliente: ");
         nome = scanner.nextLine();
         System.out.println("Digite o CPF do Cliente: ");
-        cpf = scanner.nextLine();
-        if (cpf.replace(".", "").replace("-", "").matches("")) { //especificar regex
-            throw new CPFInvalidoException("CPF Inválido. Tente Novamente");
-        } else {
-            this.cliente = new Cliente(nome, cpf);
+        documento = scanner.nextLine();
+        String documentoLimpo = documento.replace(".", "").replace("-", "").replace("/", "");
+        if ((documentoLimpo.matches("\\d{11}"))
+                || (documentoLimpo.matches("\\d{14}"))) { //especificar regex para CPF e para CNPJ (qtd de digitos)
+            this.cliente = new Cliente(nome, documentoLimpo);
             salvaCliente(this.cliente);
+        } else {
+            throw new DocumentoInvalidoException("Documento Inválido. Tente Novamente");
         }
 
         return this.cliente;

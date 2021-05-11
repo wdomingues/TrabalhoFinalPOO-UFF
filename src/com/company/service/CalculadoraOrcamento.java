@@ -1,6 +1,7 @@
 package com.company.service;
 
 import com.company.domain.*;
+import com.company.exceptions.ObjetoNaoEncontradoException;
 import com.company.helper.SituacaoProjeto;
 import com.google.gson.Gson;
 
@@ -17,7 +18,7 @@ public class CalculadoraOrcamento {
     private static Map<String, Double> funcionarioProduzEmHoras;
     private static Map<String, Double> funcionariosProduzirEmUmaHora;
 
-    public static Orcamento calcula(Projeto projeto) throws IOException{
+    public static Orcamento calcula(Projeto projeto) throws IOException, ObjetoNaoEncontradoException {
         Orcamento orcamento = new Orcamento(projeto);
         funcionarioProduzEmHoras = getFuncionarioProduzEmHoras();
         funcionariosProduzirEmUmaHora = getFuncionariosProduzirEmUmaHora();
@@ -167,20 +168,20 @@ public class CalculadoraOrcamento {
     }
 
 
-    public static Projeto[] salvaOrcamentoPendenteAprovacao(Orcamento orcamento) throws IOException{
+    public static Projeto[] salvaOrcamentoPendenteAprovacao(Orcamento orcamento) throws IOException, ObjetoNaoEncontradoException{
         return salvaOrcamento(orcamento, SituacaoProjeto.PENDENTE);
     }
 
-    public static Projeto[] salvaOrcamentoOrcamentoRevisao(Orcamento orcamento) throws IOException{
+    public static Projeto[] salvaOrcamentoOrcamentoRevisao(Orcamento orcamento) throws IOException, ObjetoNaoEncontradoException{
         return salvaOrcamento(orcamento, SituacaoProjeto.REVISAO);
     }
 
-    public static Projeto[] salvaOrcamentoAprovado(Orcamento orcamento) throws IOException{
+    public static Projeto[] salvaOrcamentoAprovado(Orcamento orcamento) throws IOException, ObjetoNaoEncontradoException{
         return salvaOrcamento(orcamento, SituacaoProjeto.APROVADO);
     }
 
 
-    private static Orcamento[] salvaOrcamento(Orcamento orcamento, SituacaoProjeto situacao) throws IOException{
+    private static Orcamento[] salvaOrcamento(Orcamento orcamento, SituacaoProjeto situacao) throws IOException, ObjetoNaoEncontradoException{
         Orcamento[] map = null;
         // create Gson instance
         Gson gson = new Gson();
@@ -201,6 +202,7 @@ public class CalculadoraOrcamento {
                     //else
 
             });
+        else throw new ObjetoNaoEncontradoException("Arquivo de Orçamentos Inválido");
         //Arrays.stream(map).reduce()
         // create a writer
         Writer writer = Files.newBufferedWriter(Paths.get("./mock-orcamentos.json"));
